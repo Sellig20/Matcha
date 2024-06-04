@@ -11,7 +11,7 @@ CREATE TABLE UserProfile (
     sexualInterest sexualInterestEnum NOT NULL,
     biography VARCHAR(150) NOT NULL,
     tags tagsEnum NOT NULL,
-    last_Active TIMESTAMP,
+    -- last_Active TIMESTAMP,
     hasProfilePicture BOOLEAN DEFAULT FALSE
 );
 
@@ -75,3 +75,5 @@ CREATE TABLE Messages (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(20) DEFAULT 'sent'
 );
+
+-- INSERT INTO UserProfile (userProfileID, userName, age, gender, sexualInterest, biography, tags, hasProfilePicture) VALUES ('0', 'Lol', '25', 'female', 'women', 'bonjour', 'vegan', 'no');

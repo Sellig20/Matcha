@@ -1,6 +1,7 @@
 {
   "name": "project",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,6 +17,5 @@
     "express": "^4.19.2",
     "nodemon": "^3.1.0",
     "pg": "^8.11.5"
-  },
-  "type": "module"
+  }
 }

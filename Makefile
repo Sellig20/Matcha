@@ -1,8 +1,8 @@
 all: up
 
 up:
-	docker compose up --build --force-recreate #>> logs.txt #-d
-
+	npm install && docker compose up --build --force-recreate #>> logs.txt #-d
+	
 down:
 	docker compose down -v
 
