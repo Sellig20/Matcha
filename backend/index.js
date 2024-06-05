@@ -21,12 +21,12 @@ app.get('/apiExpress/chat', (req, res) => {
 
 app.get('/apiExpress/userprofile', (req, res) => {
   // const result = await db.query('select * from userprofile');
-  res.send('userprofile');
+  res.send('UserProfile');
 })
 
 app.get('/apiExpress/users', async (req, res) => {
   try {
-    const result = await db.query('SELECT biography FROM userprofile');
+    const result = await db.query('SELECT biography FROM public.userprofile');
     res.json(result.rows);
   } catch (err) {
     console.error(err);

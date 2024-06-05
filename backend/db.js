@@ -7,7 +7,7 @@ const { Pool } = pkg;
 const pool = new Pool({
   user: 'zanot',
   password: '1234',
-  host: 'localhost',
+  host: 'host.docker.internal',
   database: 'db',
   port: 5432,
   max: 20, //max 20 clients
@@ -16,7 +16,7 @@ const pool = new Pool({
 });
 
 pool.on('connect', client => {
-  client.query('SET search_path TO userprofile');
+  client.query('SET search_path TO UserProfile');
 });
 
 export default {
