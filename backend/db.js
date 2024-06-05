@@ -1,14 +1,17 @@
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+require('dotenv').config()
 
-import pkg from 'pg';
-const { Pool } = pkg;
+// dotenv.config();
+var pg = require('pg');
+
+// import pkg from 'pg';
+const { Pool } = pg;
 
 const pool = new Pool({
-  user: 'zanot',
-  password: '1234',
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
   host: 'host.docker.internal',
-  database: 'db',
+  database: process.env.POSTGRES_DB,
   port: 5432,
   max: 20, //max 20 clients
   idleTimeoutMillis: 30000, //idle clients max 30 sec
@@ -19,12 +22,10 @@ pool.on('connect', client => {
   client.query('SET search_path TO UserProfile');
 });
 
-export default {
+module.export = {
   query: (text, params) => pool.query(text, params),
 };
 // export const query = (text, params) => pool.query(text, params);
-
-
 // module.exports = {
 //   query: (text, params) => pool.query(text, params),
 // }; //exporte la fonction "query" qui prend text=la requete SQL a executer et
