@@ -30,7 +30,7 @@ CREATE TABLE UserSettings (
     firstName VARCHAR(15) NOT NULL,
     lastName VARCHAR(15) NOT NULL,
     email VARCHAR(20) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL
+    pass_word VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Block (
