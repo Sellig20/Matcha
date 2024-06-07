@@ -5,7 +5,7 @@
 const path = require('path')
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 // console.log(`Hello ${process.env.POSTGRES_DB}`)
-console.log(`POSTGRES_DB: ${process.env.POSTGRES_DB}`);
+// console.log(`POSTGRES_DB: ${process.env.POSTGRES_DB}`);
 const express = require('express')
 const db = require("./db");
 // dotenv.config();
@@ -23,11 +23,10 @@ app.get('/apiExpress/chat', (req, res) => {
   res.send('Chat page !')
 });
 
-
-app.get('/apiExpress/userprofile', (req, res) => {
-  // const result = await db.query('select * from userprofile');
-  res.send('UserProfile');
-})
+// app.get('/apiExpress/userprofile', async (req, res) => {
+//   const result = await db.query('select * from userprofile');
+//   res.send('UserProfile');
+// })
 
 app.get('/apiExpress/users', async (req, res) => {
   try {

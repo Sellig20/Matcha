@@ -22,7 +22,7 @@ pool.on('connect', client => {
   client.query('SET search_path TO UserProfile');
 });
 
-module.export = {
+module.exports = {
   query: (text, params) => pool.query(text, params),
 };
 // export const query = (text, params) => pool.query(text, params);
