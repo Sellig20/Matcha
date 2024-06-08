@@ -1,11 +1,13 @@
 // import dotenv from 'dotenv';
-require('dotenv').config()
+import { Pool, PoolClient, QueryResult } from 'pg';
+import dotenv from 'dotenv';
 
-// dotenv.config();
-var pg = require('pg');
+// require('dotenv').config()
+dotenv.config();
 
+// var pg = require('pg');
 // import pkg from 'pg';
-const { Pool } = pg;
+// const { Pool } = pg;
 
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
@@ -18,12 +20,12 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000, // timeout pour tentative de co de 2 sec
 });
 
-pool.on('connect', client => {
+pool.on('connect', (client: PoolClient) => {
   client.query('SET search_path TO UserProfile');
 });
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),
+export const query = (text: string, params?: any[]): Promise<QueryResult<any>> => {
+  return pool.query(text, params);
 };
 // export const query = (text, params) => pool.query(text, params);
 // module.exports = {

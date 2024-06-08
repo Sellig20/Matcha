@@ -5,4 +5,4 @@ INSERT INTO UserProfile (userName, age, gender, sexualInterest, biography, tags,
 
 -- INSERT INTO UserPictures(pictureID, userProfileID, pictureURL, isProfile) VALUES ('')
 
-INSERT INTO UserSettings (userProfileID, validationToken, isValidatedToken, firstName, lastName, email, pass_word) VALUES ('0', '2222', 'true', 'Lola', 'Teryaki', 'lolat@gmail.com', 'teri');
+INSERT INTO UserSettings (validationToken, isValidatedToken, firstName, lastName, email, pass_word) VALUES ('2222', 'true', 'Lola', 'Teryaki', 'lolat@gmail.com', 'teri');

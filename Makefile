@@ -1,3 +1,8 @@
+DIST_DIR=backend/dist
+NM=node_modules
+BNM=backend/node_modules
+FNM=frontend/node_modules
+
 all: up
 
 up:
@@ -13,7 +18,10 @@ ps:
 fclean:	down
 	docker system prune --force
 	docker volume prune --force
-
+	rm -rf $(DIST_DIR)
+	rm -rf $(NM)
+	rm -rf $(BNM)
+	rm -rf $(FNM)
 
 re : 	clean up
 

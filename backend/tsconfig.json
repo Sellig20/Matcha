@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                          // Cible de compilation
+    "module": "CommonJS",                     // Système de module
+    "strict": true,                           // Activer toutes les vérifications strictes
+    "esModuleInterop": true,                  // Activer la compatibilité ES modules
+    "skipLibCheck": true,                     // Ignorer la vérification des fichiers de déclaration
+    "outDir": "./dist",
+    "rootDir": "./src",                    // Répertoire racine des fichiers sources
+    "resolveJsonModule": true,                // Permet l'importation de fichiers JSON
+    "forceConsistentCasingInFileNames": true, // Enforce consistent file naming
+    "lib": ["ES6"],                           // Bibliothèque utilisée pour le ciblage
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["src/app.ts"],                 // Fichiers inclus dans la compilation
+}
