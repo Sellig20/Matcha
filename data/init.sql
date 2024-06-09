@@ -15,13 +15,6 @@ CREATE TABLE UserProfile (
     hasProfilePicture BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE UserPictures (
-    pictureID SERIAL PRIMARY KEY,
-    userProfileID INTEGER REFERENCES UserProfile(userProfileID) ON DELETE CASCADE,
-    pictureURL VARCHAR(255) NOT NULL,
-    isProfile BOOLEAN DEFAULT FALSE
-);
-
 CREATE TABLE UserSettings (
     userSettingsID SERIAL PRIMARY KEY,
     userProfileID INTEGER REFERENCES UserProfile(userProfileID) ON DELETE CASCADE,
@@ -31,6 +24,13 @@ CREATE TABLE UserSettings (
     lastName VARCHAR(15) NOT NULL,
     email VARCHAR(20) NOT NULL UNIQUE,
     pass_word VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE UserPictures (
+    pictureID SERIAL PRIMARY KEY,
+    userProfileID INTEGER REFERENCES UserProfile(userProfileID) ON DELETE CASCADE,
+    pictureURL VARCHAR(255) NOT NULL,
+    isProfile BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE Block (
