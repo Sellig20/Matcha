@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';import Home from './components/Home'
 import FameRating from './components/FameRating'
 import './App.css'
+import UserSettings from './components/UserSettings';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,6 +12,7 @@ function App() {
        <Routes>
          <Route path="/" element={<Home />} />
          <Route path="/fm" element={<FameRating />}/>
+         <Route path="/usersettings/:id" element={<UserSettings />}/>
        </Routes>
      </Router>
   )
