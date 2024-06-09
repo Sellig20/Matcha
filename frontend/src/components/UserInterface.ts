@@ -1,13 +1,14 @@
-interface UserSettingsInterface {
-    userProfileID: number;
-    userName: string;
-    age: number;
-    gender: string;
-    sexualInterest: string;
-    biography: string;
-    tags: string;
-    // last_Active: 
-    hasProfilePicture: boolean;
+export interface UserSettingsInterface {
+    usersettingsid: number;
+    userprofileid: number;
+    validationtoken: number;
+    isvalidatedtoken: boolean;
+    firstname: string;
+    lastname: string;
+    email: string;
+    pass_word: string;
 }
 
-export default UserSettingsInterface;
+export interface UserSettingsArray {
+    users: UserSettingsInterface[];
+}

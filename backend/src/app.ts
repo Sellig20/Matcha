@@ -26,7 +26,7 @@ app.get('/apiExpress/chat', (req: Request, res: Response) => {
 //     res.status(500).send('Erreur du serveur pour extraction de la table UserProfile');
 //   }
 // });
-app.use('/apiUsers', routes);
+app.use('/apiServeur', routes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
