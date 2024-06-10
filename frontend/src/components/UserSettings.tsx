@@ -10,12 +10,8 @@ const UserSettings: React.FC = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                console.log("\nje try dans frontend\n");
                 const res = await axios.get(`http://localhost:8000/apiServeur/${id}`);
-                console.log(`id => ${id}`);
-                console.log("res = ", res.data);
                 setUser(res.data);
-                console.log("user -> ", user?.[0].firstname);
             } catch (error) {
                 console.error('Erreur pour recup userSettings AXIOS FRONTEND');
             }

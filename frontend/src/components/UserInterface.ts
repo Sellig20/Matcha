@@ -10,5 +10,5 @@ export interface UserSettingsInterface {
 }
 
 export interface UserSettingsArray {
-    users: UserSettingsInterface[];
+    user: UserSettingsInterface[];
 }

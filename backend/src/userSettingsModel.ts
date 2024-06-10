@@ -7,8 +7,8 @@ export class userSettingsModel {
     }
 
     static async getAllUsers(userId: number) {
-        console.log("DANS LE MODELLLLLLLL");
-        console.log("user id dans le model => ", userId);
+        // console.log("DANS LE MODELLLLLLLL");
+        // console.log("user id dans le model => ", userId);
         const res = await query('SELECT * FROM public.usersettings WHERE userProfileID = $1', [userId]);
         return res.rows;
       }

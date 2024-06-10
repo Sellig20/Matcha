@@ -4,6 +4,9 @@ require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 import { query } from './db';
 import express, { Request, Response, NextFunction } from 'express';
 import routes from './routes';
+import { configDotenv } from 'dotenv';
+
+
 
 const app = express();
 app.use(express.json());
@@ -32,5 +35,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
+app.use('/api/auth', routes);
 
 app.listen(3000, () => console.log(`App running on port 3000.`));
