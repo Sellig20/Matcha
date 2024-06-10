@@ -36,6 +36,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send('Something broke!');
 });
 
-app.use('/api/auth', routes);
+// app.use('/api/auth', routes);
 
 app.listen(3000, () => console.log(`App running on port 3000.`));
