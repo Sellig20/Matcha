@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';import
 import FameRating from './components/FameRating'
 import './App.css'
 import UserSettings from './components/UserSettings';
+import UserSignup from './components/UserSignup';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,6 +14,7 @@ function App() {
          <Route path="/" element={<Home />} />
          <Route path="/fm" element={<FameRating />}/>
          <Route path="/us/:id" element={<UserSettings />}/>
+         <Route path="/signup" element={<UserSignup />}/>
        </Routes>
      </Router>
   )

@@ -22,7 +22,7 @@ CREATE TABLE UserSettings (
     isValidatedToken BOOLEAN DEFAULT FALSE,
     firstName VARCHAR(15) NOT NULL,
     lastName VARCHAR(15) NOT NULL,
-    email VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(50) NOT NULL UNIQUE,
     pass_word VARCHAR(100) NOT NULL
 );
 

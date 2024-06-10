@@ -13,7 +13,7 @@ const SignupForm: React.FC = () => {
         try {
             console.log("dans frontend signuuuup");
             const response = await axios.post('http://localhost:8000/apiServeur/signup', { firstname, lastname, email, password });
-            setMessage(response.data);
+            setMessage(response.data.message);
         } catch (err) {
             setMessage("popopo error frontend signup");
         }
