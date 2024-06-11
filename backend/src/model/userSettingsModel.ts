@@ -1,4 +1,4 @@
-import { query } from './db';
+import { query } from '../db';
 //dans le model on fait une injection direct a la bdd
 export class userSettingsModel {
     static async getAllUsers() {

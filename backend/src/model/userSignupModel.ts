@@ -1,5 +1,5 @@
-import { query } from './db';
-import { UserSettingsInterface } from './userInterface';
+import { query } from '../db';
+import { UserSettingsInterface } from '../databaseInterfaces';
 
 export class userSignupModel {
     static async findByEmail(email: string) {

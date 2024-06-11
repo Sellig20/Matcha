@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { userSettingsModel } from './userSettingsModel';
+import { userSettingsModel } from '../model/userSettingsModel';
 //dans le controller on utilise le model et son injection pour manipuler les donnees entrantes/sortantes
 export class userSettingsController {
     static async getAllUsers(req: Request, res: Response) {

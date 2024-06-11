@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';import Home from './components/Home'
 import FameRating from './components/FameRating'
-import './App.css'
-import UserSettings from './components/UserSettings';
-import UserSignup from './components/UserSignup';
+import UserSettings from './components/User/UserSettings';
+import UserSignup from './components/User/UserSignup';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)

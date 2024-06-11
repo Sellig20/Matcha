@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
-import { userSignupModel } from "./userSignupModel";
+import { userSignupModel } from "../model/userSignupModel";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { UserSettingsInterface } from "./userInterface";
+import { UserSettingsInterface } from "../databaseInterfaces";
+import dotenv from 'dotenv';
+dotenv.config();
 
-const JWT_SECRET = 'MiaRebelle'
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export class userSignupController {
     static async signup(req: Request, res: Response) {
@@ -18,15 +20,15 @@ export class userSignupController {
                 res.status(400).json({ message: 'Cette adresse mail deja utilisee bro' });
                 return;
             }
-                console.log("------------------- avant mot de passe controllersignup------------");
             const hashedPwd = await bcrypt.hash(password, 10);
-                console.log("------------- apres mot de passe controllersignup-------------------");
             const newUser: UserSettingsInterface = { usersettingsid: 10, userprofileid: 10, validationtoken: "default", isvalidatedtoken:false, firstname, lastname, email, pass_word: hashedPwd};
             await userSignupModel.createNewUser(newUser);
-                console.log("------------- apres creation user controllersignup-------------------");
+            if (!JWT_SECRET || JWT_SECRET === null) {
+                throw new Error('JWT_SECRET is not defined in the environment variables');
+            }
             const token = jwt.sign({ email: newUser.email }, JWT_SECRET, { expiresIn: '1h' });
                 console.log("------------- apres token jwt.sign controllersignup-------------------");
-                console.log("Le token généré pour : ", firstname, " ", lastname, " est : ", token);
+                console.log("\nLe token généré pour : ", firstname, lastname, "\n est : ", token, "\n sont mot de passe est : ", hashedPwd, "\n");
             await userSignupModel.addTokenInBdd(token, newUser.email);
             res.status(201).json({ message: 'Inscription ok', token });
         } catch (err) {

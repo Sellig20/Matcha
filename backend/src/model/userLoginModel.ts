@@ -1,4 +1,4 @@
-import { query } from './db';
+import { query } from '../db';
 import bcrypt from 'bcryptjs';
 export class userLoginModel {
     static async getLogin(email: string, password: string) {

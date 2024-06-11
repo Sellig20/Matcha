@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../assets/styles/userSignup.css'
+import '../../assets/styles/userSignup.css'
 
 const UserSignup: React.FC = () => {
     const [firstname, setFirstname] = useState('');

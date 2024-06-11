@@ -4,9 +4,6 @@ require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 import { query } from './db';
 import express, { Request, Response, NextFunction } from 'express';
 import routes from './routes';
-import { configDotenv } from 'dotenv';
-
-
 
 const app = express();
 app.use(express.json());
@@ -29,6 +26,7 @@ app.get('/apiExpress/chat', (req: Request, res: Response) => {
 //     res.status(500).send('Erreur du serveur pour extraction de la table UserProfile');
 //   }
 // });
+
 app.use('/apiServeur', routes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

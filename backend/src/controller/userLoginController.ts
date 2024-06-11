@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { userLoginModel } from './userLoginModel';
-import { userPasswordModel } from './userPasswordModel';
+import { userLoginModel } from '../model/userLoginModel';
 
 export class userLoginController {
     static async getLogin(req: Request, res: Response) {
@@ -9,7 +8,6 @@ export class userLoginController {
             const {email, password} = req.body;
             const validUser = await userLoginModel.getLogin(email, password);
             res.json(validUser);
-            const validPassword = await userPasswordModel.getPassword(password);
         } catch (err) {
             console.error(err);
             res.status(401).json('xxxxx Erreur dauthentification xxxxxx');

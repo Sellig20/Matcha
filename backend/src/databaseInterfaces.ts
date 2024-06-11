@@ -8,3 +8,5 @@ export interface UserSettingsInterface {
     email: string;
     pass_word: string;
 }
+//SIGNUP | SIGNIN
+//Signup -> asked to fill usersettings table. Then redirected to userprofile table to fill.
