@@ -7,14 +7,14 @@ import { Request, Response } from "express";
 //on va rediriger ce flux de donnees du controller vers les vues
 const router = Router();
 
-router.get('/all', (req: Request, res: Response) => {
-    userSettingsController.getUserById(req, res);
-});
-
 // router.get('/:id', (req: Request, res: Response) => {
 //     const userId = parseInt(req.params.id);
-//     userSettingsController.getAllUsers(req, res, userId);
+//     userSettingsController.getUserById(req, res, userId);
 // });
+
+router.get('/allusers', (req: Request, res: Response) => {
+    userSettingsController.getAllUsers(req, res);
+});
 
 router.post('/login', (req: Request, res: Response) => {
     console.log("----- *** ------- Dans la route du controller /login --- *** ---");

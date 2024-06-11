@@ -18,7 +18,7 @@ CREATE TABLE UserProfile (
 CREATE TABLE UserSettings (
     userSettingsID SERIAL PRIMARY KEY,
     userProfileID INTEGER REFERENCES UserProfile(userProfileID) ON DELETE CASCADE,
-    validationToken INTEGER NOT NULL UNIQUE,
+    validationToken VARCHAR(500) NOT NULL UNIQUE,
     isValidatedToken BOOLEAN DEFAULT FALSE,
     firstName VARCHAR(15) NOT NULL,
     lastName VARCHAR(15) NOT NULL,

@@ -4,6 +4,7 @@ import FameRating from './components/FameRating'
 import './App.css'
 import UserSettings from './components/UserSettings';
 import UserSignup from './components/UserSignup';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [count, setCount] = useState(0)
