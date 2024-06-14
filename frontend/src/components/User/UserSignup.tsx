@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../assets/styles/userSignup.css'
+import { useNavigate } from 'react-router-dom';
 
 const UserSignup: React.FC = () => {
     const [firstname, setFirstname] = useState('');
@@ -8,13 +9,19 @@ const UserSignup: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            console.log("dans frontend signuuuup");
             const response = await axios.post('http://localhost:8000/apiServeur/signup', { firstname, lastname, email, password });
             setMessage(response.data.message);
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                console.log("*********************** signup correct and prepare to navigate *****************************")
+                navigate('/homezinzin');
+                console.log("apres le navigate");
+            }
         } catch (err) {
             setMessage("Erreur frontend signup");
         }
