@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 import { UserSettingsInterface } from "../databaseInterfaces";
 import dotenv from 'dotenv';
 import { AsyncLocalStorage } from "async_hooks";
-import { redirect } from "react-router-dom";
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -34,7 +33,6 @@ export class userSignupController {
             }
 
             const token = jwt.sign({ email: newUser.email }, JWT_SECRET, { expiresIn: '1h' });
-                console.log("------------- apres token jwt.sign controllersignup-------------------");
                 console.log("\nLe token généré pour : ", firstname, lastname, "\n est : ", token, "\n sont mot de passe est : ", hashedPwd, "\n");
             await userSignupModel.addTokenInBdd(token, newUser.email);
             res.status(201).json({ message: 'Inscription ok', token });

@@ -16,7 +16,7 @@ function App() {
          <Route path="/fm" element={<FameRating />}/>
          <Route path="/us/:id" element={<UserSettings />}/>
          <Route path="/signup" element={<UserSignup />}/>
-         <Route path="/homezinzin" element={<ProtectedRoute component={Home} />} />
+         <Route path="/apiServeur/home" element={<ProtectedRoute component={Home} />} />
        </Routes>
      </Router>
   )

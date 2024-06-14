@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from './axiosInstance';
+import axiosInstance from './axiosInstance'; // Importez l'instance configurée d'Axios
 
 const Home: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -7,9 +7,8 @@ const Home: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // const response = await axiosInstance.get('/home');
-                // setData(response.data);
-                console.log("\n dans home de user de components\n");
+                const response = await axiosInstance.get('/home');
+                setData(response.data);
             } catch (error) {
                 console.error('Error fetching home data', error);
             }
@@ -20,8 +19,7 @@ const Home: React.FC = () => {
 
     return (
         <div>
-            {/* {data ? <div>Welcome Home: {JSON.stringify(data)}</div> : <div>Loading...</div>} */}
-            <h1>HELLO HOME PAGE</h1>
+            {data ? <div>Welcome Home: {JSON.stringify(data)}</div> : <div>Loading...</div>}
         </div>
     );
 };

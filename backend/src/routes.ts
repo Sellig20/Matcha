@@ -29,8 +29,8 @@ router.post('/login', (req: Request, res: Response) => {
 });
 
 //------------------------- once authenticated ------------------------------------//
-router.get('/homezinzin', authenticateWithToken, (req, res) => {
-    res.json({ message: 'This is a protected zinzin route', user: req.user });
+router.get('/home', authenticateWithToken, (req, res) => {
+    res.json({ message: 'This is a protected route', user: req.user });
 });
 // router.get('/home', authenticateWithToken);
 // router.use('/home', authenticateWithToken);
