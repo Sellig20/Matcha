@@ -2,9 +2,20 @@ CREATE TYPE genderEnum as ENUM ('female', 'non-binary', 'male');
 CREATE TYPE sexualInterestEnum as ENUM ('women', 'men', 'both', 'not-specified');
 CREATE TYPE tagsEnum as ENUM ('vegetarian', 'vegan', 'tattoo', 'piercing', 'gamer', 'geek', 'karaoke', 'sport', 'karate', 'badminton', 'running', 'boxing', 'hike', 'football', 'fitness', 'food', 'travel', 'art', 'music', 'guitare', 'saxophone', 'painting', 'concert', 'danse', 'cinema', 'yoga');
 
+CREATE TABLE UserSettings (
+    userSettingsID SERIAL PRIMARY KEY,
+    -- userProfileID INTEGER REFERENCES UserProfile(userProfileID) ON DELETE CASCADE,
+    validationToken VARCHAR(500) NOT NULL UNIQUE,
+    isValidatedToken BOOLEAN DEFAULT FALSE,
+    firstName VARCHAR(15) NOT NULL,
+    lastName VARCHAR(15) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    pass_word VARCHAR(100) NOT NULL
+);
 
 CREATE TABLE UserProfile (
     userProfileID SERIAL PRIMARY KEY,
+    userSettingsID INTEGER REFERENCES UserSettings(userSettingsID) ON DELETE CASCADE,
     userName VARCHAR(15) NOT NULL,
     age INTEGER NOT NULL,
     gender genderEnum NOT NULL,
@@ -13,17 +24,6 @@ CREATE TABLE UserProfile (
     tags tagsEnum NOT NULL,
     -- last_Active TIMESTAMP,
     hasProfilePicture BOOLEAN DEFAULT FALSE
-);
-
-CREATE TABLE UserSettings (
-    userSettingsID SERIAL PRIMARY KEY,
-    userProfileID INTEGER REFERENCES UserProfile(userProfileID) ON DELETE CASCADE,
-    validationToken VARCHAR(500) NOT NULL UNIQUE,
-    isValidatedToken BOOLEAN DEFAULT FALSE,
-    firstName VARCHAR(15) NOT NULL,
-    lastName VARCHAR(15) NOT NULL,
-    email VARCHAR(50) NOT NULL UNIQUE,
-    pass_word VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE UserPictures (

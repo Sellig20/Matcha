@@ -19,7 +19,8 @@ const Home: React.FC = () => {
 
     return (
         <div>
-            {data ? <div>Welcome Home: {JSON.stringify(data)}</div> : <div>Loading...</div>}
+            <h1>WELCOME MATCHA BOARD</h1>
+            {data ? <div>User: {JSON.stringify(data)}</div> : <div>Loading...</div>}
         </div>
     );
 };

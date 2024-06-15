@@ -1,7 +1,6 @@
 export interface UserSettingsInterface {
-    usersettingsid: number;
-    userprofileid: number;
-    validationtoken: string;
+    usersettingsid?: number;
+    token: string;
     isvalidatedtoken: boolean;
     firstname: string;
     lastname: string;

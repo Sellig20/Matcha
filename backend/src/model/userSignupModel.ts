@@ -10,7 +10,10 @@ export class userSignupModel {
 
     static async createNewUser(newUser: UserSettingsInterface) {
         console.log("dans model CREATE USEEER signuuup");
-        await query('INSERT INTO public.usersettings (validationtoken, firstname, lastname, email, pass_word) VALUES (140, $1, $2, $3, $4)', [newUser.firstname, newUser.lastname, newUser.email, newUser.pass_word]);
+            const res = await query('INSERT INTO public.usersettings (validationtoken, isvalidatedtoken, firstname, lastname, email, pass_word) VALUES ($1, $2, $3, $4, $5, $6) RETURNING usersettingsid', 
+            [newUser.token, newUser.isvalidatedtoken, newUser.firstname, newUser.lastname, newUser.email, newUser.pass_word]
+        );
+        return res.rows[0].usersettingsid;
     }
 
     static async addTokenInBdd(validationToken: string, email: string) {
