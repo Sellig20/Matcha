@@ -1,36 +1,28 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { UserSettingsArray, UserSettingsInterface } from './UserInterface';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axiosInstance from './axiosInstance'; // Importez l'instance configurée d'Axios
 
-const UserSettings: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
-    const [user, setUser] = useState<UserSettingsInterface[] | null>(null);
+const Home: React.FC = () => {
+    const [data, setData] = useState<any>(null);
 
     useEffect(() => {
-        const fetchUser = async () => {
+        const fetchData = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/apiServeur/${id}`);
-                setUser(res.data);
+                const response = await axiosInstance.get('/usersettings');
+                setData(response.data);
             } catch (error) {
-                console.error('Erreur pour recup userSettings AXIOS FRONTEND');
+                console.error('Error fetching home data', error);
             }
         };
-        fetchUser();
-    }, [id]);
 
-    if (!user)
-    return <div> Chargement...</div>
+        fetchData();
+    }, []);
 
     return (
         <div>
-            <h1>
-                bonjour
-                {user[0].firstname} {user[0].lastname}
-            </h1>
-            <p>password : {user[0].pass_word}</p>
+            <h1>WELCOME USER SETTINGS</h1>
+            {data ? <div>User: {JSON.stringify(data)}</div> : <div>Loading...</div>}
         </div>
     );
-}
+};
 
-export default UserSettings;
+export default Home;

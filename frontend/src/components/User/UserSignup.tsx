@@ -19,7 +19,7 @@ const UserSignup: React.FC = () => {
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 console.log("UserSignup.tsx | *********************** signup correct and prepare to navigate *****************************")
-                navigate('/apiServeur/home');
+                navigate('/apiServeur/usersettings');
             }
         } catch (err) {
             setMessage("UserSignup.tsx | Erreur frontend signup");

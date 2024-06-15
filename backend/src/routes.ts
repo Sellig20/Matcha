@@ -23,8 +23,12 @@ router.post('/login', (req: Request, res: Response) => {
 });
 
 //------------------------- once authenticated ------------------------------------//
-router.get('/home', authenticateWithToken, (req, res) => {
+router.get('/usersettings', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route', user: req.user });
+});
+
+router.get('/checktok', authenticateWithToken, (req, res) => {
+    res.json({ valid: true });
 });
 
 export default router;

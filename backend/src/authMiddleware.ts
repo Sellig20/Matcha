@@ -30,8 +30,7 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
             console.log("\n\nToken décodé:", decoded);
         const user = await userSignupModel.findByEmail(decoded.email);
         if (user && user.validationtoken === token) {
-                console.log("\n\n\n AuthMiddleware.ts | -----------------\n\n")
-                console.log("------- token => ", token);
+                console.log("\n\n\n AuthMiddleware.ts | -----------------")
                 console.log("------- user => ", user);
                 console.log("\n\n");
             req.user = user;

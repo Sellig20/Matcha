@@ -22,11 +22,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, .
                     setIsAuthenticated(false);
                     return;
                 }
-                const response = await axios.get('http://localhost:8000/apiServeur/home', {
+                const response = await axios.get('http://localhost:8000/apiServeur/checktok', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setIsAuthenticated(response.data.valid);
-                console.log("Protectedroute.tsx | Response from /apiServeur/home: ", response.data);
+                console.log("Protectedroute.tsx | Response from /apiServeur/usersettings: ", response.data);
             } catch (err) {
                 console.log("Protectedroute.tsx | Error during auth check: ", err);    
                 if (axios.isAxiosError(err)) {

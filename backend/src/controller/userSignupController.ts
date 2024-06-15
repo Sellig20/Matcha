@@ -28,8 +28,7 @@ export class userSignupController {
             }
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });  
                 console.log("\nUserSignupController.ts | Le token généré pour : ", firstname, lastname, "\n est : ", token, "\n sont mot de passe est : ", hashedPwd, "\n");
-            await userSignupModel.addTokenInBdd(token, email);
-            res.status(201).json({ message: 'UserSignupController.ts | Inscription ok', token });
+            // await userSignupModel.addTokenInBdd(token, email);
             
             const newUser: UserSettingsInterface = {
                 token,
@@ -42,9 +41,7 @@ export class userSignupController {
             
             const userSettingsID = await userSignupModel.createNewUser(newUser);
             console.log("\n\n\nIdentity of the user is ", userSettingsID, "\n\n\\n");
-            // const newUser: UserSettingsInterface = { validationtoken: "default", isvalidatedtoken:false, firstname, lastname, email, pass_word: hashedPwd};
-            await userSignupModel.createNewUser(newUser);
-
+            res.status(201).json({ message: 'UserSignupController.ts | Inscription ok', token });
         } catch (err) {
                 console.error('UserSignupController.ts | Erreur lors de linscription: ', err);
             res.status(500).json({ message: 'UserSignupController.ts | Erreur pdt linscrpiton' });

@@ -2,9 +2,9 @@ CREATE TYPE genderEnum as ENUM ('female', 'non-binary', 'male');
 CREATE TYPE sexualInterestEnum as ENUM ('women', 'men', 'both', 'not-specified');
 CREATE TYPE tagsEnum as ENUM ('vegetarian', 'vegan', 'tattoo', 'piercing', 'gamer', 'geek', 'karaoke', 'sport', 'karate', 'badminton', 'running', 'boxing', 'hike', 'football', 'fitness', 'food', 'travel', 'art', 'music', 'guitare', 'saxophone', 'painting', 'concert', 'danse', 'cinema', 'yoga');
 
+-- 1) creer un user : sign up
 CREATE TABLE UserSettings (
     userSettingsID SERIAL PRIMARY KEY,
-    -- userProfileID INTEGER REFERENCES UserProfile(userProfileID) ON DELETE CASCADE,
     validationToken VARCHAR(500) NOT NULL UNIQUE,
     isValidatedToken BOOLEAN DEFAULT FALSE,
     firstName VARCHAR(15) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE UserSettings (
     email VARCHAR(50) NOT NULL UNIQUE,
     pass_word VARCHAR(100) NOT NULL
 );
-
+-- 2) signup mene a completer son profile : d'abord on check si usersettings est valide pour le user + question pour le GPS, puis si c'est ok il est mené à userprofile to complete
 CREATE TABLE UserProfile (
     userProfileID SERIAL PRIMARY KEY,
     userSettingsID INTEGER REFERENCES UserSettings(userSettingsID) ON DELETE CASCADE,
