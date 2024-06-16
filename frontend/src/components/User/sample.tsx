@@ -3,7 +3,7 @@ import axios from 'axios';
 import { UserSettingsInterface } from './UserInterface';
 import { useParams } from 'react-router-dom';
 
-const UserSettings: React.FC = () => {
+const Sample: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [user, setUser] = useState<UserSettingsInterface[] | null>(null);
 
@@ -13,7 +13,7 @@ const UserSettings: React.FC = () => {
                 const res = await axios.get(`http://localhost:8000/apiServeur/${id}`);
                 setUser(res.data);
             } catch (error) {
-                console.error('Erreur pour recup userSettings AXIOS FRONTEND');
+                console.error('sample.tsx | Erreur pour recup userSettings AXIOS FRONTEND');
             }
         };
         fetchUser();
@@ -33,4 +33,4 @@ const UserSettings: React.FC = () => {
     );
 }
 
-export default UserSettings;
+export default Sample;

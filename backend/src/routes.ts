@@ -27,6 +27,10 @@ router.get('/usersettings', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route', user: req.user });
 });
 
+router.get('/fm', authenticateWithToken, (req, res) => {
+    res.json({ message: 'This is a protected route', user: req.user });
+});
+
 router.get('/checktok', authenticateWithToken, (req, res) => {
     res.json({ valid: true });
 });

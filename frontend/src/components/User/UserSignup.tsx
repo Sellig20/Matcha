@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../assets/styles/userSignup.css'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../useAuth';
 
 const UserSignup: React.FC = () => {
+    const { isAuthenticated, checkAuth } = useAuth();
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
@@ -14,19 +16,26 @@ const UserSignup: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            console.log("je passe ici en premier dans usersignup.tsx");
             const response = await axios.post('http://localhost:8000/apiServeur/signup', { firstname, lastname, email, password });
             setMessage(response.data.message);
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 console.log("UserSignup.tsx | *********************** signup correct and prepare to navigate *****************************")
-                navigate('/apiServeur/usersettings');
+                checkAuth();
             }
         } catch (err) {
             setMessage("UserSignup.tsx | Erreur frontend signup");
         }
     };
+    
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/apiServeur/usersettings');
+        }
+    }, [isAuthenticated, navigate]);
 
-    return (
+        return (
         <section className="gradient-custom" >
         <div className="container py-5 h-100 ">
             <div className="row justify-content-center align-items-center h-100" >

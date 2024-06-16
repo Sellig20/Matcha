@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from './axiosInstance'; // Importez l'instance configurée d'Axios
 
-const Home: React.FC = () => {
+const UserSettings: React.FC = () => {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosInstance.get('/usersettings');
+                const response = await axiosInstance.get(`http://localhost:8000/apiServeur/checktok`);
                 setData(response.data);
             } catch (error) {
-                console.error('Error fetching home data', error);
+                console.error('userSettings.tsx | Error fetching home data', error);
             }
         };
 
@@ -25,4 +25,4 @@ const Home: React.FC = () => {
     );
 };
 
-export default Home;
+export default UserSettings;
