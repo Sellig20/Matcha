@@ -13,6 +13,14 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
     
+    const signedOut = async () => {
+        try {
+            setIsAuthenticated(false);
+        } catch (err) {
+            console.log("useAuth.tsx | Error during sign out: ", err);    
+        }
+    }
+
     const checkAuth = async () => {
         try {
                     console.log("je passe dans authprovider");

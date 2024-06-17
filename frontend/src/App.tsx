@@ -9,6 +9,13 @@ import FameRating from './components/FameRating';
 import { AuthProvider } from './components/authContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import Sidebar from './components/Sidebar';
+import { useAuth } from './components/useAuth';
+
+const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <>{children}</> : null;
+};
 
 function App() {
 
@@ -16,6 +23,9 @@ function App() {
     <AuthProvider>
       <Router>
           <Navbar/>
+          <AuthWrapper>
+          <Sidebar />
+          </AuthWrapper>
           <Routes>
             <Route path="/us/:id" element={<UserSettings />} />
             <Route path="/signup" element={<UserSignup />} />

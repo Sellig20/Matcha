@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from './axiosInstance'; // Importez l'instance configurée d'Axios
+import axiosInstance from '../axiosInstance'; // Importez l'instance configurée d'Axios
 
 const UserSettings: React.FC = () => {
     const [data, setData] = useState<any>(null);
