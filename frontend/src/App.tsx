@@ -6,7 +6,7 @@ import UserSignup from './components/User/UserSignup';
 import ProtectedRoute from './ProtectedRoute';
 import Navbar from './components/Navbar';
 import FameRating from './components/FameRating';
-import { AuthProvider } from './components/useAuth';
+import { AuthProvider } from './components/authContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
