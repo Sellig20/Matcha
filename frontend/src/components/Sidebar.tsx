@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from './useAuth';
+import { Link } from 'react-router-dom';
+import { AuthContext } from './authContext';
 
 const Sidebar: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const navigate = useNavigate();
+    const setAuth = useContext(AuthContext);
+    
+    if (!setAuth) {
+        throw new Error("Sidebar must be used within an AuthProvider");
+    }
+    
+    const { signedOut } = setAuth;
 
     const openNav = () => {
         document.getElementById("mySidenav")!.style.width = "250px";
@@ -19,22 +29,24 @@ const Sidebar: React.FC = () => {
         setIsOpen(false);
     }
 
-    const logout = () => {
-        localStorage.clear();
-        // window.location.href = '/';
+    const handleLogout = async (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        // localStorage.clear();
+        // setAuth(null);
+        await signedOut();
+        console.log("-----LOG OUT----")
         navigate('/signup');
-    }
-
+    };
+    
     return (
         <div>
             <div id="mySidenav" className="sidenav">
                 <a href="#" className="closebtn" onClick={closeNav}>&times;</a>
-                <a href="#">User settings</a>
-                <a href="#">Confidentiality politic</a>
-                <a href="#">Report something</a>
-                <a href="" onClick={logout}>Disconnect</a>
+                {<a href="#">User settings</a>}
+                {<a href="#">Confidentiality politic</a>}
+                {<a href="#">Report something</a>}
+                {<a href="#" onClick={handleLogout}>Disconnect</a>}
             </div>
-
             <div id="main">
                 {!isOpen && <span style={{fontSize: '20px', cursor: 'pointer'}} className="openbtn" onClick={openNav}>&#9776; open</span>}
             </div>

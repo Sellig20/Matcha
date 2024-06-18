@@ -3,6 +3,10 @@ h1 {
   color: crimson;
 }
 
+.navbar {
+  background-color: orchid;
+}
+
 .card-registration .select-input.form-control[readonly]:not([disabled]) {
   font-size: 1rem;
   line-height: 2.15;
@@ -17,6 +21,9 @@ h1 {
   color: white;
 }
 
+.btn-primary {
+  background-color: violet;
+}
 
 
 
@@ -27,18 +34,23 @@ h1 {
 
 
 
-/* The sidebar menu */
+
 .sidenav {
   height: 100%;
   width: 0;
   position: fixed;
   z-index: 1;
   top: 0;
-  right: 0; /* Change left to right */
+  right: 0;
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
+  white-space: nowrap;
+}
+
+.sidenav-transitioning {
+  visibility: hidden;
 }
 
 .sidenav a {

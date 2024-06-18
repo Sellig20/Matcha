@@ -6,6 +6,7 @@ import { createContext } from 'react';
 export interface AuthContextType {
     isAuthenticated: boolean | null;
     checkAuth: () => void;
+    signedOut: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,7 +16,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
     const signedOut = async () => {
         try {
-            setIsAuthenticated(false);
+            console.log("usersignup.tsx | signedout xxxxxx");
+            setIsAuthenticated(null);
         } catch (err) {
             console.log("useAuth.tsx | Error during sign out: ", err);    
         }
@@ -46,11 +48,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             };
 
             useEffect(() => {
-                checkAuth();
+                if (isAuthenticated != null) {
+                    checkAuth();
+                }
             })
 
         return (
-            <AuthContext.Provider value={{ isAuthenticated, checkAuth }}>
+            <AuthContext.Provider value={{ isAuthenticated, checkAuth, signedOut }}>
                 {children}
             </AuthContext.Provider>
 

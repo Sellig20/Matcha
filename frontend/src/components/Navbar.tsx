@@ -19,8 +19,8 @@ const Navbar = () => {
                     {isAuthenticated === true && <li><Link to="/fm" type="button" className="btn btn-warning me-2">Chat</Link></li>}
                 </ul>
                 <div className="d-flex">
-                    {isAuthenticated === false && <Link to="/signup" className="btn btn-primary me-2">Sign up</Link>}
-                    {isAuthenticated === false && <Link to="/signin" className="btn btn-primary">Sign in</Link>}
+                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signup" className="btn btn-primary me-2">Sign up</Link>}
+                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signin" className="btn btn-primary">Sign in</Link>}
                 </div>
             </div>
         </nav>
