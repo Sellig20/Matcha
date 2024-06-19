@@ -4,7 +4,8 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { decode } from 'punycode';
 import { userSignupModel } from './model/userSignupModel';
-import { userLoginModel } from './model/userLoginModel';
+import { userSigninModel } from './model/userSigninModel';
+
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET;

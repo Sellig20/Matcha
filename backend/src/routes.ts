@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { userSettingsController } from './controller/userSettingsController';
-import { userLoginController } from './controller/userLoginController';
+import { userSigninController } from './controller/userSigninController';
 import { userSignupController } from './controller/userSignupController'
 import { Request, Response } from "express";
 import { authenticateWithToken } from "./authMiddleware";
@@ -17,9 +17,9 @@ router.post('/signup', (req: Request, res: Response) => {
     userSignupController.signup(req, res);
 });
 
-router.post('/login', (req: Request, res: Response) => {
+router.post('/signin', (req: Request, res: Response) => {
     console.log("----- *** ------- Dans la route du controller /login --- *** ---");
-    userLoginController.getLogin(req, res);
+    userSigninController.getLogin(req, res);
 });
 
 //------------------------- once authenticated ------------------------------------//

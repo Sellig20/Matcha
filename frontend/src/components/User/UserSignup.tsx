@@ -19,7 +19,7 @@ const UserSignup: React.FC = () => {
             setMessage(response.data.message);
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
-                console.log("UserSignup.tsx | *********************** signup correct and prepare to navigate *****************************")
+                console.log("UserSignup.tsx | *********************** signup correct and prepare to navigate *****************************");
                 checkAuth();
             }
         } catch (err) {

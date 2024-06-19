@@ -15,8 +15,8 @@ export class userSignupController {
                 console.log("\nUserSignupController.ts | req.body = ", req.body);
                 console.log("\nUserSignupController.ts | fn = ", firstname, "\nln = ", lastname, "\nemail =", email, "\npassw=", password);
 
-            const existingUser = await userSignupModel.findByEmail(email);
-            if (existingUser) {
+            const existingUserAlready = await userSignupModel.findByEmail(email);
+            if (existingUserAlready) {
                 res.status(400).json({ message: 'UserSignupController.ts | Cette adresse mail deja utilisee bro' });
                 return;
             }
