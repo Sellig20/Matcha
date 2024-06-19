@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { UserSettingsInterface } from './UserInterface';
+import { UserSettingsInterface } from './userInterface';
 import { useParams } from 'react-router-dom';
 
 const Sample: React.FC = () => {

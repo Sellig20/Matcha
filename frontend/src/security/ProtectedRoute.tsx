@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from './components/useAuth';
+import { useAuth } from './useAuth';
 
 interface ProtectedRouteProps {
     component: React.ComponentType<any>;

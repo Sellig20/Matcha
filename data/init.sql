@@ -12,7 +12,7 @@ CREATE TABLE UserSettings (
     email VARCHAR(50) NOT NULL UNIQUE,
     pass_word VARCHAR(100) NOT NULL
 );
--- 2) signup mene a completer son profile : d'abord on check si usersettings est valide pour le user + question pour le GPS, puis si c'est ok il est mené à userprofile to complete
+-- 2) signup mene a completer son profil : d'abord on check si usersettings est valide pour le user + question pour le GPS, puis si c'est ok il est mené à userprofile to complete
 CREATE TABLE UserProfile (
     userProfileID SERIAL PRIMARY KEY,
     userSettingsID INTEGER REFERENCES UserSettings(userSettingsID) ON DELETE CASCADE,

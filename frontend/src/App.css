@@ -27,14 +27,6 @@ h1 {
 
 
 
-
-
-
-
-
-
-
-
 .sidenav {
   height: 100%;
   width: 0;
@@ -60,6 +52,7 @@ h1 {
   color: #818181;
   display: block;
   transition: 0.3s;
+  padding: 14px;
 }
 
 .sidenav a:hover {
@@ -69,7 +62,7 @@ h1 {
 .sidenav .closebtn {
   position: absolute;
   top: 0;
-  left: 110px;
+  left: 140px;
   font-size: 36px;
   margin-left: 50px;
 }

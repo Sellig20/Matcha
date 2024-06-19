@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../assets/styles/userSignup.css'
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../useAuth';
+import { useAuth } from '../../security/useAuth';
 import { useForm } from './useForm';
 
 const UserSignup: React.FC = () => {

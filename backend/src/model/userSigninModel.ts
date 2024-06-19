@@ -1,3 +1,4 @@
+import console from 'console';
 import { query } from '../db';
 import bcrypt from 'bcryptjs';
 
@@ -25,5 +26,10 @@ export class userSigninModel {
 
         delete myUser.pass_word;
         return myUser;
+    }
+
+    static async storeNewToken(email: string, token: string) {
+            console.log("userSigninModel.ts | store new token");
+        await query('UPDATE public.usersettings SET validationtoken = $1 WHERE email = $2', [token, email]);
     }
 }

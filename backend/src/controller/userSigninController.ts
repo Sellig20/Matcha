@@ -29,7 +29,7 @@ export class userSigninController {
                 throw new Error('UserSigninController.ts | JWT_SECRET is not defined in the environment variables');
             }
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });  
-            
+            await userSigninModel.storeNewToken(email, token);
             res.json({
                 message: "Auth successfull welcome in the app",
                 token: token,

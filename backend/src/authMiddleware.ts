@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import { UserSettingsInterface } from "./databaseInterfaces";
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { decode } from 'punycode';
 import { userSignupModel } from './model/userSignupModel';
 import { userSigninModel } from './model/userSigninModel';
 

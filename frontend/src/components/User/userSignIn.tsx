@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../useAuth';
-import { useForm } from './useForm';import dotenv from 'dotenv';
+import { useAuth } from '../../security/useAuth';
+import { useForm } from './useForm';
 
 const UserSignIn: React.FC = () => {
     const { isAuthenticated, checkAuth } = useAuth();
@@ -31,7 +31,7 @@ const UserSignIn: React.FC = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/apiServeur/usersettings');
+            navigate('/apiServeur/userprofile');
         }
     })
 

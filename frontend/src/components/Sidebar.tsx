@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useAuth } from './useAuth';
+import { useAuth } from '../security/useAuth';
 import { Link } from 'react-router-dom';
-import { AuthContext } from './authContext';
+import { AuthContext } from '../security/authContext';
 
 const Sidebar: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -42,9 +42,9 @@ const Sidebar: React.FC = () => {
         <div>
             <div id="mySidenav" className="sidenav">
                 <a href="#" className="closebtn" onClick={closeNav}>&times;</a>
-                {<a href="#">User settings</a>}
-                {<a href="#">Confidentiality politic</a>}
-                {<a href="#">Report something</a>}
+                {<Link to="/apiServeur/usersettings" className="sidebar-link">Users settings</Link>}
+                {<Link to="/apiServeur/usersettings" className="sidebar-link">Confidentiality politic</Link>}
+                {<Link to="/apiServeur/usersettings" className="sidebar-link">Report something</Link>}
                 {<a href="#" onClick={handleLogout}>Disconnect</a>}
             </div>
             <div id="main">
