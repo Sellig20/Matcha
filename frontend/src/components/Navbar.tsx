@@ -13,9 +13,9 @@ const Navbar = () => {
                 <a className="navbar-brand" href="#">Matcha</a>
                 </div>
                 <ul className="nav navbar d-flex">
-                    {isAuthenticated === true && <li><Link to="/fm" type="button" className="btn btn-warning me-2">Match</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/match" type="button" className="btn btn-warning me-2">Match</Link></li>}
                     {isAuthenticated === true && <li><Link to="/fm" type="button" className="btn btn-warning me-2">Fame Rating</Link></li>}
-                    {isAuthenticated === true && <li><Link to="/fm" type="button" className="btn btn-warning me-2">Chat</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/chat" type="button" className="btn btn-warning me-2">Chat</Link></li>}
                     {isAuthenticated === true && <li><Link to="/apiServeur/userprofile" type="button" className="btn btn-warning me-2">UserProfile</Link></li>}
                 </ul>
                 <div className="d-flex">

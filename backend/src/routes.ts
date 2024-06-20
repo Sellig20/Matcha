@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { userSettingsController } from './controller/userSettingsController';
 import { userSigninController } from './controller/userSigninController';
-import { userSignupController } from './controller/userSignupController'
+import { userSignupController } from './controller/userSignupController';
+import { userProfileController } from './controller/userProfileController';
 import { Request, Response } from "express";
 import { authenticateWithToken } from "./authMiddleware";
 
@@ -24,15 +25,25 @@ router.post('/signin', (req: Request, res: Response) => {
 
 //------------------------- once authenticated ------------------------------------//
 router.get('/usersettings', authenticateWithToken, (req, res) => {
-    res.json({ message: 'This is a protected route', user: req.user });
+    res.json({ message: 'This is a protected route -- /USERSETTINGS', user: req.user });
 });
 
-router.get('/userprofile', authenticateWithToken, (req, res) => {
-    res.json({ message: 'This is a protected route', user: req.user });
+router.post('/userprofile', authenticateWithToken, (req, res) => {
+    console.log("\n\n\n\nuserrrrr proooooofile routes.ts");
+    res.json({ message: 'This is a protected route -- /USERPROFILE', user: req.user });
+    userProfileController.displayProfile(req, res);
+});
+
+router.get('/match', authenticateWithToken, (req, res) => {
+    res.json({ message: 'This is a protected route -- /MATCH', user: req.user });
+});
+
+router.get('/chat', authenticateWithToken, (req, res) => {
+    res.json({ message: 'This is a protected route -- /CHAT', user: req.user });
 });
 
 router.get('/fm', authenticateWithToken, (req, res) => {
-    res.json({ message: 'This is a protected route', user: req.user });
+    res.json({ message: 'This is a protected route -- /FM', user: req.user });
 });
 
 router.get('/checktok', authenticateWithToken, (req, res) => {

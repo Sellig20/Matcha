@@ -6,6 +6,8 @@ import ProtectedRoute from './security/ProtectedRoute';
 import Navbar from './components/Navbar';
 import FameRating from './components/FameRating';
 import Sidebar from './components/Sidebar';
+import Chat from './components/Chat';
+import Match from './components/Match';
 import { useAuth } from './security/useAuth';
 import { AuthProvider } from './security/authContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,7 +32,9 @@ function App() {
             {/* <Route path="/us/:id" element={<UserSettings />} /> */}
             <Route path="/signup" element={<UserSignup />} />            
             <Route path="/signin" element={<UserSignIn />} />
-            <Route path="/fm" element={<ProtectedRoute component={FameRating} />} />
+            <Route path="/apiServeur/match" element={<Match />} />
+            <Route path="/apiServeur/chat" element={<Chat />} />
+            <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
             <Route path="/apiServeur/usersettings" element={<ProtectedRoute component={UserSettings} />} />
             <Route path="/apiServeur/userprofile" element={<ProtectedRoute component={UserProfile} />} />
           </Routes>

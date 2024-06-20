@@ -11,6 +11,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 declare module 'express-serve-static-core' {
     interface Request {
         user?: UserSettingsInterface;
+        userId?: string;
     }
 }
 
@@ -33,7 +34,11 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
                 console.log("\n\n\n AuthMiddleware.ts | -----------------")
                 console.log("------- user => ", user);
                 console.log("\n\n");
-            req.user = user;
+                req.user = user;
+                req.userId = user.usersettingsid;
+                console.log("user.id = ", user.usersettingsid);
+            console.log("\nREQ.USERID => ", req.userId);
+            console.log("nananananana");
             next();
         } else {
             console.log("AuthMiddleware.ts | Utilisateur non trouvé ou token invalide\n\n");
