@@ -28,7 +28,7 @@ router.get('/usersettings', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /USERSETTINGS', user: req.user });
 });
 
-router.post('/userprofile', authenticateWithToken, (req, res) => {
+router.get('/userprofile', authenticateWithToken, (req, res) => {
     console.log("\n\n\n\nuserrrrr proooooofile routes.ts");
     res.json({ message: 'This is a protected route -- /USERPROFILE', user: req.user });
     userProfileController.displayProfile(req, res);

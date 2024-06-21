@@ -11,7 +11,7 @@ const UserProfile: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosInstance.get(`http://localhost:8000/apiServeur/checktok`);
+                const response = await axiosInstance.get(`http://localhost:8000/apiServeur/userprofile`);
                 console.log("data de userprofile.tsx --> ", response);
                 setData(response.data);
                 setMessage(response.data.message);
