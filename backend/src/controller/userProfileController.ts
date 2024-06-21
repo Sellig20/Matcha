@@ -5,10 +5,13 @@ export class userProfileController {
         try {
             console.log("\n\n\nuserProfileController.tsx | try to display profile\n\n\n");
             // console.log("id du user -> ", id);
-            const { userId } = req.body;
-            console.log("\n\n\n userprofilecontroller.ts ++++++++ ", userId, " ++++++++++");
+            const userId = req.userId;
+            if (!userId) {
+                return res.status(400).json({ message: 'User ID not found in request' });
+            }
+            console.log("\n\n\n userprofilecontroller.ts ++++++++ ", userId, " ++++++++++\n\n\n");
             const displayUser = await userProfileModel.displayProfile(userId);
-            console.log("\n\n\n userprofilecontroller.ts | display user => ", displayUser, "\n\n\n");
+            console.log("\n\n\n userprofilecontroller.ts | display user => ", displayUser , "\n\n\n");
         } catch (err) {
             console.error(err);
         }
