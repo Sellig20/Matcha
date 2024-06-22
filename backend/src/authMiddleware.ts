@@ -43,9 +43,11 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
         } else {
             console.log("AuthMiddleware.ts | Utilisateur non trouvé ou token invalide\n\n");
             res.status(401).json({ valid: false });
+            return;
         }
     } catch (err) {
         console.log("AuthMiddleware.ts | Erreur 500\n\n", err);
         res.status(500).json({ valid: false });
+        return;
     }
 }

@@ -12,10 +12,10 @@ export class userProfileController {
             console.log("\n\n\n userprofilecontroller.ts ++++++++ ", userId, " ++++++++++\n\n\n");
             const displayUser = await userProfileModel.displayProfile(userId);
             console.log("\n\n\n userprofilecontroller.ts | display user => ", displayUser , "\n\n\n");
-            res.json({
+            res.status(200).json({
                 displayUser
             })
-        } catch (err) {
+    } catch (err) {
             console.error(err);
         }
     }

@@ -42,9 +42,11 @@ export class userSignupController {
             const userSettingsID = await userSignupModel.createNewUser(newUser);
             console.log("\n\n\nIdentity of the user is ", userSettingsID, "\n\n\\n");
             res.status(201).json({ message: 'UserSignupController.ts | Inscription ok', token });
+            return;
         } catch (err) {
                 console.error('UserSignupController.ts | Erreur lors de linscription: ', err);
             res.status(500).json({ message: 'UserSignupController.ts | Erreur pdt linscrpiton' });
+            return;
         }
     }
 }

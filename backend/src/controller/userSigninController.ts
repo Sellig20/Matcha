@@ -38,6 +38,7 @@ export class userSigninController {
         } catch (err) {
                 console.error(err);
             res.status(401).json('xxxxx Erreur dauthentification xxxxxx');
+            return;
         }
     }
 }

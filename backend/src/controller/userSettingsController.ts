@@ -7,9 +7,11 @@ export class userSettingsController {
                 console.log("-------- usersettings constroller get all users-----------");
             const users = await userSettingsModel.getAllUsers();
             res.json(users);
+            return;
         } catch (err) {
                 console.error(err);
             res.status(500).json('Erreur du serveur pour extraction de la table usersettings\n');
+            return;
         }
     }
 
