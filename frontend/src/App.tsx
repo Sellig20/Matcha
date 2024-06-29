@@ -13,6 +13,7 @@ import { AuthProvider } from './security/authContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import UserProfile from './components/User/userProfile';
+import UserProfileDisplay from './components/User/userProfileDisplay';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -37,6 +38,7 @@ function App() {
             <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
             <Route path="/apiServeur/usersettings" element={<ProtectedRoute component={UserSettings} />} />
             <Route path="/apiServeur/userprofile" element={<ProtectedRoute component={UserProfile} />} />
+            <Route path="/apiServeur/userprofile/display" element={<ProtectedRoute component={UserProfileDisplay} />} />
           </Routes>
       </Router>
     </AuthProvider>

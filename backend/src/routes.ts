@@ -30,8 +30,13 @@ router.get('/usersettings', authenticateWithToken, (req, res) => {
 
 router.post('/userprofile', authenticateWithToken, (req, res) => {
     console.log("\n\n\n\nuserrrrr proooooofile routes.ts");
-    userProfileController.displayProfile(req, res);
+    userProfileController.getUserIdProfile(req, res);
 });
+
+router.get('/userprofile/display', authenticateWithToken, (req, res) => {
+    console.log("\n\n user profile --- display route.ts");
+    userProfileController.displayProfile(req, res);
+})
 
 // router.post('/userprofile/fill', authenticateWithToken, (req, res) => {
 //     console.log("\n\n\n\nuserrrrr profile FILL routes.ts");

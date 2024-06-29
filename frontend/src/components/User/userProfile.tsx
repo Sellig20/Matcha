@@ -22,7 +22,9 @@ const UserProfile: React.FC = () => {
             const response = await axiosInstance.post('http://localhost:8000/apiServeur/userprofile', formValues);
             setMessage(response.data.message);
                 console.log("UserProfile.tsx | enter your profile preferences");
-
+            if (response.data) {
+               navigate('/apiServeur/userprofile/display');
+            }
         } catch (err) {
             setMessage("UserProfile.tsx | Erreur frontend userprofile");
         }

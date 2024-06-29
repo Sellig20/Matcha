@@ -2,10 +2,15 @@ import { UserProfileInterface } from '../databaseInterfaces';
 import { query } from '../db';
 
 export class userProfileModel {
-    static async displayProfile(usersettingsid: string) {
+    static async getUserIdProfile(usersettingsid: string) {
             console.log("\nuserProfileModel.ts | display profile | usersettingsid ---> ", usersettingsid);
         const res = await query('SELECT * FROM public.usersettings WHERE usersettingsid = $1', [usersettingsid]);
             console.log("\n\n\n ----> userprofilemodel.ts | res user to display : ", res, "\n\n\n")
+        return res.rows[0];
+    }
+
+    static async displayProfile(userId: any) {
+        const res = await query('SELECT * FROM public.userprofile WHERE usersettingsid = $1', [userId]);
         return res.rows[0];
     }
     
