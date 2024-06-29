@@ -28,10 +28,15 @@ router.get('/usersettings', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /USERSETTINGS', user: req.user });
 });
 
-router.get('/userprofile', authenticateWithToken, (req, res) => {
+router.post('/userprofile', authenticateWithToken, (req, res) => {
     console.log("\n\n\n\nuserrrrr proooooofile routes.ts");
     userProfileController.displayProfile(req, res);
 });
+
+// router.post('/userprofile/fill', authenticateWithToken, (req, res) => {
+//     console.log("\n\n\n\nuserrrrr profile FILL routes.ts");
+//     userProfileController.fillProfile(req, res);
+// });
 
 router.get('/match', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /MATCH', user: req.user });

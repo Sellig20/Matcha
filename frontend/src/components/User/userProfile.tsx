@@ -2,24 +2,29 @@ import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
 import { useForm } from './useForm';
 import axios from 'axios';
+import { useAuth } from '../../security/useAuth';
 import { genderEnum, sexualInterestEnum, tagsEnum } from './userInterface';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile: React.FC = () => {
     //user profile donc reprendre la table en bbdd,
     //l'afficher,
     //avoir la possibilite de la modifier
+    const { isAuthenticated, checkAuth } = useAuth();
     const [data, setData] = useState<any>(null);
     const [message, setMessage] = useState('');
-    const [formValues, handleChange] = useForm({ username: '', age: '', gender: '', sexualInterest: '', biography: '', tags: '' });
+    const [formValues, handleChange] = useForm({ usersettingsid: '', username: '', age: '', gender: '', sexualInterest: '', biography: '', tags: '' });
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/apiServeur/signup', formValues);
+            const response = await axiosInstance.post('http://localhost:8000/apiServeur/userprofile', formValues);
             setMessage(response.data.message);
                 console.log("UserProfile.tsx | enter your profile preferences");
+
         } catch (err) {
-            setMessage("UserProfile.tsx | Erreur frontend signup");
+            setMessage("UserProfile.tsx | Erreur frontend userprofile");
         }
     };
 
@@ -35,7 +40,10 @@ const UserProfile: React.FC = () => {
             }
         };
 
-        fetchData();
+        if (isAuthenticated) {
+            
+        }
+        // fetchData();
 
     }, []);
 

@@ -7,5 +7,59 @@ export interface UserSettingsInterface {
     email: string;
     pass_word: string;
 }
+
+export enum genderEnum {
+    female = "female",
+    nonBinary = "non-binary",
+    male = 'male'
+}
+
+export enum sexualInterestEnum {
+    women = "women",
+    men = "men",
+    both = "both",
+    notSpecified = "not-specified"
+}
+
+export enum tagsEnum {
+    vegetarian = "vegetarian", 
+    vegan = "vegan", 
+    tattoo = "tattoo", 
+    piercing = "piercing", 
+    gamer = "gamer", 
+    geek = "geek", 
+    karaoke = "karaoke", 
+    sport = "sport", 
+    karate = "karate", 
+    badminton = "badminton", 
+    running = "running", 
+    boxing = "boxing", 
+    hike = "hike", 
+    football = "football", 
+    fitness = "fitness", 
+    food = "food",
+    rowing = "rowing",
+    travel = "travel", 
+    art = "art", 
+    music = "music", 
+    guitare = "guitare", 
+    saxophone = "saxophone", 
+    painting = "painting", 
+    concert = "concert", 
+    danse = "danse", 
+    cinema = "cinema", 
+    yoga = "yoga"
+}
+export interface UserProfileInterface {
+    userprofileid?: number;
+    usersettingsid: number;
+    username: string;
+    age: number;
+    gender : genderEnum;
+    sexualInterest : sexualInterestEnum;
+    biography: string;
+    tags: tagsEnum;
+    hasProfilePicture: boolean;
+}
 //SIGNUP | SIGNIN
 //Signup -> asked to fill usersettings table. Then redirected to userprofile table to fill.

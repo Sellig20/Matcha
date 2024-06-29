@@ -13,7 +13,7 @@ export class userSignupController {
         try {
             const { firstname, lastname, email, password } = req.body;
                 console.log("\nUserSignupController.ts | req.body = ", req.body);
-                console.log("\nUserSignupController.ts | fn = ", firstname, "\nln = ", lastname, "\nemail =", email, "\npassw=", password);
+                console.log("\nUserSignupController.ts |\n fn = ", firstname, "\nln = ", lastname, "\nemail =", email, "\npassw=", password);
 
             const existingUserAlready = await userSignupModel.findByEmail(email);
             if (existingUserAlready) {
@@ -42,7 +42,6 @@ export class userSignupController {
             const userSettingsID = await userSignupModel.createNewUser(newUser);
             console.log("\n\n\nIdentity of the user is ", userSettingsID, "\n\n\\n");
             res.status(201).json({ message: 'UserSignupController.ts | Inscription ok', token });
-            return;
         } catch (err) {
                 console.error('UserSignupController.ts | Erreur lors de linscription: ', err);
             res.status(500).json({ message: 'UserSignupController.ts | Erreur pdt linscrpiton' });
