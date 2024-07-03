@@ -1,53 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
 import { useForm } from './useForm';
-import axios from 'axios';
 import { useAuth } from '../../security/useAuth';
 import { genderEnum, sexualInterestEnum, tagsEnum } from './userInterface';
 import { useNavigate } from 'react-router-dom';
+import { useProfile } from './profileContext';
 
 const UserProfile: React.FC = () => {
     //user profile donc reprendre la table en bbdd,
     //l'afficher,
     //avoir la possibilite de la modifier
-    const { isAuthenticated, checkAuth } = useAuth();
+    // const { isAuthenticated, checkAuth } = useAuth();
     const [data, setData] = useState<any>(null);
     const [message, setMessage] = useState('');
     const [formValues, handleChange] = useForm({ usersettingsid: '', username: '', age: '', gender: '', sexualInterest: '', biography: '', tags: '' });
     const navigate = useNavigate();
+    const { fetchProfile } = useProfile();
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post('http://localhost:8000/apiServeur/userprofile', formValues);
+            const response = await axiosInstance.post(`http://localhost:8000/apiServeur/userprofile`, formValues);
             setMessage(response.data.message);
                 console.log("UserProfile.tsx | enter your profile preferences");
+                console.log("\n\n\nressssssponse data ", response.data);
             if (response.data) {
-               navigate('/apiServeur/userprofile/display');
+                console.log("\n\n je vais pour navigate\n\n");
+                await fetchProfile();
+                navigate('/apiServeur/userprofile/display');
             }
         } catch (err) {
             setMessage("UserProfile.tsx | Erreur frontend userprofile");
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.get(`http://localhost:8000/apiServeur/userprofile`);
-                console.log("data de userprofile.tsx --> ", response);
-                setData(response.data);
-                setMessage(response.data.message);
-            } catch (error) {
-                console.error('userprofile.tsx | Error fetching home data', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/userprofile`);
+    //             console.log("data de userprofile.tsx --> ", response);
+    //             setData(response.data);
+    //             setMessage(response.data.message);
+    //         } catch (error) {
+    //             console.error('userprofile.tsx | Error fetching home data', error);
+    //         }
+    //     };
 
-        if (isAuthenticated) {
-            
-        }
-        // fetchData();
+    //     // fetchData();
 
-    }, []);
+    // }, []);
 
     return (
         <section className="gradient-custom" >

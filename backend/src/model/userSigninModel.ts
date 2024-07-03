@@ -10,13 +10,13 @@ export class userSigninModel {
         }
 
         const myUser = resEmail.rows[0];
-        console.log("\n\n\n ici -> my user = ", myUser.pass_word);
+        // console.log("\n\n\n ici -> my user = ", myUser.pass_word);
 
         const hashedPwd = myUser.pass_word;
 
-            console.log("\n\nUserSignInModel.tsx | password ===============> ", password);
-            console.log("UserSignInModel.tsx | la comparaison =================> ", myUser);
-            console.log("UserSignInModel.tsx | hashedPWD =================> ", hashedPwd);
+            // console.log("\n\nUserSignInModel.tsx | password ===============> ", password);
+            // console.log("UserSignInModel.tsx | la comparaison =================> ", myUser);
+            // console.log("UserSignInModel.tsx | hashedPWD =================> ", hashedPwd);
 
         const resPassword = await bcrypt.compare(password, hashedPwd);
         console.log("---------> ", resPassword);
@@ -29,7 +29,7 @@ export class userSigninModel {
     }
 
     static async storeNewToken(email: string, token: string) {
-            console.log("userSigninModel.ts | store new token");
+            // console.log("userSigninModel.ts | store new token");
         await query('UPDATE public.usersettings SET validationtoken = $1 WHERE email = $2', [token, email]);
     }
 }

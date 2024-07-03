@@ -14,12 +14,10 @@ router.get('/allusers', (req: Request, res: Response) => {
 });
 
 router.post('/signup', (req: Request, res: Response) => {
-    console.log("----- *** ------- Dans la route du controller /signup --- *** ---");
     userSignupController.signup(req, res);
 });
 
 router.post('/signin', (req: Request, res: Response) => {
-    console.log("----- *** ------- Dans la route du controller /login --- *** ---");
     userSigninController.getLogin(req, res);
 });
 
@@ -29,13 +27,13 @@ router.get('/usersettings', authenticateWithToken, (req, res) => {
 });
 
 router.post('/userprofile', authenticateWithToken, (req, res) => {
-    console.log("\n\n\n\nuserrrrr proooooofile routes.ts");
     userProfileController.getUserIdProfile(req, res);
 });
 
 router.get('/userprofile/display', authenticateWithToken, (req, res) => {
     console.log("\n\n user profile --- display route.ts");
     userProfileController.displayProfile(req, res);
+
 })
 
 // router.post('/userprofile/fill', authenticateWithToken, (req, res) => {

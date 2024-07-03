@@ -14,35 +14,52 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import UserProfile from './components/User/userProfile';
 import UserProfileDisplay from './components/User/userProfileDisplay';
+import { ProfileProvider, useProfile } from './components/User/profileContext';
+import { useEffect } from 'react';
+import { isPromise } from 'util/types';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? <>{children}</> : null;
 };
 
-function App() {
+const ContentComplete: React.FC = () => {
+  const { isProfileComplete } = useProfile();
 
+  console.log("\n\n\n --------+++++++++----------- \n profile complete ? ", isProfileComplete, "\n-----+++++--------");
   return (
-    <AuthProvider>
-      <Router>
-          <Navbar/>
-          <AuthWrapper>
-          <Sidebar />
-          </AuthWrapper>
-          <Routes>
-            {/* <Route path="/us/:id" element={<UserSettings />} /> */}
-            <Route path="/signup" element={<UserSignup />} />            
-            <Route path="/signin" element={<UserSignIn />} />
-            <Route path="/apiServeur/match" element={<Match />} />
-            <Route path="/apiServeur/chat" element={<Chat />} />
-            <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
-            <Route path="/apiServeur/usersettings" element={<ProtectedRoute component={UserSettings} />} />
-            <Route path="/apiServeur/userprofile" element={<ProtectedRoute component={UserProfile} />} />
-            <Route path="/apiServeur/userprofile/display" element={<ProtectedRoute component={UserProfileDisplay} />} />
-          </Routes>
-      </Router>
-    </AuthProvider>
-  )
-}
+    <Routes>
+      <Route path="/signup" element={<UserSignup />} /> 
+      <Route path="/signin" element={<UserSignIn />} />
+          <Route path="/apiServeur/match" element={<Match />} />
+          <Route path="/apiServeur/chat" element={<Chat />} />
+          <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
+          <Route path="/apiServeur/usersettings" element={<ProtectedRoute component={UserSettings} />} />
+        {( isProfileComplete === false &&
+          <Route path="/apiServeur/userprofile" element={<ProtectedRoute component={UserProfile} />} />
+        )}
+        {( isProfileComplete === true &&
+          <Route path="/apiServeur/userprofile/display" element={<ProtectedRoute component={UserProfileDisplay} />} />
+        )}
+    </Routes>
+  );
+};
 
-export default App
+const App: React.FC = () => {
+
+    return (
+      <AuthProvider>
+        <ProfileProvider>
+          <Router>
+            <Navbar />
+            <AuthWrapper>
+              <Sidebar />
+            </AuthWrapper>
+            <ContentComplete />
+          </Router>
+        </ProfileProvider>
+      </AuthProvider>
+    );
+};
+
+export default App;

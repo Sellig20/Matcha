@@ -9,11 +9,11 @@ const JWT_SECRET = process.env.JWT_SECRET;
 export class userSigninController {
     static async getLogin(req: Request, res: Response) {
         try {
-                console.log("---------- Dans le controller de Login\n");
+                // console.log("---------- Dans le controller de Login\n");
 
             const { email, password } = req.body;
-                console.log("\n\nMODEL signin, email = ", email);
-                console.log("MODEL signin, password = ", password, "\n\n");
+                // console.log("\n\nMODEL signin, email = ", email);
+                // console.log("MODEL signin, password = ", password, "\n\n");
 
             const validUser = await userSigninModel.getLogin(email, password);
 
@@ -22,8 +22,8 @@ export class userSigninController {
                 return;
             }
 
-                console.log("\nusersignincontroller: user found : ", email, " | ", password);
-                console.log("valid user is ", validUser);
+                // console.log("\nusersignincontroller: user found : ", email, " | ", password);
+                // console.log("valid user is ", validUser);
             
             if (!JWT_SECRET || JWT_SECRET === null) {
                 throw new Error('UserSigninController.ts | JWT_SECRET is not defined in the environment variables');

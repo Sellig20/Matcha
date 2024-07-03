@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface UserSettingsInterface {
     usersettingsid: number;
     userprofileid: number;
@@ -58,7 +60,7 @@ export interface UserProfileInterface {
     username: string;
     age: number;
     gender : genderEnum;
-    sexualInterest : sexualInterestEnum;
+    sexualinterest : sexualInterestEnum;
     biography: string;
     tags: tagsEnum;
     hasProfilePicture: boolean;
@@ -67,3 +69,5 @@ export interface UserProfileInterface {
 export interface UserSettingsArray {
     user: UserSettingsInterface[];
 }
+
+
