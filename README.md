@@ -1,8 +1,8 @@
 # Matcha
 
 Docker
-Backend : expressjs | Port 3000
-Fronted : react + vitejs | Port 3001
+Backend : expressjs | Port 5000
+Fronted : react + vitejs | Port 5173
 WebServer & reverse proxy : Nginx | Port 8000
 Db : Postgresql | Port 5432
 
