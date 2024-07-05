@@ -42,12 +42,18 @@ clean:
 
 # Stop the Docker containers and remove all associated resources
 .PHONY: fclean
-fclean:
+fclean: clean-volumes
 	docker compose down --rmi all --volumes --remove-orphans
 	docker builder prune -a -f
 	docker image prune -a -f
-	docker volume prune -f
 	docker network prune -f
+
+clean-volumes:
+	@if [ -n "$$(docker volume ls -q)" ]; then \
+		docker volume rm $$(docker volume ls -q); \
+	else \
+		echo "No volumes to remove."; \
+	fi
 
 # Restart the Docker containers
 .PHONY: re
