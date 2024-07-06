@@ -1,9 +1,11 @@
 import { query, pool } from "../db";
 import { Schema, TableSchema, FieldDefinition, CreateType } from "./schema";
 import errorHandler from "../utils/error";
-import { Pool, PoolClient } from "pg";
+import { Pool, PoolClient } from 'pg';
+import dotenv from 'dotenv';
 
 // TODO : parse db and compare with schema
+dotenv.config();
 
 class ORM {
 	constructor(schema: Schema) {
@@ -22,19 +24,21 @@ class ORM {
     private pool: Pool;
 
 	private async createTables(): Promise<void> { // TODO : wrap another try catch
-        const client = await this.pool.connect();
+		const client = await this.pool.connect();
 		try {
 			await client.query("BEGIN");
-
 			for (const tableName of Object.keys(this.schema)) {
 				await this.createTable(client, tableName, this.schema[tableName]);
 			}
 
 			await client.query("COMMIT");
 		} catch (error) {
-			await client.query("ROLLBACK");
+			if (client) {
+				console.log("ERROR CATCH CREATE TAVBLEEEEEEEEEEE");
+				// await client.query("ROLLBACK");
+			}
 			errorHandler(error, "Failed to create tables");
-		}
+		} 
 	}
 
 	private async createTable(

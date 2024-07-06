@@ -1,22 +1,21 @@
 import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
-import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 import cors from "cors";
 import cookieParser from 'cookie-parser';
-import router from "./routes";
+import routes from "./routes";
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-
-app.use(morgan("dev"));
 
 app.use(express.json());
 
 app.use(cookieParser());
 
-app.use("/", router);
+app.use("/apiServeur", routes);
 
 app.use((req, res, next) => {
     next(createHttpError(404,"Endpoint not found"));

@@ -1,8 +1,9 @@
 function errorHandler(error: unknown, message: string) {
     if (error instanceof Error) {
-        throw new Error(`${message}: ${error.message}`);
+        console.log("\nERROR MESSAGE IS : ", message, "\nFOR ERROR : ", error, "\n");
     } else {
-        throw new Error(`${message}: Unknown error`);
+        // throw new Error(`${message}: Unknown error`);
+        console.log("\nERROR MESSAGE IS : ", message, "\nFOR ERROR : ", error, "\n");
     }
 }
 

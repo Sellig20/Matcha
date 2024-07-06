@@ -18,6 +18,8 @@ ps:
 fclean:	down
 	docker system prune --force
 	docker volume prune --force
+	docker builder prune -f
+	docker image prune -f
 	rm -rf $(DIST_DIR)
 	rm -rf $(NM)
 	rm -rf $(BNM)
