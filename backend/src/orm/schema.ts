@@ -3,8 +3,6 @@
 export type CreateType<T extends keyof Schema> =
   T extends "users" ? UserCreate :
   T extends "users_sexual_preferences" ? UsersSexualPreferencesCreate :
-  T extends "users_age_range_preferences" ? UsersAgeRangePreferencesCreate :
-  T extends "interests" ? InterestsCreate :
   T extends "users_interests" ? UsersInterestsCreate :
   T extends "users_pictures" ? UsersPicturesCreate :
   T extends "users_pictures_likes" ? UsersPicturesLikesCreate :
@@ -26,24 +24,14 @@ export interface UserCreate {
     fame_rating: number,
     stated_location: string,
     real_location: string,
+	age_lower_bound: number,
+    age_upper_bound: number,
   }
   
 export interface UsersSexualPreferencesCreate {
     name: string,
     user_id: number,
 }
-
-export interface UsersAgeRangePreferencesCreate {
-    lower_bound: number,
-    upper_bound: number,
-    user_id: number,
-}
-
-export interface InterestsCreate {
-    name: string,
-    color: string,
-}
-
 export interface UsersInterestsCreate {
     name: string,
     user_id: number,
@@ -137,25 +125,14 @@ export const schema: Schema = {
 		fame_rating: [ColumnType.INT, ColumnConstraint.NOT_NULL],
 		stated_location: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		real_location: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
+		age_lower_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // check >= 18
+		age_upper_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // enum <= 61
 	},
 
 	users_sexual_preferences: {
 		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
 		name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL], // enum
 		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
-	},
-
-	users_age_range_preferences: {
-		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
-		lower_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // check >= 18
-		upper_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // enum <= 61
-		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
-	},
-
-	interests: {
-		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
-		name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL], // enum
-		color: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL], // enum check valid color
 	},
 
 	users_interests: {

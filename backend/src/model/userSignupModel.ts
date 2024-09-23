@@ -1,5 +1,7 @@
 import { query } from '../db';
 import { UserSettingsInterface } from '../databaseInterfaces';
+import orm from '../../index'
+import { UserCreate } from '../orm/schema';
 
 export class userSignupModel {
     static async findByEmail(email: string) {
@@ -17,4 +19,27 @@ export class userSignupModel {
     static async addTokenInBdd(validationToken: string, email: string) {
         await query('UPDATE public.usersettings SET validationtoken = $1 WHERE email = $2', [validationToken, email]);
     }
+}
+
+export class userModel {
+    static async createUser(newUser: UserCreate) {
+        const response = await orm?.create<"users">("users", newUser);
+        return response;
+    }
+
+    static async updateUser(id: number, updateData: Partial<UserCreate>) {
+        const response = await orm?.update<"users">("users", id, updateData);
+        return response;
+    }
+
+    static async readUser(key: string, value?: string | number) {
+        const response = await orm?.read<"users", any>("users", key, value);
+        return response;
+    }
+
+    static async deleteUser(id: number) {
+        const response = await orm?.delete<"users">("users", id);
+        return response;
+    } 
+
 }
