@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import UserSettings from './components/User/userSettings';
-import UserSignup from './components/User/userSignup';
-import UserSignIn from './components/User/userSignin';
+import UserSettings from './components/User/UserSettings';
+import UserSignup from './components/User/UserSignup';
+import UserSignIn from './components/User/UserSignIn';
 import ProtectedRoute from './security/ProtectedRoute';
 import Navbar from './components/Navbar';
 import FameRating from './components/FameRating';
@@ -12,8 +12,8 @@ import { useAuth } from './security/useAuth';
 import { AuthProvider } from './security/authContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import UserProfile from './components/User/userProfile';
-import UserProfileDisplay from './components/User/userProfileDisplay';
+import UserProfile from './components/User/UserProfile';
+import UserProfileDisplay from './components/User/UserProfileDisplay';
 import { ProfileProvider, useProfile } from './components/User/profileContext';
 import { useEffect } from 'react';
 import { isPromise } from 'util/types';

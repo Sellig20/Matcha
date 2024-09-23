@@ -13,7 +13,7 @@ export const pool = new Pool({
   
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
-  host: 'host.docker.internal',
+  host: 'db',
   database: process.env.POSTGRES_DB,
   port: 5432,
   max: 20, //max 20 clients

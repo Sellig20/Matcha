@@ -16,8 +16,8 @@ ps:
 	docker ps -a
 
 fclean:	down
-	docker system prune --force
-	docker volume prune --force
+	docker system prune -a -f
+	docker volume prune -a -f
 	docker builder prune -f
 	docker image prune -f
 	rm -rf $(DIST_DIR)
