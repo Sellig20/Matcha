@@ -19,6 +19,7 @@ export interface UserCreate {
     first_name: string,
     last_name: string,
     password_hash: string,
+	validation_token: string,
     gender: string,
     biography: string,
     fame_rating: number,
@@ -120,6 +121,7 @@ export const schema: Schema = {
 		first_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		last_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		password_hash: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
+		validation_token: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		gender: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL], // enum
 		biography: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		fame_rating: [ColumnType.INT, ColumnConstraint.NOT_NULL],

@@ -26,9 +26,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const checkAuth = async () => {
         try {
             const token = localStorage.getItem('token'); 
-                console.log("useAuth.tsx | TOKEN ===> ", token);
+                console.log("authContext.tsx | TOKEN ===> ", token);
             if (!token) {
-                    console.log("useAuth.tsx | Pas de token dans protected routes");
+                    console.log("authContext.tsx | Pas de token dans protected routes");
                 setIsAuthenticated(false);                    
                 return;
             }
@@ -36,11 +36,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 headers: { Authorization: `Bearer ${token}` }
             });
             setIsAuthenticated(response.data.valid);
-                console.log("useAuth.tsx | Response from /apiServeur/checktok: ", response.data);
+                console.log("authContext.tsx | Response from /apiServeur/checktok: ", response.data);
             } catch (err) {
-                console.log("useAuth.tsx | Error during auth check: ", err);    
+                console.log("authContext.tsx | Error during auth check: ", err);    
                 if (axios.isAxiosError(err)) {
-                    console.error("useAuth.tsx | Error response:", err.response?.data);
+                    console.error("authContext.tsx | Error response:", err.response?.data);
                 }
                 setIsAuthenticated(false);
             }

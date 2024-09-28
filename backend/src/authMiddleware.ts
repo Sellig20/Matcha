@@ -18,9 +18,7 @@ declare module 'express-serve-static-core' {
 export async function authenticateWithToken(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-        // console.log("\n\nAuthMiddleware.ts | Token reçu dans middleware: ", token);
     if (!token) {
-            // console.log("\n\nAuthMiddleware.ts | Pas de token dans l'en-tête");
         return res.status(401).json({ valid: false });
     }
     if (!JWT_SECRET || JWT_SECRET === null) {
@@ -29,24 +27,23 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
     try {
         const decoded = jwt.verify(token, JWT_SECRET) as { email: string };
             console.log("\n\nToken décodé:", decoded);
-        const user = await userSignupModel.findByEmail(decoded.email);
-        if (user && user.validationtoken === token) {
-                // console.log("\n\n\n AuthMiddleware.ts | -----------------")
-                // console.log("------- user => ", user);
-                // console.log("\n\n");
+        const userArray = await userSignupModel.readUserByEmail("email", decoded.email);
+        const user = userArray ? userArray[0] : null;
+        console.log("\n\n\n$$$$$$$$$$$$$$$$$");
+        console.log("token = ", token);
+        console.log("user.validation_token = ", user.validation_token);
+        console.log("\n\n\n$$$$$$$$$$$$$$$$$");
+        if (user && user.validation_token === token) {
                 req.user = user;
-                req.userId = user.usersettingsid;
-                console.log("user.id = ", user.usersettingsid);
-            // console.log("\nREQ.USERID => ", req.userId);
-            // console.log("nananananana");
+                req.userId = user.id;
             next();
         } else {
-            // console.log("AuthMiddleware.ts | Utilisateur non trouvé ou token invalide\n\n");
+            console.log("\n\n\n Error : authMiddleware backend else du if token === token");
             res.status(401).json({ valid: false });
             return;
         }
     } catch (err) {
-        // console.log("AuthMiddleware.ts | Erreur 500\n\n", err);
+        console.log("\n\n\n Error : authMiddleware backend err du try ");
         res.status(500).json({ valid: false });
         return;
     }

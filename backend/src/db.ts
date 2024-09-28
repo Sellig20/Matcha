@@ -26,7 +26,6 @@ export const query = async (text: string, params?: any[]): Promise<any> => {
   const start = Date.now();
   try {
     const res = await pool.query(text, params);
-    console.log("\n res = ", res);
     const duration = Date.now() - start;
     console.log("Executed query", { text, duration, rows: res.rowCount });
     return (res);
