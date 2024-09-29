@@ -128,7 +128,6 @@ class ORM {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
     ): Promise<any[] | null> {
         const tableSchema = this.schema[tableName];
-		console.log("------------------------------------------------------ je suis dans read ----------------------------------");
         try {
             if (!(propertyName in tableSchema)) {
                 throw new Error(`Table '${tableName}' does not have a '${String(propertyName)}' field.`);

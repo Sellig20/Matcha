@@ -54,7 +54,6 @@ router.get('/fm', authenticateWithToken, (req, res) => {
 });
 
 router.get('/checktok', authenticateWithToken, (req, res) => {
-    console.log("---------------------- je suis dans /checktok de routes.ts -------");
     res.json({ valid: true });
 });
 

@@ -11,7 +11,7 @@ export class userProfileModel {
         return response;
     }
 
-    static async displayProfile(userId: any, key: string, value?: string | number) {
+    static async displayProfile(key: string, value?: string | number) {
         // const res = await query('SELECT * FROM public.userprofile WHERE usersettingsid = $1', [userId]);
         // return res.rows[0];
         const response = await orm?.read<"users", any>("users", key, value);

@@ -7,15 +7,14 @@ export class userProfileController {
         try {
             const userId = req.userId;
             if (!userId) {
-                return res.status(400).json({ message: 'User ID not found in request' });
+                return res.status(400).json({ message: 'UserProfileController.ts | Error user id not found in request' });
             }
-            const displayUser = await userProfileModel.getUserIdProfile(userId, "", "");
+            // const displayUser = await userProfileModel.getUserIdProfile(userId, "", "");
             //rajouter une verification si userIdModel == req.userId
             // res.status(200).json({
             //     displayUser
             // })
-            const newProfile = userProfileController.createNewProfile(req, res, userId);
-            console.log("------------------------------------------______________________________> ", newProfile);
+            // const newProfile = userProfileController.createNewProfile(req, res, userId);
 
         } catch (err) {
             return res.status(500).json({ message: 'Server error', err });
@@ -26,9 +25,9 @@ export class userProfileController {
         try {
             const userId = req.userId;
             if (!userId) {
-                return res.status(400).json({ message: 'User ID not found in request' });
+                return res.status(400).json({ message: 'UserProfileController.ts | Error user id not found in request' });
             }
-            const displayProfile = await userProfileModel.displayProfile(userId, "", "");
+            const displayProfile = await userProfileModel.displayProfile("id", userId);
             if (displayProfile) {
                 console.log("\n-----------------\n DISPLAY PROFILE => ", displayProfile);
                 const isProfileComplete = true;
@@ -41,23 +40,14 @@ export class userProfileController {
                 return ;
             }
         } catch (err) {
-            res.status(500).json({ error: 'Something went srong '});
+            res.status(500).json({ error: 'UserProfileController.ts | Error something went srong '});
         }
     }
 
     static async createNewProfile(req: Request, res: Response, displayUser: any) {
         try {
             const { firstname, lastname, email, password, hashedPwd, username, age, gender, sexualInterest, biography, tags, hasProfilePicture } = req.body;
-            const newProfile: UserProfileInterface = {
-                usersettingsid: displayUser,
-                username,
-                age,
-                gender,
-                sexualInterest,
-                biography,
-                tags,
-                hasProfilePicture
-            };
+            
             const newUser: UserCreate = {
                 user_name: "",
                 email: email,

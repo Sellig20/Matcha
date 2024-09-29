@@ -16,19 +16,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
     const signedOut = async () => {
         try {
-            console.log("usersignup.tsx | signedout xxxxxx");
+            console.log("\n\n\nUsersignup.tsx | signedout xxxxxx");
             setIsAuthenticated(null);
         } catch (err) {
-            console.log("useAuth.tsx | Error during sign out: ", err);    
+            console.log("\n\n\nUseAuth.tsx | Error during sign out: ", err);    
         }
     }
 
     const checkAuth = async () => {
         try {
             const token = localStorage.getItem('token'); 
-                console.log("authContext.tsx | TOKEN ===> ", token);
             if (!token) {
-                    console.log("authContext.tsx | Pas de token dans protected routes");
+                    console.log("\n\n\nAuthContext.tsx | Error pas de token dans protected routes");
                 setIsAuthenticated(false);                    
                 return;
             }
@@ -36,11 +35,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 headers: { Authorization: `Bearer ${token}` }
             });
             setIsAuthenticated(response.data.valid);
-                console.log("authContext.tsx | Response from /apiServeur/checktok: ", response.data);
+                console.log("\n\n\nAuthContext.tsx | Response from /apiServeur/checktok: ", response.data);
             } catch (err) {
                 console.log("authContext.tsx | Error during auth check: ", err);    
                 if (axios.isAxiosError(err)) {
-                    console.error("authContext.tsx | Error response:", err.response?.data);
+                    console.error("\n\n\nAuthContext.tsx | Error response:", err.response?.data);
                 }
                 setIsAuthenticated(false);
             }
@@ -56,6 +55,5 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         <AuthContext.Provider value={{ isAuthenticated, checkAuth, signedOut }}>
             {children}
         </AuthContext.Provider>
-
     );
 };

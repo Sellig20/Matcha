@@ -18,17 +18,16 @@ export class userSigninController {
             if (!JWT_SECRET || JWT_SECRET === null) {
                 throw new Error('UserSigninController.ts | JWT_SECRET is not defined in the environment variables');
             }
-            const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' }); 
-            await userSigninModel.storeNewToken(email, token, 1);
-            //ID EN DUR = FAUX
+            const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
+            await userSigninModel.storeNewToken(email, token, validUser.id);
             res.json({
-                message: "Auth successfull welcome in the app",
+                message: "UserSigninController.ts | Auth successfull welcome in the app",
                 token: token,
                 user: validUser
             });
         } catch (err) {
                 console.error(err);
-            res.status(401).json('xxxxx Erreur dauthentification xxxxxx');
+            res.status(401).json('UserSigninController.ts | Error during authentication');
             return;
         }
     }

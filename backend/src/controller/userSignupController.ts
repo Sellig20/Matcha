@@ -15,7 +15,7 @@ export class userSignupController {
             const { firstname, lastname, email, password } = req.body;
             const existingUserAlready = await userSignupModel.readUserByEmail("email", email);
             if (existingUserAlready) {
-                res.status(400).json({ message: 'UserSignupController.ts | Cette adresse mail deja utilisee bro' });
+                res.status(400).json({ message: 'UserSignupController.ts | Email already existing in the database' });
                 return;
             }
 
@@ -25,17 +25,8 @@ export class userSignupController {
                 throw new Error('UserSignupController.ts | JWT_SECRET is not defined in the environment variables');
             }
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
-            await userSignupModel.addTokenInBdd(token, email);
-            // const newUser: UserSettingsInterface = {
-            //     token,
-            //     isvalidatedtoken: false,
-            //     firstname,
-            //     lastname,
-            //     email,
-            //     pass_word: hashedPwd
-            // };
-
-            const newUser2: UserCreate = {
+        
+            const newUser: UserCreate = {
                 user_name: "",
                 email: email,
                 first_name: firstname,
@@ -51,10 +42,10 @@ export class userSignupController {
                 age_upper_bound: 0,
               }
             
-            const response = userSignupModel.createUser(newUser2);
-            res.status(201).json({ message: 'UserSignupController.ts | Inscription ok', token });
+            const response = userSignupModel.createUser(newUser);
+            res.status(201).json({ message: 'UserSignupController.ts | Inscription success', token });
         } catch (err) {
-            res.status(500).json({ message: 'UserSignupController.ts | Erreur pdt linscrpiton' });
+            res.status(500).json({ message: 'UserSignupController.ts | Error during inscription' });
             return;
         }
     }

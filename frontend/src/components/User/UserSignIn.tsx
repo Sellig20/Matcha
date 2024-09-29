@@ -15,13 +15,9 @@ const UserSignIn: React.FC = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8000/apiServeur/signin', formValues);
-                console.log("\n\n-------after post axios sign in");
-                console.log("Response data: ", response.data);
-                console.log("Response data token: ", response.data.token);
             setMessage(response.data.message);
             if (response.data.message) {
                 localStorage.setItem('token', response.data.token);
-                console.log("\nUserSignin.tsx | signin correct\n");
                 checkAuth();
             }
         } catch (err) {

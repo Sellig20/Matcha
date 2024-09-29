@@ -43,9 +43,4 @@ export class userSignupModel {
         return response;
     }
 
-    static async addTokenInBdd(validationToken: string, email: string) {
-        console.log("\n++++++++++++++ je suis dans addTokenInBdd userSignupModel++++++++++++++++++")
-        await query('UPDATE public.users SET validation_token = $1 WHERE email = $2', [validationToken, email]);
-    }
-
 }
