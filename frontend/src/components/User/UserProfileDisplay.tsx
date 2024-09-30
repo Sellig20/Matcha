@@ -8,7 +8,7 @@ import { useProfile } from './profileContext';
 
 const UserProfileDisplay: React.FC = () => {
 
-    const { profile } = useProfile();
+    const profile  = useProfile();
 
     return (
         <section className="gradient-custom" >
@@ -24,14 +24,14 @@ const UserProfileDisplay: React.FC = () => {
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline">
                 <label>Username</label>
-                <p>{profile?.username}</p>
+                <p>{profile.profile?.user_name}</p>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline">
                 <label>Gender</label>
-                <p>{profile?.gender}</p>
+                <p>{profile.profile?.gender}</p>
             </div>
             </div>
             </div>
@@ -40,14 +40,14 @@ const UserProfileDisplay: React.FC = () => {
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline">
                 <label>age</label>
-                <p>{profile?.age}</p>
+                <p>{profile.profile?.age}</p>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline">
                 <label>Sexual Interest</label>
-                <p>{profile?.sexualinterest}</p>
+                <p>{profile.profile?.sexualinterest}</p>
             </div>
             </div>
             </div>
@@ -56,14 +56,14 @@ const UserProfileDisplay: React.FC = () => {
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline">
                 <label>Biography</label>
-                <p>{profile?.biography}</p>
+                <p>{profile.profile?.biography}</p>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline">
                 <label>Tags</label>
-                <p>{profile?.tags}</p>
+                <p>{profile.profile?.tags}</p>
             </div>
             </div>
             </div>

@@ -17,6 +17,7 @@ declare module 'express-serve-static-core' {
 export async function authenticateWithToken(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
+    console.log("\n\n\n -------- authenticate with token -------");
     if (!token) {
         return res.status(401).json({ valid: false });
     }
@@ -27,13 +28,14 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
         const decoded = jwt.verify(token, JWT_SECRET) as { email: string };
         const userArray = await userSignupModel.readUserByEmail("email", decoded.email);
         const user = userArray ? userArray[0] : null;
-        // console.log("\n\n\n$$$$$$$$$$$$$$$$$");
-        // console.log("token = ", token);
-        // console.log("user.validation_token = ", user.validation_token);
-        // console.log("$$$$$$$$$$$$$$$$$\n\n\n");
+        console.log("\n\n\n$$$$$$$$$$$$$$$$$");
+        console.log("token = ", token);
+        console.log("user.validation_token = ", user.validation_token);
+        console.log("$$$$$$$$$$$$$$$$$\n\n\n");
         if (user && user.validation_token === token) {
                 req.user = user;
                 req.userId = user.id;
+                console.log("\n\n\n ---------- next --------");
             next();
         } else {
             console.log("\n\n\nAuthMiddleware.ts | Error : authMiddleware backend else du if token === token");
@@ -41,7 +43,7 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
             return;
         }
     } catch (err) {
-        console.log("\n\n\nAuthMiddleware.ts | Error : authMiddleware backend error du try ");
+        console.log(`\n\n\nAuthMiddleware.ts | Error : authMiddleware backend error du try : ${err}`);
         res.status(500).json({ valid: false });
         return;
     }

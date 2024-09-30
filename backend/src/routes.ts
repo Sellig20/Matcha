@@ -27,6 +27,7 @@ router.get('/usersettings', authenticateWithToken, (req, res) => {
 });
 
 router.post('/userprofile', authenticateWithToken, (req, res) => {
+    console.log("Form values received:", req.body); 
     userProfileController.getUserIdProfile(req, res);
 });
 

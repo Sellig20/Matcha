@@ -57,7 +57,7 @@ export enum tagsEnum {
 export interface UserProfileInterface {
     userprofileid: number;
     usersettingsid: number;
-    username: string;
+    user_name: string;
     age: number;
     gender : genderEnum;
     sexualinterest : sexualInterestEnum;

@@ -30,6 +30,7 @@ export class userSignupModel {
 
     static async updateUserToken(id: number, updateData: Partial<UserCreate>) {
         const response = await orm?.update<"users">("users", id, updateData);
+        console.log("***************************************************** ", response);
         return response;
     }
 

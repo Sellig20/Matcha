@@ -25,19 +25,16 @@ export const ProfileProvider: React.FC<{ children: ReactNode }> = ({ children })
     const fetchProfile = async () => {
         try {
             console.log("\n\nres------data-------displayProfile------- ");
-            const res = await axiosInstance.get<UserProfileResponse>(`http://localhost:8000/apiServeur/userprofile/display`);
-            setProfile(res.data.displayProfile);
+            const res = await axiosInstance.get(`http://localhost:8000/apiServeur/userprofile/display`);
+            // const pro = res.data.displayProfile[0];
+            setProfile(res.data.displayProfile[0]);
             setIsProfileComplete(res.data.isProfileComplete);
-            console.log("\n\nprofile context : setProfile => ", res.data.displayProfile);
+            const gogo = res.data.displayProfile[0].user_name;
+            console.log("\n\n\n\n\n GOGO ISSSSSSSSSSSSSSSSSSSS ====> ", gogo);
+            console.log("\n\nprofile context : setProfile => ", res);
             console.log("\nprofile context : isProfileComplete => ", res.data.isProfileComplete, "\n\n");
-            // else {
-            //     setIsProfileComplete(false);
-            // } 
-
         } catch (err) {
-            
-                console.error("Unknown error:", err);
-            
+            console.error("Unknown error:", err);
         } 
     }
 

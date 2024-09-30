@@ -107,12 +107,13 @@ class ORM {
 					`${field} = '${updateData[field as keyof typeof updateData]}'`
 			)
 			.join(", ");
-		const queryText = `UPDATE ${tableName} SET ${setClause} WHERE id = ${id}`;
+		const queryText = `UPDATE ${tableName} SET ${setClause} WHERE id = ${id} RETURNING *`;
 
 		try {
 			const result = await query(queryText);
 			console.log(`Successfully updated record in ${tableName} with id ${id}`);
 			console.log("Updated row:", result.rows[0]);
+			return result;
 		} catch (error) {
 			errorHandler(
 				error,

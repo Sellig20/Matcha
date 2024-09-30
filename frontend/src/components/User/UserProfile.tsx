@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
 import { useForm } from './useForm';
-import { useAuth } from '../../security/useAuth';
 import { genderEnum, sexualInterestEnum, tagsEnum } from './UserInterface';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from './profileContext';
@@ -17,10 +16,10 @@ const UserProfile: React.FC = () => {
     const navigate = useNavigate();
     const { fetchProfile } = useProfile();
 
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            console.log("\n\n\nbefooooore axiosInstance");
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/userprofile`, formValues);
             setMessage(response.data.message);
                 console.log("UserProfile.tsx | enter your profile preferences");
@@ -31,7 +30,7 @@ const UserProfile: React.FC = () => {
                 navigate('/apiServeur/userprofile/display');
             }
         } catch (err) {
-            setMessage("UserProfile.tsx | Erreur frontend userprofile");
+            setMessage(`UserProfile.tsxxxxx | Erreur frontend userprofile : ${err}`);
         }
     };
 
