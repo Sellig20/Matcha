@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../../security/axiosInstance';
+import axiosInstance from '../../../security/axiosInstance';
 import { useForm } from './useForm';
 import { genderEnum, sexualInterestEnum, tagsEnum } from './UserInterface';
 import { useNavigate } from 'react-router-dom';
@@ -57,7 +57,7 @@ const UserProfile: React.FC = () => {
         <div className="col-12 col-lg-9 col-xl-7">
         <div className="card shadow-2-strong card-registration" style={{ borderRadius: '150px'}}>
         <div className="card-body p-4 p-md-5 ">
-            <h2>Welcome </h2>
+            <h2>Welcome, please fill your informations </h2>
         <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">My Profile</h3>
 
         <div>

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useAuth } from '../security/useAuth';
+import { useAuth } from '../../security/useAuth';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../security/authContext';
+import { AuthContext } from '../../security/authContext';
 
 const Sidebar: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);

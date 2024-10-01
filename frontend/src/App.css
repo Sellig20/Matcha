@@ -69,10 +69,12 @@ h1 {
 
 #main {
   transition: margin-right .5s;
-  padding: 16px;
+  margin: 0;
+  padding: 0;
 }
 
 .openbtn {
+  
   font-size: 20px;
   cursor: pointer;
   position: fixed;

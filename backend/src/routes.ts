@@ -51,6 +51,7 @@ router.get('/chat', authenticateWithToken, (req, res) => {
 });
 
 router.get('/fm', authenticateWithToken, (req, res) => {
+    console.log("--------- fm routes.ts -------------");
     res.json({ message: 'This is a protected route -- /FM', user: req.user });
 });
 

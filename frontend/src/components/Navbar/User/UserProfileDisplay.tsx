@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from '../../security/axiosInstance';
+import axiosInstance from '../../../security/axiosInstance';
 import { useForm } from './useForm';
-import { useAuth } from '../../security/useAuth';
+import { useAuth } from '../../../security/useAuth';
 import { genderEnum, sexualInterestEnum, tagsEnum, UserProfileInterface } from './UserInterface';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from './profileContext';

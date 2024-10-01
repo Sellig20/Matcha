@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import axiosInstance from '../../security/axiosInstance';
+import axiosInstance from '../../../security/axiosInstance';
 import { UserProfileInterface } from "./UserInterface";
-import { useAuth } from '../../security/useAuth';
+import { useAuth } from '../../../security/useAuth';
 
 export interface ProfileContextType {
     profile: UserProfileInterface | null;
