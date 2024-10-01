@@ -1,0 +1,11 @@
+.gradient-custom-error {
+    background: #f093fb;
+    min-height: 100vh;
+    background: -webkit-linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+    background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 150px;
+    font-size: 25px;
+}

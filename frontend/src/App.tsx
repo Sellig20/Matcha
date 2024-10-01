@@ -31,8 +31,8 @@ const ContentComplete: React.FC = () => {
       <Route path="/" element={<HomePage />} /> 
       <Route path="/signup" element={<UserSignup />} /> 
       <Route path="/signin" element={<UserSignIn />} />
-          <Route path="/apiServeur/match" element={<Match />} />
-          <Route path="/apiServeur/chat" element={<Chat />} />
+          <Route path="/apiServeur/match" element={<ProtectedRoute component={Match} />} />
+          <Route path="/apiServeur/chat" element={<ProtectedRoute component={Chat} />} />
           <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
           <Route path="/apiServeur/usersettings" element={<ProtectedRoute component={UserSettings} />} />
         {( isProfileComplete === false &&

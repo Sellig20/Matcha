@@ -6,8 +6,6 @@ const HomePage: React.FC = () => {
 
     return (
         <section className="gradient-custom" >
-
-
         <div className="title">Welcome in Matcha !</div>
         <div className="bubble-container">
             <div className="bubble left">
