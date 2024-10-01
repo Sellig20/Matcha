@@ -1,0 +1,63 @@
+.gradient-custom {
+    background: #f093fb;
+    min-height: 100vh;
+    background: -webkit-linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+    background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+}
+
+.title {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    height: 200px;
+    font-size: 70px;
+    font: italic 3.2rem "Fira Sans", serif;
+    color: rgba(240, 147, 251, 1);
+    margin-bottom: 20px;
+    background-color: rgb(245, 87, 171);
+    border-radius: 50%;
+    box-shadow: 0 4px 5px rgba(39, 18, 49, 0.1);
+}
+
+.bubble-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .bubble {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    height: 150px;
+    padding: 60px;
+    margin: 10px;
+    border-radius: 70px;
+    box-shadow: 0 4px 5px rgba(39, 18, 49, 0.1);
+  }
+  
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .bubble.left {
+    align-self: flex-start;
+    background-color: rgb(245, 87, 171);
+    color: rgba(240, 147, 251, 1);
+  }
+  
+  .bubble.right {
+    align-self: flex-end;    
+    background-color: rgb(232, 148, 241);
+    color: rgb(224, 60, 148);
+  }

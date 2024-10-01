@@ -1,4 +1,9 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useAuth } from './security/useAuth';
+import { AuthProvider } from './security/authContext';
+import { ProfileProvider, useProfile } from './components/User/profileContext';
 import UserSettings from './components/User/UserSettings';
 import UserSignup from './components/User/UserSignup';
 import UserSignIn from './components/User/UserSignIn';
@@ -8,15 +13,9 @@ import FameRating from './components/FameRating';
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
 import Match from './components/Match';
-import { useAuth } from './security/useAuth';
-import { AuthProvider } from './security/authContext';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
+import HomePage from './components/HomePage';
 import UserProfile from './components/User/UserProfile';
 import UserProfileDisplay from './components/User/UserProfileDisplay';
-import { ProfileProvider, useProfile } from './components/User/profileContext';
-import { useEffect } from 'react';
-import { isPromise } from 'util/types';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -29,6 +28,7 @@ const ContentComplete: React.FC = () => {
   console.log("\n\n\n --------+++++++++----------- \n profile complete ? ", isProfileComplete, "\n-----+++++--------");
   return (
     <Routes>
+      <Route path="/" element={<HomePage />} /> 
       <Route path="/signup" element={<UserSignup />} /> 
       <Route path="/signin" element={<UserSignIn />} />
           <Route path="/apiServeur/match" element={<Match />} />
