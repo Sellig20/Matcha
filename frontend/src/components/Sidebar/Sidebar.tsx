@@ -43,8 +43,8 @@ const Sidebar: React.FC = () => {
             <div id="mySidenav" className="sidenav">
                 <a href="#" className="closebtn" onClick={closeNav}>&times;</a>
                 {<Link to="/apiServeur/usersettings" className="sidebar-link">Users settings</Link>}
-                {<Link to="/apiServeur/usersettings" className="sidebar-link">Confidentiality politic</Link>}
-                {<Link to="/apiServeur/usersettings" className="sidebar-link">Report something</Link>}
+                {<Link to="/apiServeur/confidentialitypolitic" className="sidebar-link">Confidentiality politic</Link>}
+                {<Link to="/apiServeur/report" className="sidebar-link">Report something</Link>}
                 {<a href="#" onClick={handleLogout}>Disconnect</a>}
             </div>
             <div id="main">

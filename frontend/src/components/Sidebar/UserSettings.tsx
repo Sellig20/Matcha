@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
 import UserCreate from "../../../../backend/src/orm/orm";
-import "../../assets/styles/UserSettings.css"
+import "../../assets/styles/Sidebar/UserSettings.css"
 
 const UserSettings: React.FC = () => {
     const [dataValidity, setValidity] = useState<any>(null);
@@ -100,7 +100,7 @@ const UserSettings: React.FC = () => {
     
                 <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                     <input data-mdb-ripple-init 
-                        className="btn btn-primary btn-lg" 
+                        className="btn btn-info btn-lg" 
                         type="modify" 
                         value="Modify" />
                 </div>

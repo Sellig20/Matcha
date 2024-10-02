@@ -4,13 +4,9 @@ import { useForm } from './useForm';
 import { genderEnum, sexualInterestEnum, tagsEnum } from './UserInterface';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from './profileContext';
+import "../../../assets/styles/Navbar/User/UserProfile.css"
 
 const UserProfile: React.FC = () => {
-    //user profile donc reprendre la table en bbdd,
-    //l'afficher,
-    //avoir la possibilite de la modifier
-    // const { isAuthenticated, checkAuth } = useAuth();
-    const [data, setData] = useState<any>(null);
     const [message, setMessage] = useState('');
     const [formValues, handleChange] = useForm({ usersettingsid: '', username: '', age: '', gender: '', sexualInterest: '', biography: '', tags: '' });
     const navigate = useNavigate();
@@ -19,36 +15,16 @@ const UserProfile: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            console.log("\n\n\nbefooooore axiosInstance");
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/userprofile`, formValues);
             setMessage(response.data.message);
-                console.log("UserProfile.tsx | enter your profile preferences");
-                console.log("\n\n\nressssssponse data ", response.data);
             if (response.data) {
-                console.log("\n\n je vais pour navigate\n\n");
                 await fetchProfile();
                 navigate('/apiServeur/userprofile/display');
             }
         } catch (err) {
-            setMessage(`UserProfile.tsxxxxx | Erreur frontend userprofile : ${err}`);
+            setMessage(`UserProfile.tsx | Erreur frontend userprofile : ${err}`);
         }
     };
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/userprofile`);
-    //             console.log("data de userprofile.tsx --> ", response);
-    //             setData(response.data);
-    //             setMessage(response.data.message);
-    //         } catch (error) {
-    //             console.error('userprofile.tsx | Error fetching home data', error);
-    //         }
-    //     };
-
-    //     // fetchData();
-
-    // }, []);
 
     return (
         <section className="gradient-custom" >
@@ -66,15 +42,15 @@ const UserProfile: React.FC = () => {
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline">
-                    <label>Username</label>
-                    <input 
-                        type="text" 
-                        id="username"
-                        className="form-control form-control-lg" 
-                        value={formValues.username}
-                        onChange={handleChange}
-                        required
-                    />
+                <label>Username</label>
+                <input 
+                    type="text" 
+                    id="username"
+                    className="form-control form-control-lg" 
+                    value={formValues.username}
+                    onChange={handleChange}
+                    required
+                />
             </div>
             </div>
 
@@ -176,7 +152,7 @@ const UserProfile: React.FC = () => {
 
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                 <input data-mdb-ripple-init 
-                    className="btn btn-primary btn-lg" 
+                    className="btn btn-info btn-lg" 
                     type="submit" 
                     value="Submit" />
             </div>

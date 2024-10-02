@@ -4,7 +4,6 @@ import { userSettingsModel } from '../model/userSettingsModel';
 export class userSettingsController {
     static async getAllUsers(req: Request, res: Response) {
         try {
-                // console.log("-------- usersettings constroller get all users-----------");
             const users = await userSettingsModel.getAllUsers();
             res.json(users);
             return;

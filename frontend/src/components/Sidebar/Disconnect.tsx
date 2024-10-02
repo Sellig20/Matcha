@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
-import "../../assets/styles/Sidebar/Report.css"
+import "../../assets/styles/Sidebar/Disconnect.css"
 
-const Report: React.FC = () => {
+const Disconnect: React.FC = () => {
 
     return (
         <div>
             <h1>
-                Report = bla bla bla
+                Disconnect = bla bla bla
             </h1>
         </div>
     )
 }
 
-export default Report;
+export default Disconnect;

@@ -1,6 +1,5 @@
 h1 {
-  background-color:hotpink;
-  color: crimson;
+  color: rgb(156, 36, 152);
 }
 
 .navbar {
@@ -18,14 +17,15 @@ h1 {
 }
 
 .btn-warning{
-  color: white;
 }
 
-.btn-primary {
-  background-color: violet;
+.btn-info {
+  color: rgb(255, 255, 255);
 }
 
-
+.card {
+  background-color: rgb(58, 156, 254);
+}
 
 .sidenav {
   height: 100%;

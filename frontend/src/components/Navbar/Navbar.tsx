@@ -13,14 +13,16 @@ const Navbar = () => {
                 <Link to="/apiServeur/match" className="navbar-brand">Matcha</Link>
                 </div>
                 <ul className="nav navbar d-flex">
-                    {isAuthenticated === true && <li><Link to="/apiServeur/match" type="button" className="btn btn-warning me-2">Match</Link></li>}
-                    {isAuthenticated === true && <li><Link to="/apiServeur/fm" type="button" className="btn btn-warning me-2">Fame Rating</Link></li>}
-                    {isAuthenticated === true && <li><Link to="/apiServeur/chat" type="button" className="btn btn-warning me-2">Chat</Link></li>}
-                    {isAuthenticated === true && <li><Link to="/apiServeur/userprofile" type="button" className="btn btn-warning me-2">UserProfile</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/mymatchaprofile" type="button" className="btn btn-info me-2">My Matcha profile</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/match" type="button" className="btn btn-info me-2">Mes Match</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/fm" type="button" className="btn btn-info me-2">Fame Rating</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/chat" type="button" className="btn btn-info me-2">Chat</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/map" type="button" className="btn btn-info me-2">Map</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/userprofile" type="button" className="btn btn-info me-2">My UserProfile Settings</Link></li>}
                 </ul>
                 <div className="d-flex">
-                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signup" className="btn btn-primary me-2">Sign up</Link>}
-                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signin" className="btn btn-primary">Sign in</Link>}
+                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signup" className="btn btn-info me-2">Sign up</Link>}
+                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signin" className="btn btn-info">Sign in</Link>}
                 </div>
             </div>
         </nav>

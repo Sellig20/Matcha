@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
-import "../../assets/styles/Sidebar/Report.css"
+import "../../assets/styles/Navbar/Map.css"
 
-const Report: React.FC = () => {
+const Map: React.FC = () => {
 
     return (
         <div>
             <h1>
-                Report = bla bla bla
+                Map = trouver les bougs sur la map, me trouver sur la map
             </h1>
         </div>
     )
 }
 
-export default Report;
+export default Map;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
+import "../../assets/styles/Navbar/Chat.css"
 
 const Chat = () => {
     const [data, setData] = useState<any>(null);

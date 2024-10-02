@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../../../assets/styles/Navbar/User/UserSignin.css'
 import { useAuth } from '../../../security/useAuth';
 import { useForm } from './useForm';
 
@@ -20,8 +21,8 @@ const UserSignIn: React.FC = () => {
                 localStorage.setItem('token', response.data.token);
                 checkAuth();
             }
-        } catch (err) {
-            setMessage("UserSignin.tsx | Erreur frontend signin");
+        } catch (error) {
+            setMessage(`UserSignin.tsx | Erreur frontend signin : ${error}`);
         }
     };
 
@@ -77,7 +78,7 @@ const UserSignIn: React.FC = () => {
 
                     <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                         <input data-mdb-ripple-init 
-                            className="btn btn-primary btn-lg" 
+                            className="btn btn-info btn-lg" 
                             type="submit" 
                             value="Submit" />
                     </div>

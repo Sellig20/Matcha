@@ -13,9 +13,13 @@ import FameRating from './components/Navbar/FameRating';
 import Sidebar from './components/Sidebar/Sidebar';
 import Chat from './components/Navbar/Chat';
 import Match from './components/Navbar/Match';
-import HomePage from './components/HomePage';
+import LandingPage from './components/LandingPage';
 import UserProfile from './components/Navbar/User/UserProfile';
 import UserProfileDisplay from './components/Navbar/User/UserProfileDisplay';
+import MatchaProfile from './components/Navbar/User/MatchaProfile';
+import Map from './components/Navbar/Map';
+import ConfidentialityPolitic from './components/Sidebar/ConfidentialityPolitic';
+import Report from './components/Sidebar/Report';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -25,16 +29,20 @@ const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const ContentComplete: React.FC = () => {
   const { isProfileComplete } = useProfile();
 
-  console.log("\n\n\n --------+++++++++----------- \n profile complete ? ", isProfileComplete, "\n-----+++++--------");
+  console.log("\n\n is profile completed ? ", isProfileComplete);
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} /> 
+      <Route path="/" element={<LandingPage />} /> 
       <Route path="/signup" element={<UserSignup />} /> 
       <Route path="/signin" element={<UserSignIn />} />
+          <Route path="/apiServeur/mymatchaprofile" element={<ProtectedRoute component={MatchaProfile} />} />
           <Route path="/apiServeur/match" element={<ProtectedRoute component={Match} />} />
           <Route path="/apiServeur/chat" element={<ProtectedRoute component={Chat} />} />
           <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
+          <Route path="/apiServeur/map" element={<ProtectedRoute component={Map} />} />
           <Route path="/apiServeur/usersettings" element={<ProtectedRoute component={UserSettings} />} />
+          <Route path="/apiServeur/confidentialitypolitic" element={<ProtectedRoute component={ConfidentialityPolitic} />} />
+          <Route path="/apiServeur/report" element={<ProtectedRoute component={Report} />} />
         {( isProfileComplete === false &&
           <Route path="/apiServeur/userprofile" element={<ProtectedRoute component={UserProfile} />} />
         )}

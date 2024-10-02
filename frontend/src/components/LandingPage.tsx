@@ -1,8 +1,8 @@
 import React from 'react';
-import '../assets/styles/HomePage.css'
+import '../assets/styles/LandingPage.css'
 import { Link } from 'react-router-dom';
 
-const HomePage: React.FC = () => {
+const LandingPage: React.FC = () => {
 
     return (
         <section className="gradient-custom" >
@@ -25,4 +25,4 @@ const HomePage: React.FC = () => {
     )
 }
 
-export default HomePage;
+export default LandingPage;

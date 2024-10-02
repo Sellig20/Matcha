@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../../../assets/styles/userSignup.css'
+import '../../../assets/styles/Navbar/User/UserSignup.css'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../security/useAuth';
 import { useForm } from './useForm';
@@ -18,7 +18,6 @@ const UserSignup: React.FC = () => {
             setMessage(response.data.message);
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
-                console.log("UserSignup.tsx | *********************** signup correct and prepare to navigate *****************************");
                 checkAuth();
             }
         } catch (err) {
@@ -110,7 +109,7 @@ const UserSignup: React.FC = () => {
 
                     <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                         <input data-mdb-ripple-init 
-                            className="btn btn-primary btn-lg" 
+                            className="btn btn-info btn-lg" 
                             type="submit" 
                             value="Submit" />
                     </div>

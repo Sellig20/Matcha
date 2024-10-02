@@ -5,6 +5,7 @@ import { useAuth } from '../../../security/useAuth';
 import { genderEnum, sexualInterestEnum, tagsEnum, UserProfileInterface } from './UserInterface';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from './profileContext';
+import "../../../assets/styles/Navbar/User/UserProfile.css"
 
 const UserProfileDisplay: React.FC = () => {
 
@@ -70,7 +71,7 @@ const UserProfileDisplay: React.FC = () => {
 
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                 <input data-mdb-ripple-init 
-                    className="btn btn-primary btn-lg" 
+                    className="btn btn-info btn-lg" 
                     type="modify" 
                     value="Modify" />
             </div>
