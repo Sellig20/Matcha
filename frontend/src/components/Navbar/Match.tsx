@@ -1,5 +1,4 @@
-import '../../../assets/styles/Navbar/Match.css'
-
+import '../../assets/styles/Navbar/Match.css'
 
 const Match = () => {
     return (
