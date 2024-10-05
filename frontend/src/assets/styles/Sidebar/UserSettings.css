@@ -29,3 +29,18 @@
     width: 90%;
     margin-left: -7.5%;
 }
+
+@font-face {
+    font-family: 'trukin';
+    src: url('keep-on-truckin.regular.ttf') format('truetype');
+}
+
+.fields {
+    border: 1px;
+    border-color: rgba(240, 147, 251, 0.5);
+    background-color: rgb(252, 83, 106);
+    border-radius: 50% 20% / 10% 40%;
+    padding: 7px;
+    width: 100px;
+    font-family: trukin;
+}

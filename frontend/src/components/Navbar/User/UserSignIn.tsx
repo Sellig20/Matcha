@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import '../../../assets/styles/Navbar/User/UserSignin.css'
 import { useAuth } from '../../../security/useAuth';
 import { useForm } from './useForm';
+import { useProfile } from './profileContext';
 
 const UserSignIn: React.FC = () => {
     const { isAuthenticated, checkAuth } = useAuth();
+    const { isProfileComplete } = useProfile();
     const [message, setMessage] = useState('');
     const [formValues, handleChange] = useForm({email: '', password: '' });
     const navigate = useNavigate();
@@ -27,8 +29,13 @@ const UserSignIn: React.FC = () => {
     };
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isAuthenticated && isProfileComplete === false) {
+            console.log("is authent oui je vais navigate a userprofile");
             navigate('/apiServeur/userprofile');
+        }
+        else if (isAuthenticated && isProfileComplete) {
+            console.log("Profile a deja ete complete, tu sign in, on va te faire matcher bb");
+            navigate('/apiServeur/mymatchaprofile');
         }
     })
 

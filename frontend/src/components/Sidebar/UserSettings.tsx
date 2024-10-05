@@ -46,7 +46,9 @@ const UserSettings: React.FC = () => {
                 <div className="row">
                 <div className="col-md-6 mb-4 pb-2">
                 <div data-mdb-input-init className="form-outline">
+                    <div className="fields">
                     <label>First name</label>
+                    </div>
                     <div className="highlight-text">
                     <p>{data?.user?.first_name}</p>
                     </div>

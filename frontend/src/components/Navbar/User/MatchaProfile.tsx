@@ -5,8 +5,6 @@ import "../../../assets/styles/Navbar/User/MatchaProfile.css"
 const MatchaProfile: React.FC = () => {
 
     return (
-    
-
         <section className="gradient-custom">
         <div>
             <h3>

@@ -8,10 +8,6 @@ import { authenticateWithToken } from "./authMiddleware";
 
 const router = Router();
 
-// router.get('/allusers', (req: Request, res: Response) => {
-//     userSettingsController.getAllUsers(req, res);
-// });
-
 router.post('/signup', (req: Request, res: Response) => {
     userSignupController.signup(req, res);
 });

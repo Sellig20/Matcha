@@ -13,7 +13,6 @@ export class userProfileController {
             }
             const alreadyUser = await userProfileModel.displayProfile("id", userId);
             const midUser = alreadyUser ? alreadyUser[0] : null;
-            // console.log("\n\n\n ====> midUser : ", midUser);
             const userIdNumber = parseInt(userId, 10);
             const achieveUser: UserCreate = {
                 user_name: req.body.username,
