@@ -1,3 +1,7 @@
+@font-face {
+    font-family: 'trukin';
+    src: url('keep-on-truckin.regular.ttf') format('truetype');
+}
 .gradient-custom {
     background: #f093fb;
     min-height: 100vh;
@@ -9,38 +13,45 @@
     padding: 40px;
 }
 
+.bigBox {
+    width: 100%;
+    padding: 20px;
+}
+
+.us .row, .vertical {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.vertical {
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+
 .highlight-text {
-    position: relative;
     padding: 10px;
-    z-index: 1;
+    text-align: center;
+    font-family: trukin;
+    color: rgba(129, 13, 142, 0.681);
+    font-size: 22px;
 }
 
-.highlight-text::before {
-    content: '';
-    position: absolute;
-    top: 20%;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    height: 20px;
-    background: rgba(240, 147, 251, 0.5);
-    transform: rotate(-3deg);
-    border-radius: 30px;
-    width: 90%;
-    margin-left: -7.5%;
-}
-
-@font-face {
-    font-family: 'trukin';
-    src: url('keep-on-truckin.regular.ttf') format('truetype');
+.form-outline {
+    background-color:#eaaaf1;
+    border-radius: 50% 20% / 10% 40%;
 }
 
 .fields {
     border: 1px;
-    border-color: rgba(240, 147, 251, 0.5);
-    background-color: rgb(252, 83, 106);
+    background-color: rgb(252, 83, 156);
     border-radius: 50% 20% / 10% 40%;
     padding: 7px;
-    width: 100px;
+    width: 100%;
+    text-align: center;
     font-family: trukin;
+    font-size: 25px;
+    color: rgba(129, 13, 142, 0.681);
 }

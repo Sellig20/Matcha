@@ -35,6 +35,9 @@ export const ProfileProvider: React.FC<{ children: ReactNode }> = ({ children })
     useEffect(() => {
         if (isAuthenticated === true && isProfileComplete === true) {
             fetchProfile();
+        } else {
+            setProfile(null);
+            setIsProfileComplete(false);
         }
       }, [isAuthenticated, isProfileComplete]);
 

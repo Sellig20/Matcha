@@ -28,21 +28,25 @@ const UserProfile: React.FC = () => {
 
     return (
         <section className="gradient-custom" >
+        <div>
+        <h1>🩵 Let us know more about you ! 🩵</h1>
+        </div>
         <div className="container py-5 h-100 ">
         <div className="row justify-content-center align-items-center h-100" >
         <div className="col-12 col-lg-9 col-xl-7">
         <div className="card shadow-2-strong card-registration" style={{ borderRadius: '150px'}}>
         <div className="card-body p-4 p-md-5 ">
-            <h2>Welcome, please fill your informations </h2>
-        <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">My Profile</h3>
+        {/* <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">My Profile</h3> */}
 
         <div>
             <form onSubmit={handleSubmit}>
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline">
+            <div data-mdb-input-init className="form-outline-display">
+                <div className="fields-profile">
                 <label>Username</label>
+                </div>
                 <input 
                     type="text" 
                     id="username"
@@ -55,8 +59,10 @@ const UserProfile: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline">
+            <div data-mdb-input-init className="form-outline-display">
+                <div className="fields-profile">
                 <label>Gender</label>
+                </div>
                 <select
                     id="gender"
                     name="gender"
@@ -78,9 +84,11 @@ const UserProfile: React.FC = () => {
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline">
-                <label>age</label>
-                <input 
+            <div data-mdb-input-init className="form-outline-display">
+                <div className="fields-profile">
+                <label>Age</label>
+                </div>
+                <input
                     type="text" 
                     id="age"
                     className="form-control form-control-lg" 
@@ -92,8 +100,10 @@ const UserProfile: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline">
+            <div data-mdb-input-init className="form-outline-display">
+                <div className="fields-profile">
                 <label>Sexual Interest</label>
+                </div>
                 <select 
                     id="sexualInterest"
                     name="sexualInterest"
@@ -115,8 +125,10 @@ const UserProfile: React.FC = () => {
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline">
+            <div data-mdb-input-init className="form-outline-display">
+                <div className="fields-profile">
                 <label>Biography</label>
+                </div>
                 <textarea
                     id="biography"
                     name="biography"
@@ -129,8 +141,10 @@ const UserProfile: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline">
+            <div data-mdb-input-init className="form-outline-display">
+                <div className="fields-profile">
                 <label>Tags</label>
+                </div>
                 <select 
                     id="tags"
                     name="tags"
@@ -152,9 +166,10 @@ const UserProfile: React.FC = () => {
 
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                 <input data-mdb-ripple-init 
-                    className="btn btn-info btn-lg" 
+                    className="btn-modify btn-info btn-lg" 
                     type="submit" 
-                    value="Submit" />
+                    value="Submit"
+                    style={{ color: 'violet', fontFamily: 'trukin'}} />
             </div>
             </form>
         {message && <p>{message}</p>}

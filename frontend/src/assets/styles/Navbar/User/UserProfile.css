@@ -1,3 +1,11 @@
 h2 {
     color: orchid;
 }
+
+
+
+.form-control {
+    color: rgb(214, 51, 214);
+    font-family: 'Courier New', Courier, monospace, bold;
+    font-size: 15px;
+}

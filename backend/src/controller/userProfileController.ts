@@ -29,9 +29,7 @@ export class userProfileController {
                 age_lower_bound: 0,
                 age_upper_bound: 0,
             }
-            console.log(" \n\n\n ===> req.body.username : ", req.body.username);
             const response = await userSignupModel.updateUserToken(userIdNumber, achieveUser);
-            console.log("\n\n\n +++++++++++++++++ res = ", response);
             res.status(201).json({ message: `userProfileController.ts | Fill profile success`, response});
         } catch (err) {
             return res.status(500).json({ message: 'Server error', err });
@@ -54,7 +52,6 @@ export class userProfileController {
                 res.status(201).json({ message: 'UserProfileController.ts | profile complete', displayProfile, isProfileComplete });
             }
             else {
-                console.log("\n\n\n\n oh no no non o no");
                 const isProfileComplete = false;
                 res.status(422).json({ message: 'UserProfileController.ts | profile incomplete', displayProfile, isProfileComplete });
                 return ;

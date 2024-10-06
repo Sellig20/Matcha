@@ -1,0 +1,9 @@
+.bigBox-fm {
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.fm-row {
+    display: flex;
+    justify-content: center;
+}

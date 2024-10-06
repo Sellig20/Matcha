@@ -11,6 +11,7 @@ export class userProfileModel {
 
     static async displayProfile(key: string, value?: string | number) {
         const response = await orm?.read<"users", any>("users", key, value);
+        console.log("response model db = ", response);
         return response;
     }
     
