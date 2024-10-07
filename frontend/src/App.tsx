@@ -20,6 +20,7 @@ import MatchaProfile from './components/Navbar/User/MatchaProfile';
 import Map from './components/Navbar/Map';
 import ConfidentialityPolitic from './components/Sidebar/ConfidentialityPolitic';
 import Report from './components/Sidebar/Report';
+import UserProfileUpdate from './components/Navbar/User/UserProfileUpdate';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -49,7 +50,10 @@ const ContentComplete: React.FC = () => {
         {( isProfileComplete === true &&
           <Route path="/apiServeur/userprofile/display" element={<ProtectedRoute component={UserProfileDisplay} />} />
         )}
-    </Routes>
+        {( isProfileComplete === true &&
+        <Route path="/apiServeur/userprofile/display/update" element={<ProtectedRoute component={UserProfileUpdate} />} />
+        )}
+      </Routes>
   );
 };
 

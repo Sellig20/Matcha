@@ -27,7 +27,11 @@ router.post('/userprofile', authenticateWithToken, (req, res) => {
 router.get('/userprofile/display', authenticateWithToken, (req, res) => {
     console.log("\n\n user profile --- display route.ts");
     userProfileController.displayProfile(req, res);
-    
+})
+
+router.put('/userprofile/display/updated', authenticateWithToken, (req, res) => {
+    console.log("\n\n user profile --- display updated route.ts");
+    // userProfileController.displayProfileUpdated(req, res);
 })
 
 router.get('/mymatchaprofile', authenticateWithToken, (req, res) => {

@@ -16,6 +16,7 @@ export class userProfileModel {
     }
     
     static async createNewProfile(newUser: UserCreate) {
+        console.log("\n\n++++++++++++++++++++++++\nNew profile created => ", newUser);
         const response = await orm?.create<"users">("users", newUser);
         return response;
     }

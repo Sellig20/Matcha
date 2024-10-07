@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { UserSettingsInterface } from "../databaseInterfaces";
 import dotenv from 'dotenv';
 import { UserCreate } from "../orm/schema";
 dotenv.config();
@@ -31,10 +30,12 @@ export class userSignupController {
                 email: email,
                 first_name: firstname,
                 last_name: lastname,
+                age: 0,
                 password_hash: hashedPwd,
                 validation_token: token,
                 gender: "",
                 biography: "",
+                sexual_interest: "",
                 fame_rating: 0,
                 stated_location: "",
                 real_location: "",

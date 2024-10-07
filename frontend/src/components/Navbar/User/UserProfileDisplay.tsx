@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from '../../../security/axiosInstance';
-
 import { useProfile } from './profileContext';
 import "../../../assets/styles/Navbar/User/UserProfileDisplay.css"
+import { useNavigate } from 'react-router-dom';
 
 const UserProfileDisplay: React.FC = () => {
 
-    const profile  = useProfile();
+    const profile = useProfile();
+    const navigate = useNavigate();
+
+    const handleModifyClick = () => {
+        navigate('/apiServeur/userprofile/display/update');
+    }
 
     return (
         <section className="gradient-custom" >
@@ -98,7 +102,8 @@ const UserProfileDisplay: React.FC = () => {
                     className="btn btn-info btn-lg" 
                     type="modify" 
                     value="Modify"
-                    style={{ color: 'violet', fontFamily: 'trukin'}} />
+                    style={{ color: 'violet', fontFamily: 'trukin'}} 
+                    onClick={handleModifyClick} />
             </div>
         </div>
         </div>

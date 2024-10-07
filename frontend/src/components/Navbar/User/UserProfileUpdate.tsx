@@ -1,35 +1,39 @@
 import React, { useState } from 'react';
 import axiosInstance from '../../../security/axiosInstance';
-import { useForm } from './useForm';
 import { genderEnum, sexualInterestEnum, tagsEnum } from './UserInterface';
-import { useNavigate } from 'react-router-dom';
+import { useForm } from './useForm';
 import { useProfile } from './profileContext';
-import "../../../assets/styles/Navbar/User/UserProfile.css"
+import { useNavigate } from 'react-router-dom';
 
-const UserProfile: React.FC = () => {
+const UserProfileUpdate: React.FC = () => {
+
     const [message, setMessage] = useState('');
-    const [formValues, handleChange] = useForm({ usersettingsid: '', username: '', age: '', gender: '', sexualInterest: '', biography: '', tags: '' });
+    const { profile , fetchProfile } = useProfile();
+    const [formValues, handleChange] = useForm({ usersettingsid: '', username: profile?.user_name || '', age: profile?.age || 0, gender: profile?.gender || '', sexualInterest: profile?.sexualinterest || '', biography: profile?.biography || '', tags: profile?.tags || '' });
     const navigate = useNavigate();
-    const { fetchProfile } = useProfile();
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post(`http://localhost:8000/apiServeur/userprofile`, formValues);
+            const response = await axiosInstance.put(`http://localhost:8000/apiServeur/userprofile`, formValues);
             setMessage(response.data.message);
             if (response.data) {
                 await fetchProfile();
                 navigate('/apiServeur/userprofile/display');
             }
         } catch (error) {
-            setMessage(`UserProfile.tsx | Erreur frontend userprofile : ${error}`);
+            setMessage(`UserProfile.tsx | Erreur frontend userprofileUPDATE : ${error}`);
         }
     };
 
+    const handleModifyClick = () => {
+
+    };
+    
     return (
         <section className="gradient-custom" >
         <div>
-        <h1>🩵 Let us know more about you ! 🩵</h1>
+        <h1>🩵 Modify your informations ! 🩵</h1>
         </div>
         <div className="container py-5 h-100 ">
         <div className="row justify-content-center align-items-center h-100" >
@@ -37,6 +41,8 @@ const UserProfile: React.FC = () => {
         <div className="card shadow-2-strong card-registration" style={{ borderRadius: '150px'}}>
         <div className="card-body p-4 p-md-5 ">
         {/* <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">My Profile</h3> */}
+
+        <div className="bigBox-profile-display">
 
         <div>
             <form onSubmit={handleSubmit}>
@@ -179,8 +185,9 @@ const UserProfile: React.FC = () => {
         </div>
         </div>
         </div>
+        </div>
         </section>
     )
 }
 
-export default UserProfile;
+export default UserProfileUpdate;

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import ProtectedRoute from '../../security/ProtectedRoute';
+import '../../assets/styles/Navbar/Navbar.css'
 import { useAuth } from '../../security/useAuth';
 import { useEffect, useState } from 'react';
 import { useProfile } from './User/profileContext';
