@@ -21,6 +21,7 @@ import Map from './components/Navbar/Map';
 import ConfidentialityPolitic from './components/Sidebar/ConfidentialityPolitic';
 import Report from './components/Sidebar/Report';
 import UserProfileUpdate from './components/Navbar/User/UserProfileUpdate';
+import UserSettingsUpdate from './components/Sidebar/UserSettingsUpdate';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -30,7 +31,7 @@ const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const ContentComplete: React.FC = () => {
   const { isProfileComplete } = useProfile();
 
-  console.log("\n\n is profile completed ? ", isProfileComplete);
+  console.log("\n\n Welcome to the app. Is profile completed ? ", isProfileComplete);
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} /> 
@@ -42,6 +43,7 @@ const ContentComplete: React.FC = () => {
           <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
           <Route path="/apiServeur/map" element={<ProtectedRoute component={Map} />} />
           <Route path="/apiServeur/usersettings" element={<ProtectedRoute component={UserSettings} />} />
+          <Route path="/apiServeur/usersettings/update" element={<ProtectedRoute component={UserSettingsUpdate} />} />
           <Route path="/apiServeur/confidentialitypolitic" element={<ProtectedRoute component={ConfidentialityPolitic} />} />
           <Route path="/apiServeur/report" element={<ProtectedRoute component={Report} />} />
         {( isProfileComplete === false &&

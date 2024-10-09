@@ -4,11 +4,6 @@ import { Pool } from 'pg';
 
 dotenv.config();
 
-console.log("\n ENV VARIABLES \n-> ", process.env.POSTGRES_USER,
-  "\n-> ", process.env.POSTGRES_PASSWORD,
-  "\n-> ", process.env.POSTGRES_HOST,
-  "\n-> ", process.env.POSTGRES_DB);
-
 export const pool = new Pool({
   
   user: process.env.POSTGRES_USER,

@@ -2,26 +2,23 @@ import { Request, Response } from "express";
 import { userSettingsModel } from '../model/userSettingsModel';
 //dans le controller on utilise le model et son injection pour manipuler les donnees entrantes/sortantes
 export class userSettingsController {
+
     static async getAllUsers(req: Request, res: Response) {
         try {
             const users = await userSettingsModel.getAllUsers();
-            res.json(users);
-            return;
-        } catch (err) {
-                console.error(err);
-            res.status(500).json('Erreur du serveur pour extraction de la table usersettings\n');
-            return;
+            return res.json(users);
+        } catch (error) {
+            return res.status(500).json({ message: 'userSettingsController.ts getAllUsers | Server error', error });
         }
     }
 
-    // static async getUserById(req: Request, res: Response, userId: number) {
-    //     try {
-    //             console.log("-------- usersettings constroller get user by id-----------");
-    //         const users = await userSettingsModel.getUserById(userId);
-    //         res.json(users);
-    //     } catch (err) {
-    //             console.error(err);
-    //         res.status(500).json('Erreur du serveur pour extraction de l id');
-    //     }
-    // }
+    static async updateSettings(req: Request, res: Response) {
+        try {
+            const updatedUser = await userSettingsModel.updateUser(id, updateData);
+            return res.json(updatedUser);
+        } catch (error) {
+            return res.status(500).json({ message: 'userSettingsController.ts update settings | Server error', error });
+        }
+    }
+
 }

@@ -7,7 +7,6 @@ export class userProfileController {
     static async getUserIdProfile(req: Request, res: Response) {//TO CREATE NEW PROFILE
         try {
             const userId = req.userId;
-            console.log("\n\n\n ------------ userprofile controller get user id, userid is : ", userId);
             if (!userId) {
                 return res.status(400).json({ message: 'UserProfileController.ts | Error user id not found in request' });
             }
@@ -44,12 +43,10 @@ export class userProfileController {
             if (!userId) {
                 return res.status(400).json({ message: 'UserProfileController.ts | Error user id not found in request' });
             }
-            console.log("\n\n\n ------------------- userProfileModel.displayProfile");
             const displayProfile = await userProfileModel.displayProfile("id", userId);
             if (displayProfile) {
-                console.log("\n-----------------\n DISPLAY PROFILE => ", displayProfile);
+                console.log("\n-----------------\n DISPLAY PROFILE from userProfileController.ts => ", displayProfile);
                 const gogo = displayProfile[0].user_name;
-                console.log("\n\n\n\n\n GOGO ISSSSSSSSSSSSSSSSSSSS ====> ", gogo);
                 const isProfileComplete = true;
                 res.status(201).json({ message: 'UserProfileController.ts | profile complete', displayProfile, isProfileComplete });
             }

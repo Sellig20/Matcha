@@ -11,12 +11,10 @@ export class userProfileModel {
 
     static async displayProfile(key: string, value?: string | number) {
         const response = await orm?.read<"users", any>("users", key, value);
-        console.log("response model db = ", response);
         return response;
     }
     
     static async createNewProfile(newUser: UserCreate) {
-        console.log("\n\n++++++++++++++++++++++++\nNew profile created => ", newUser);
         const response = await orm?.create<"users">("users", newUser);
         return response;
     }

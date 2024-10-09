@@ -30,11 +30,11 @@ const UserSignIn: React.FC = () => {
 
     useEffect(() => {
         if (isAuthenticated && isProfileComplete === false) {
-            console.log("is authent oui je vais navigate a userprofile");
+            console.log("userSignin.tsx -> is authenticated and profile is UNcompleted please fill your profile");
             navigate('/apiServeur/userprofile');
         }
         else if (isAuthenticated && isProfileComplete) {
-            console.log("Profile a deja ete complete, tu sign in, on va te faire matcher bb");
+            console.log("userSignin.tsx -> profile is completed let's go to matcha");
             navigate('/apiServeur/mymatchaprofile');
         }
     })

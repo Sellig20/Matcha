@@ -98,13 +98,12 @@ const UserProfileDisplay: React.FC = () => {
             </div>
 
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
-                <input data-mdb-ripple-init 
-                    className="btn btn-info btn-lg" 
-                    type="modify" 
-                    value="Modify"
-                    style={{ color: 'violet', fontFamily: 'trukin'}} 
-                    onClick={handleModifyClick} />
-            </div>
+                    <button data-mdb-ripple-init 
+                        className="btn btn-info btn-lg" 
+                        style={{ color: 'violet', fontFamily: 'trukin'}}
+                        onClick={handleModifyClick}
+                    > Modify </button>
+                </div>
         </div>
         </div>
         </div>

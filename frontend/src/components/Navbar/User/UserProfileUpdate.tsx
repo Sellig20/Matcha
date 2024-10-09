@@ -22,7 +22,7 @@ const UserProfileUpdate: React.FC = () => {
                 navigate('/apiServeur/userprofile/display');
             }
         } catch (error) {
-            setMessage(`UserProfile.tsx | Erreur frontend userprofileUPDATE : ${error}`);
+            setMessage(`UserProfileUpdate.tsx | Erreur frontend userprofileUPDATE : ${error}`);
         }
     };
 

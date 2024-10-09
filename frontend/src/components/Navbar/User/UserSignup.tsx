@@ -33,21 +33,27 @@ const UserSignup: React.FC = () => {
 
         return (
         <section className="gradient-custom" >
+        <div>
+        <h1>🩵 Sign up ! 🩵</h1>
+        </div>
         <div className="container py-5 h-100 ">
             <div className="row justify-content-center align-items-center h-100" >
             <div className="col-12 col-lg-9 col-xl-7">
                 <div className="card shadow-2-strong card-registration" style={{ borderRadius: '150px'}}>
                 <div className="card-body p-4 p-md-5 ">
                     
-                    <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">Sign up !</h3>
+                    {/* <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">Sign up !</h3> */}
                     
                     <form onSubmit={handleSubmit}>
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline">
+                        <div data-mdb-input-init className="form-outline-signup">
+                            <div className="fields-signup">
                             <label className="form-label" htmlFor="firstName">First Name</label>
-                            <input 
+                            </div>
+                            <div className="highlight-text-signup">
+                            <input
                                 type="text" 
                                 id="firstname"
                                 className="form-control form-control-lg" 
@@ -55,14 +61,18 @@ const UserSignup: React.FC = () => {
                                 onChange={handleChange}
                                 required 
                             />
+                            </div>
                         </div>
                         </div>
                     </div>
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline">
+                        <div data-mdb-input-init className="form-outline-signup">
+                            <div className="fields-signup">
                             <label className="form-label" htmlFor="lastName">Last Name</label>
+                            </div>
+                            <div className="highlight-text-signup">
                             <input 
                                 type="text" 
                                 id="lastname" 
@@ -71,14 +81,18 @@ const UserSignup: React.FC = () => {
                                 onChange={handleChange}
                                 required 
                             />
+                            </div>
                         </div>
                         </div>
                     </div>
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline">
+                        <div data-mdb-input-init className="form-outline-signup">
+                            <div className="fields-signup">
                             <label className="form-label" htmlFor="emailAddress">Email</label>
+                            </div>
+                            <div className="highlight-text-signup">
                             <input 
                                 type="email" 
                                 id="email" 
@@ -87,14 +101,18 @@ const UserSignup: React.FC = () => {
                                 onChange={handleChange}
                                 required 
                             />
+                            </div>
                         </div>
                         </div>
                     </div>
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline">
+                        <div data-mdb-input-init className="form-outline-signup">
+                            <div className="fields-signup">
                             <label className="form-label" htmlFor="passwordAddress">Password</label>
+                            </div>
+                            <div className="highlight-text-signup">
                             <input 
                                 type="password" 
                                 id="password" 
@@ -103,6 +121,7 @@ const UserSignup: React.FC = () => {
                                 onChange={handleChange}
                                 required 
                             />
+                            </div>
                         </div>
                         </div>
                     </div>

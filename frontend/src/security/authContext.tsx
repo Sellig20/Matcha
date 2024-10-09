@@ -16,7 +16,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
     const signedOut = async () => {
         try {
-            console.log("\n\n\nUsersignup.tsx | signedout xxxxxx");
+            console.log("\n\n\nUsersignup.tsx | signedout");
             setIsAuthenticated(null);
         } catch (err) {
             console.log("\n\n\nUseAuth.tsx | Error during sign out: ", err);    

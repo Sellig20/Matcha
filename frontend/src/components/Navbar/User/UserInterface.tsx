@@ -64,6 +64,12 @@ export interface UserProfileInterface {
     biography: string;
     tags: tagsEnum;
     hasProfilePicture: boolean;
+    validationtoken: number;
+    isvalidatedtoken: boolean;
+    first_name: string;
+    last_name: string;
+    email: string;
+    pass_word: string;
 }
 
 export interface UserSettingsArray {

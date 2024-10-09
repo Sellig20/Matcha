@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
 import "../../assets/styles/Sidebar/UserSettings.css"
+import { useNavigate } from 'react-router-dom';
 
 const UserSettings: React.FC = () => {
     const [dataValidity, setValidity] = useState<any>(null);
     const [data, setData] = useState<any>(null); //remplacer les any par une interface ? UserCreate ? a voir
+    const navigate = useNavigate();
+
+    const handleModifyClick = () => {
+        navigate('/apiServeur/usersettings/update');
+    }
 
     useEffect(() => {
         const fetchValidity = async () => {
@@ -105,11 +111,11 @@ const UserSettings: React.FC = () => {
                 </div>
     
                 <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
-                    <input data-mdb-ripple-init 
+                    <button data-mdb-ripple-init 
                         className="btn btn-info btn-lg" 
-                        type="modify" 
-                        value="Modify"
-                        style={{ color: 'violet', fontFamily: 'trukin'}} />
+                        style={{ color: 'violet', fontFamily: 'trukin'}}
+                        onClick={handleModifyClick}
+                    > Modify </button>
                 </div>
             </div>
             </div>

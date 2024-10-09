@@ -17,7 +17,6 @@ declare module 'express-serve-static-core' {
 export async function authenticateWithToken(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    console.log("\n\n\n -------- authenticate with token -------");
     if (!token) {
         return res.status(401).json({ valid: false });
     }
@@ -35,7 +34,6 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
         if (user && user.validation_token === token) {
                 req.user = user;
                 req.userId = user.id;
-                console.log("\n\n\n ---------- next --------");
             next();
         } else {
             console.log("\n\n\nAuthMiddleware.ts | Error : authMiddleware backend else du if token === token");

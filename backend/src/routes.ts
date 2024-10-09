@@ -25,12 +25,10 @@ router.post('/userprofile', authenticateWithToken, (req, res) => {
 });
 
 router.get('/userprofile/display', authenticateWithToken, (req, res) => {
-    console.log("\n\n user profile --- display route.ts");
     userProfileController.displayProfile(req, res);
 })
 
 router.put('/userprofile/display/updated', authenticateWithToken, (req, res) => {
-    console.log("\n\n user profile --- display updated route.ts");
     // userProfileController.displayProfileUpdated(req, res);
 })
 
@@ -43,7 +41,6 @@ router.get('/match', authenticateWithToken, (req, res) => {
 });
 
 router.get('/fm', authenticateWithToken, (req, res) => {
-    console.log("--------- fm routes.ts -------------");
     res.json({ message: 'This is a protected route -- /FM', user: req.user });
 });
 
@@ -62,6 +59,11 @@ router.get('/checktok', authenticateWithToken, (req, res) => {
 //------------------------------ SIDEBAR ---------------------------------------//
 router.get('/usersettings', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /USERSETTINGS', user: req.user });
+});
+
+router.put('/usersettings/update', authenticateWithToken, (req, res) => {
+    userSettingsController.
+    res.json({ message: 'This is a protected route -- /USERSETTINGS UPDATE', user: req.user });
 });
 
 router.get('/confidentialitypolitic', authenticateWithToken, (req, res) => {
