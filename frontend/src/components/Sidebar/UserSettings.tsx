@@ -4,7 +4,6 @@ import "../../assets/styles/Sidebar/UserSettings.css"
 import { useNavigate } from 'react-router-dom';
 
 const UserSettings: React.FC = () => {
-    const [dataValidity, setValidity] = useState<any>(null);
     const [data, setData] = useState<any>(null); //remplacer les any par une interface ? UserCreate ? a voir
     const navigate = useNavigate();
 
@@ -13,14 +12,6 @@ const UserSettings: React.FC = () => {
     }
 
     useEffect(() => {
-        const fetchValidity = async () => {
-            try {
-                const response = await axiosInstance.get(`http://localhost:8000/apiServeur/checktok`);
-                setValidity(response.data);
-            } catch (error) {
-                console.error('userSettings.tsx | Error fetching validity chechAuth', error);
-            }
-        };
 
         const fetchData = async () => {
             try {
@@ -30,7 +21,6 @@ const UserSettings: React.FC = () => {
                 console.error('userSettings.tsx | Error fetching home data', error);
             }
         }
-        fetchValidity();
         fetchData();
     }, []);
 
@@ -44,7 +34,6 @@ const UserSettings: React.FC = () => {
             <div className="col-12 col-lg-9 col-xl-7">
             <div className="card shadow-2-strong card-registration" style={{ borderRadius: '150px'}}>
             <div className="card-body p-4 p-md-5 ">
-            {/* <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">Settings</h3> */}
     
             <div className="bigBox">
                 <div className="us row">

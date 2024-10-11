@@ -43,10 +43,11 @@ const UserProfile: React.FC = () => {
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Username</label>
                 </div>
+                <div className="highlight-text">
                 <input 
                     type="text" 
                     id="username"
@@ -55,14 +56,16 @@ const UserProfile: React.FC = () => {
                     onChange={handleChange}
                     required
                 />
+                </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Gender</label>
                 </div>
+                <div className="highlight-text">
                 <select
                     id="gender"
                     name="gender"
@@ -78,16 +81,18 @@ const UserProfile: React.FC = () => {
                         </option>
                     ))}
                 </select>
+                </div>
             </div>
             </div>
             </div>
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Age</label>
                 </div>
+                <div className="highlight-text">
                 <input
                     type="text" 
                     id="age"
@@ -96,14 +101,16 @@ const UserProfile: React.FC = () => {
                     onChange={handleChange}
                     required
                 />
+                </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Sexual Interest</label>
                 </div>
+                <div className="highlight-text">
                 <select 
                     id="sexualInterest"
                     name="sexualInterest"
@@ -119,16 +126,18 @@ const UserProfile: React.FC = () => {
                         </option>
                     ))}
                 </select>
+                </div>
             </div>
             </div>
             </div>
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Biography</label>
                 </div>
+                <div className="highlight-text">
                 <textarea
                     id="biography"
                     name="biography"
@@ -137,14 +146,16 @@ const UserProfile: React.FC = () => {
                     onChange={handleChange}
                     required
                 />
+                </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Tags</label>
                 </div>
+                <div className="highlight-text">
                 <select 
                     id="tags"
                     name="tags"
@@ -160,6 +171,7 @@ const UserProfile: React.FC = () => {
                         </option>
                     ))}
                 </select>
+                </div>
             </div>
             </div>
             </div>

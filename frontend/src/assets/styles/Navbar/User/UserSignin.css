@@ -1,0 +1,24 @@
+.form-outline-signin {
+    background-color:#eaaaf1;
+    border-radius: 50% 6% / 10% 40%;
+}
+
+.fields-signin {
+    border: 1px;
+    background-color: rgb(252, 83, 156);
+    border-radius: 50% 6% / 10% 40%;
+    padding: 7px;
+    width: 100%;
+    text-align: center;
+    font-family: trukin;
+    font-size: 25px;
+    color: rgba(129, 13, 142, 0.681);
+}
+
+.highlight-text-signin {
+    padding: 10px;
+    text-align: center;
+    font-family: trukin;
+    color: rgba(129, 13, 142, 0.681);
+    font-size: 22px;
+}

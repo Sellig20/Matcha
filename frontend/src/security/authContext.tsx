@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 headers: { Authorization: `Bearer ${token}` }
             });
             setIsAuthenticated(response.data.valid);
-                console.log("\n\n\nAuthContext.tsx | Response from /apiServeur/checktok: ", response.data);
+            console.log("\n\n\nAuthContext.tsx | Response from /apiServeur/checktok: ", response.data);
             } catch (err) {
                 console.log("authContext.tsx | Error during auth check: ", err);    
                 if (axios.isAxiosError(err)) {

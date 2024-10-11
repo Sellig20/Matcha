@@ -7,9 +7,6 @@ import '../assets/styles/Error.css'
 
 interface ProtectedRouteProps {
     component: React.ComponentType<any>;
-    // path: string;
-    // element?: JSX.Element;
-    // exact: boolean;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, ...rest }) => {

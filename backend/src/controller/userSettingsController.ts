@@ -11,14 +11,4 @@ export class userSettingsController {
             return res.status(500).json({ message: 'userSettingsController.ts getAllUsers | Server error', error });
         }
     }
-
-    static async updateSettings(req: Request, res: Response) {
-        try {
-            const updatedUser = await userSettingsModel.updateUser(id, updateData);
-            return res.json(updatedUser);
-        } catch (error) {
-            return res.status(500).json({ message: 'userSettingsController.ts update settings | Server error', error });
-        }
-    }
-
 }

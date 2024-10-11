@@ -41,20 +41,24 @@ const UserSignIn: React.FC = () => {
 
     return (
         <section className="gradient-custom" >
+        <div>
+        <h1>🩵 Sign in ! 🩵</h1>
+        </div>
         <div className="container py-5 h-100 ">
             <div className="row justify-content-center align-items-center h-100" >
             <div className="col-12 col-lg-9 col-xl-7">
                 <div className="card shadow-2-strong card-registration" style={{ borderRadius: '150px'}}>
                 <div className="card-body p-4 p-md-5 ">
                     
-                    <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">Sign in !</h3>
-                    
                     <form onSubmit={handleSubmit}>
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline">
+                        <div data-mdb-input-init className="form-outline-signin">
+                            <div className="fields-signup">
                             <label className="form-label" htmlFor="emailAddress">Email</label>
+                            </div>
+                            <div className="highlight-text-signin">
                             <input 
                                 type="email" 
                                 id="email" 
@@ -63,14 +67,18 @@ const UserSignIn: React.FC = () => {
                                 onChange={handleChange}
                                 required 
                             />
+                            </div>
                         </div>
                         </div>
                     </div>
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline">
+                        <div data-mdb-input-init className="form-outline-signin">
+                            <div className="fields-signup">
                             <label className="form-label" htmlFor="passwordAddress">Password</label>
+                            </div>
+                            <div className="highlight-text-signin">
                             <input 
                                 type="password" 
                                 id="password" 
@@ -79,6 +87,7 @@ const UserSignIn: React.FC = () => {
                                 onChange={handleChange}
                                 required 
                             />
+                            </div>
                         </div>
                         </div>
                     </div>

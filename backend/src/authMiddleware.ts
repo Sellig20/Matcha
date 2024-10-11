@@ -27,16 +27,13 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
         const decoded = jwt.verify(token, JWT_SECRET) as { email: string };
         const userArray = await userSignupModel.readUserByEmail("email", decoded.email);
         const user = userArray ? userArray[0] : null;
-        console.log("\n\n\n$$$$$$$$$$$$$$$$$");
-        console.log("token = ", token);
-        console.log("user.validation_token = ", user.validation_token);
-        console.log("$$$$$$$$$$$$$$$$$\n\n\n");
+        console.log(`\n\n                ********** token (${token}) | user.validation_token (${user.validation_token}**********`)
         if (user && user.validation_token === token) {
                 req.user = user;
                 req.userId = user.id;
             next();
         } else {
-            console.log("\n\n\nAuthMiddleware.ts | Error : authMiddleware backend else du if token === token");
+            console.log(`\n\n\nAuthMiddleware.ts | Error : authMiddleware backend else du if token (${token}) === user.validation_token (${user.validation_token}`);
             res.status(401).json({ valid: false });
             return;
         }

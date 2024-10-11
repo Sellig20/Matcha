@@ -42,8 +42,6 @@ const UserSignup: React.FC = () => {
                 <div className="card shadow-2-strong card-registration" style={{ borderRadius: '150px'}}>
                 <div className="card-body p-4 p-md-5 ">
                     
-                    {/* <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">Sign up !</h3> */}
-                    
                     <form onSubmit={handleSubmit}>
 
                     <div className="row d-flex align-items-center justify-content-center">

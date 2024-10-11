@@ -20,8 +20,7 @@ router.post('/signin', (req: Request, res: Response) => {
 
 //------------------------- NAVBAR ------------------------------------------------//
 router.post('/userprofile', authenticateWithToken, (req, res) => {
-    console.log("Form values received:", req.body); 
-    userProfileController.getUserIdProfile(req, res);
+    userProfileController.joinNewProfile(req, res);
 });
 
 router.get('/userprofile/display', authenticateWithToken, (req, res) => {
@@ -61,9 +60,8 @@ router.get('/usersettings', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /USERSETTINGS', user: req.user });
 });
 
-router.put('/usersettings/update', authenticateWithToken, (req, res) => {
-    userSettingsController.
-    res.json({ message: 'This is a protected route -- /USERSETTINGS UPDATE', user: req.user });
+router.put('/usersettings', authenticateWithToken, (req, res) => {
+    userProfileController.updateUserSettings(req, res);
 });
 
 router.get('/confidentialitypolitic', authenticateWithToken, (req, res) => {

@@ -4,10 +4,10 @@ import { query } from '../db';
 import { UserCreate } from '../orm/schema';
 
 export class userProfileModel {
-    static async getUserIdProfile(usersettingsid: string, key: string, value?: string | number) {
-        const response = await orm?.read<"users", any>("users", key, value);
-        return response;
-    }
+    // static async getUserIdProfile(usersettingsid: string, key: string, value?: string | number) {
+    //     const response = await orm?.read<"users", any>("users", key, value);
+    //     return response;
+    // }
 
     static async displayProfile(key: string, value?: string | number) {
         const response = await orm?.read<"users", any>("users", key, value);

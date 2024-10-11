@@ -108,7 +108,6 @@ class ORM {
 			)
 			.join(", ");
 		const queryText = `UPDATE ${tableName} SET ${setClause} WHERE id = ${id} RETURNING *`;
-
 		try {
 			const result = await query(queryText);
 			console.log(`Successfully updated record in ${tableName} with id ${id}`);
