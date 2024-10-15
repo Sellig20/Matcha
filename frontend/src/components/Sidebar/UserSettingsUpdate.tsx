@@ -47,29 +47,74 @@ const UserSettingsUpdate: React.FC = () => {
 
                 <div className="us row">
                 <div className="col-md-6 mb-4 pb-2">
-                <div data-mdb-input-init className="form-outline">
-                    <div className="fields">
+                <div data-mdb-input-init className="form-outline-settings">
+                    <div className="fields-settings">
                     <label>First name</label>
                     </div>
+                    <div className="highlight-text-settings">
                     <input 
-                    type="text" 
-                    id="first_name"
-                    className="form-control form-control-lg" 
-                    value={formValues.first_name}
-                    onChange={handleChange}
-                    required
+                        type="text" 
+                        id="first_name"
+                        className="form-control form-control-lg" 
+                        value={formValues.first_name}
+                        onChange={handleChange}
+                        required
                     />
-                    
+                    </div>
+                </div>
+                </div>
+
+                <div className="col-md-6 mb-4 pb-2">
+                <div data-mdb-input-init className="form-outline-settings">
+                    <div className="fields-settings">
+                    <label>Last name</label>
+                    </div>
+                    <div className="highlight-text-settings">
+                    <input 
+                        type="text" 
+                        id="first_name"
+                        className="form-control form-control-lg" 
+                        value={formValues.last_name}
+                        onChange={handleChange}
+                        required
+                    />
+                    </div>
                 </div>
                 </div>
                 </div>
 
+                <div className ="vertical">
+                <div data-mdb-input-init className="form-outline-settings">
+                    <div className="fields-settings">
+                    <label>Password</label>
+                    </div>
+                    <div className="highlight-text-settings">
+                    <input 
+                        type="text" 
+                        id="first_name"
+                        className="form-control form-control-lg" 
+                        value={formValues.password}
+                        onChange={handleChange}
+                        required
+                    />
+                    </div>
+                </div>
+
+                <div data-mdb-input-init className="form-outline-settings">
+                    <div className="fields-settings">
+                    <label>GPS localisation authorised ?</label>
+                    </div>
+                    <div className="highlight-text-settings">
+                    <p> oui / non </p>
+                    </div>
+                </div>
+                </div>
+
                 <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
-                <input data-mdb-ripple-init 
-                    className="btn-modify btn-info btn-lg" 
-                    type="submit" 
-                    value="Submit"
-                    style={{ color: 'violet', fontFamily: 'trukin'}} />
+                    <button data-mdb-ripple-init 
+                            className="btn btn-info btn-lg" 
+                            style={{ color: 'violet', fontFamily: 'trukin'}}
+                    > Submit </button>
                 </div>
                 {message && <p>{message}</p>}
             </form>

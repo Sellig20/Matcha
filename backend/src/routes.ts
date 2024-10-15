@@ -27,9 +27,9 @@ router.get('/userprofile/display', authenticateWithToken, (req, res) => {
     userProfileController.displayProfile(req, res);
 })
 
-router.put('/userprofile/display/updated', authenticateWithToken, (req, res) => {
-    // userProfileController.displayProfileUpdated(req, res);
-})
+router.put('/userprofile', authenticateWithToken, (req, res) => {
+    userProfileController.joinNewProfile(req, res);
+});
 
 router.get('/mymatchaprofile', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /MY MATCHA PROFILE', user: req.user });

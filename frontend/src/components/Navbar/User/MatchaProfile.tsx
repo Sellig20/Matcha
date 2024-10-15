@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../../security/axiosInstance';
 import "../../../assets/styles/Navbar/User/MatchaProfile.css"
+import { useForm } from './useForm';
+import { useProfile } from './profileContext';
 
 const MatchaProfile: React.FC = () => {
+
+    const { fetchProfile } = useProfile();
+    const [message, setMessage] = useState('');
+    const profile = useProfile();
+
+    useEffect(() => {
+        try {
+            fetchProfile();
+        } catch (error) {
+            setMessage(`UserProfile.tsx | Erreur frontend userprofile : ${error}`);
+        }
+    }, [])
 
     return (
         <section className="gradient-custom">
         <div>
-            <h3>
-                MY matcha profile = sur la gauche mon PROFIL, sur la droite QUI JE MATCHE AUJOURDHUI
-            </h3>
+        <h1>Hello <span className="colorH1">{profile.profile?.first_name}</span> ! </h1> 
+        <h3>
+            MY matcha profile = sur la gauche mon PROFIL, sur la droite QUI JE MATCHE AUJOURDHUI
+        </h3>
         </div>
         <div className="container py-5 h-100">
             <div className="row justify-content-center align-items-center h-100">

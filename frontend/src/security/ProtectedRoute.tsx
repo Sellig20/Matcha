@@ -14,6 +14,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, .
     const { isAuthenticated } = useAuth();
 
     if (isAuthenticated === null) {
+        console.log("isAuthenticated === null, redirection ...");
         return (
             <section className="gradient-custom-error" >
             <div><Link to="/signup" style={{ textDecoration: 'none'}}>Sign up </Link>

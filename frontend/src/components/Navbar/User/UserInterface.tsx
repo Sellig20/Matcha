@@ -60,7 +60,7 @@ export interface UserProfileInterface {
     user_name: string;
     age: number;
     gender : genderEnum;
-    sexualinterest : sexualInterestEnum;
+    sexual_interest : sexualInterestEnum;
     biography: string;
     tags: tagsEnum;
     hasProfilePicture: boolean;

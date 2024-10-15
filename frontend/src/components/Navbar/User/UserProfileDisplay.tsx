@@ -7,7 +7,7 @@ const UserProfileDisplay: React.FC = () => {
 
     const profile = useProfile();
     const navigate = useNavigate();
-
+    console.log("\n\n PROFILE => ", profile);
     const handleModifyClick = () => {
         navigate('/apiServeur/userprofile/display/update');
     }
@@ -30,7 +30,7 @@ const UserProfileDisplay: React.FC = () => {
                 <div className="fields-profile-display">
                 <label>Username</label>
                 </div>
-                <div className="highlight-text">
+                <div className="highlight-text-profile">
                 <p>{profile.profile?.user_name}</p>
                 </div>
             </div>
@@ -41,7 +41,7 @@ const UserProfileDisplay: React.FC = () => {
                 <div className="fields-profile-display">
                 <label>Gender</label>
                 </div>
-                <div className="highlight-text">
+                <div className="highlight-text-profile">
                 <p>{profile.profile?.gender}</p>
                 </div>
             </div>
@@ -54,7 +54,7 @@ const UserProfileDisplay: React.FC = () => {
                 <div className="fields-profile-display">
                 <label>Age</label>
                 </div>
-                <div className="highlight-text">
+                <div className="highlight-text-profile">
                 <p>{profile.profile?.age}</p>
                 </div>
             </div>
@@ -65,8 +65,8 @@ const UserProfileDisplay: React.FC = () => {
                 <div className="fields-profile-display">
                 <label>Sexual Interest</label>
                 </div>
-                <div className="highlight-text">
-                <p>{profile.profile?.sexualinterest}</p>
+                <div className="highlight-text-profile">
+                <p>{profile.profile?.sexual_interest}</p>
                 </div>
             </div>
             </div>
@@ -78,7 +78,7 @@ const UserProfileDisplay: React.FC = () => {
                     <div className="fields-profile-display">
                     <label>Biography</label>
                     </div>
-                    <div className="highlight-text">
+                    <div className="highlight-text-profile">
                     <p>{profile.profile?.biography}</p>
                     </div>
                 </div>
@@ -89,7 +89,7 @@ const UserProfileDisplay: React.FC = () => {
                     <div className="fields-profile-display">
                     <label>Tags</label>
                     </div>
-                    <div className="highlight-text">
+                    <div className="highlight-text-profile">
                     <p>{profile.profile?.tags}</p>
                     </div>
                 </div>

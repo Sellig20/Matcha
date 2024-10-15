@@ -15,6 +15,7 @@ const UserProfile: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            console.log("\n\n\n les form values envoyees depuis front4end = ", formValues);
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/userprofile`, formValues);
             setMessage(response.data.message);
             if (response.data) {
@@ -38,16 +39,15 @@ const UserProfile: React.FC = () => {
         <div className="card-body p-4 p-md-5 ">
         {/* <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">My Profile</h3> */}
 
-        <div>
+        <div className="bigBox-profile-display">
             <form onSubmit={handleSubmit}>
-
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
                 <div className="fields-profile-display">
                 <label>Username</label>
                 </div>
-                <div className="highlight-text">
+                <div className="highlight-text-profile">
                 <input 
                     type="text" 
                     id="username"
@@ -65,7 +65,7 @@ const UserProfile: React.FC = () => {
                 <div className="fields-profile-display">
                 <label>Gender</label>
                 </div>
-                <div className="highlight-text">
+                <div className="highlight-text-profile">
                 <select
                     id="gender"
                     name="gender"
@@ -92,7 +92,7 @@ const UserProfile: React.FC = () => {
                 <div className="fields-profile-display">
                 <label>Age</label>
                 </div>
-                <div className="highlight-text">
+                <div className="highlight-text-profile">
                 <input
                     type="text" 
                     id="age"
@@ -110,12 +110,12 @@ const UserProfile: React.FC = () => {
                 <div className="fields-profile-display">
                 <label>Sexual Interest</label>
                 </div>
-                <div className="highlight-text">
+                <div className="highlight-text-profile">
                 <select 
                     id="sexualInterest"
                     name="sexualInterest"
                     className="form-control form-control-lg" 
-                    value={formValues.sexualInterest}
+                    value={formValues.sexual_interest}
                     onChange={handleChange}
                     required
                 >
@@ -137,7 +137,7 @@ const UserProfile: React.FC = () => {
                 <div className="fields-profile-display">
                 <label>Biography</label>
                 </div>
-                <div className="highlight-text">
+                <div className="highlight-text-profile">
                 <textarea
                     id="biography"
                     name="biography"
@@ -155,7 +155,7 @@ const UserProfile: React.FC = () => {
                 <div className="fields-profile-display">
                 <label>Tags</label>
                 </div>
-                <div className="highlight-text">
+                <div className="highlight-text-profile">
                 <select 
                     id="tags"
                     name="tags"
@@ -177,11 +177,10 @@ const UserProfile: React.FC = () => {
             </div>
 
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
-                <input data-mdb-ripple-init 
-                    className="btn-modify btn-info btn-lg" 
-                    type="submit" 
-                    value="Submit"
-                    style={{ color: 'violet', fontFamily: 'trukin'}} />
+            <button data-mdb-ripple-init 
+                        className="btn btn-info btn-lg" 
+                        style={{ color: 'violet', fontFamily: 'trukin'}}
+                    > Submit </button>
             </div>
             </form>
         {message && <p>{message}</p>}

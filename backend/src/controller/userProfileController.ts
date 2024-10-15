@@ -23,7 +23,7 @@ export class userProfileController {
                 validation_token: midUser.validation_token,
                 gender: req.body.gender,
                 biography: req.body.biography,
-                sexual_interest: req.body.sexual_interest,
+                sexual_interest: req.body.sexualInterest,
                 fame_rating: 0,
                 stated_location: "",
                 real_location: "",

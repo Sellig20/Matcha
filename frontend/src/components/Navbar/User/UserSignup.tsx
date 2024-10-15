@@ -125,10 +125,10 @@ const UserSignup: React.FC = () => {
                     </div>
 
                     <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
-                        <input data-mdb-ripple-init 
+                        <button data-mdb-ripple-init 
                             className="btn btn-info btn-lg" 
-                            type="submit" 
-                            value="Submit" />
+                            style={{ color: 'violet', fontFamily: 'trukin'}}
+                        > Submit </button>
                     </div>
                     {message && <p>{message}</p>}
                     </form>

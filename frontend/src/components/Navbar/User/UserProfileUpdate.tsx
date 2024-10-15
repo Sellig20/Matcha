@@ -41,13 +41,13 @@ const UserProfileUpdate: React.FC = () => {
 
         <div>
             <form onSubmit={handleSubmit}>
-
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Username</label>
                 </div>
+                <div className="highlight-text-profile">
                 <input 
                     type="text" 
                     id="username"
@@ -56,14 +56,16 @@ const UserProfileUpdate: React.FC = () => {
                     onChange={handleChange}
                     required
                 />
+                </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Gender</label>
                 </div>
+                <div className="highlight-text-profile">
                 <select
                     id="gender"
                     name="gender"
@@ -79,16 +81,18 @@ const UserProfileUpdate: React.FC = () => {
                         </option>
                     ))}
                 </select>
+                </div>
             </div>
             </div>
             </div>
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Age</label>
                 </div>
+                <div className="highlight-text-profile">
                 <input
                     type="text" 
                     id="age"
@@ -97,19 +101,21 @@ const UserProfileUpdate: React.FC = () => {
                     onChange={handleChange}
                     required
                 />
+                </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Sexual Interest</label>
                 </div>
+                <div className="highlight-text-profile">
                 <select 
                     id="sexualInterest"
                     name="sexualInterest"
                     className="form-control form-control-lg" 
-                    value={formValues.sexualInterest}
+                    value={formValues.sexualinterest}
                     onChange={handleChange}
                     required
                 >
@@ -120,16 +126,18 @@ const UserProfileUpdate: React.FC = () => {
                         </option>
                     ))}
                 </select>
+                </div>
             </div>
             </div>
             </div>
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Biography</label>
                 </div>
+                <div className="highlight-text-profile">
                 <textarea
                     id="biography"
                     name="biography"
@@ -138,14 +146,16 @@ const UserProfileUpdate: React.FC = () => {
                     onChange={handleChange}
                     required
                 />
+                </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-display">
-                <div className="fields-profile">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Tags</label>
                 </div>
+                <div className="highlight-text-profile">
                 <select 
                     id="tags"
                     name="tags"
@@ -161,16 +171,16 @@ const UserProfileUpdate: React.FC = () => {
                         </option>
                     ))}
                 </select>
+                </div>
             </div>
             </div>
             </div>
 
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
-                <input data-mdb-ripple-init 
-                    className="btn-modify btn-info btn-lg" 
-                    type="submit" 
-                    value="Submit"
-                    style={{ color: 'violet', fontFamily: 'trukin'}} />
+                <button data-mdb-ripple-init 
+                    className="btn btn-info btn-lg" 
+                    style={{ color: 'violet', fontFamily: 'trukin'}}
+                > Submit </button>
             </div>
             </form>
         {message && <p>{message}</p>}
