@@ -3,6 +3,7 @@ import axiosInstance from '../../../security/axiosInstance';
 import "../../../assets/styles/Navbar/User/MatchaProfile.css"
 import { useForm } from './useForm';
 import { useProfile } from './profileContext';
+import { useParams } from 'react-router-dom';
 
 const MatchaProfile: React.FC = () => {
 

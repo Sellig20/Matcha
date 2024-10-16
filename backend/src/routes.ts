@@ -31,8 +31,12 @@ router.put('/userprofile', authenticateWithToken, (req, res) => {
     userProfileController.joinNewProfile(req, res);
 });
 
+router.get('/navbar', authenticateWithToken, (req, res) => {
+    res.json({ message: 'This is a protected route -- /MY MATCHA PROFILE', userId: req.userId });
+});
+
 router.get('/mymatchaprofile', authenticateWithToken, (req, res) => {
-    res.json({ message: 'This is a protected route -- /MY MATCHA PROFILE', user: req.user });
+    res.json({ message: 'This is a protected route -- /MY MATCHA PROFILE', user: req.user, userId: req.userId });
 });
 
 router.get('/match', authenticateWithToken, (req, res) => {

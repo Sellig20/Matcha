@@ -22,6 +22,7 @@ import ConfidentialityPolitic from './components/Sidebar/ConfidentialityPolitic'
 import Report from './components/Sidebar/Report';
 import UserProfileUpdate from './components/Navbar/User/UserProfileUpdate';
 import UserSettingsUpdate from './components/Sidebar/UserSettingsUpdate';
+import AllUSers from './components/Navbar/AllUsers';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -37,8 +38,9 @@ const ContentComplete: React.FC = () => {
       <Route path="/" element={<LandingPage />} /> 
       <Route path="/signup" element={<UserSignup />} /> 
       <Route path="/signin" element={<UserSignIn />} />
-          <Route path="/apiServeur/mymatchaprofile" element={<ProtectedRoute component={MatchaProfile} />} />
+          <Route path="/apiServeur/mymatchaprofile/:id" element={<ProtectedRoute component={MatchaProfile} />} />
           <Route path="/apiServeur/match" element={<ProtectedRoute component={Match} />} />
+          <Route path="/apiServeur/allusers" element={<ProtectedRoute component={AllUSers} />} />
           <Route path="/apiServeur/chat" element={<ProtectedRoute component={Chat} />} />
           <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
           <Route path="/apiServeur/map" element={<ProtectedRoute component={Map} />} />
