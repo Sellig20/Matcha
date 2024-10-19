@@ -16,7 +16,7 @@
     padding: 7px;
     width: 100%;
     text-align: center;
-    font-family: trukin;
+    font-family: "posterable";
     font-size: 25px;
     color: rgba(129, 13, 142, 0.681);
 }
@@ -24,7 +24,7 @@
 .highlight-text-profile {
     padding: 10px;
     text-align: center;
-    font-family: trukin;
+    font-family: "posterable";
     color: rgba(129, 13, 142, 0.681);
     font-size: 22px;
 }

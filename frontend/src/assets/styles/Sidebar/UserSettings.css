@@ -1,7 +1,3 @@
-@font-face {
-    font-family: 'trukin';
-    src: url('keep-on-truckin.regular.ttf') format('truetype');
-}
 .gradient-custom {
     background: #f093fb;
     min-height: 100vh;
@@ -34,7 +30,7 @@
 .highlight-text {
     padding: 10px;
     text-align: center;
-    font-family: trukin;
+    font-family: "posterable";
     color: rgba(129, 13, 142, 0.681);
     font-size: 22px;
 }
@@ -51,7 +47,7 @@
     padding: 7px;
     width: 100%;
     text-align: center;
-    font-family: trukin;
+    font-family: "posterable";
     font-size: 25px;
     color: rgba(129, 13, 142, 0.681);
 }
@@ -59,7 +55,7 @@
 .highlight-text-settings {
     padding: 10px;
     text-align: center;
-    font-family: trukin;
+    font-family: "posterable";
     color: rgba(129, 13, 142, 0.681);
     font-size: 22px;
 }

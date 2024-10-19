@@ -44,4 +44,9 @@ export class userSignupModel {
         return response;
     }
 
+    static async readAllUsers() {
+        const response = await orm?.read<"users", any>("users", "");
+        return response;
+    }
+
 }

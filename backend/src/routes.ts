@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { userSettingsController } from './controller/userSettingsController';
+import { viewsFameRatingController } from './controller/viewsFameRatingController';
 import { userSigninController } from './controller/userSigninController';
 import { userSignupController } from './controller/userSignupController';
 import { userProfileController } from './controller/userProfileController';
@@ -32,11 +33,17 @@ router.put('/userprofile', authenticateWithToken, (req, res) => {
 });
 
 router.get('/navbar', authenticateWithToken, (req, res) => {
-    res.json({ message: 'This is a protected route -- /MY MATCHA PROFILE', userId: req.userId });
+    res.json({ message: 'This is a protected route -- /NAVBAR', userId: req.userId });
 });
 
 router.get('/mymatchaprofile', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /MY MATCHA PROFILE', user: req.user, userId: req.userId });
+});
+
+router.get('/allusers', authenticateWithToken, (req, res) => {
+    viewsFameRatingController.getListUsers(req, res);
+    console.log("\n\n\n\n---------- je passe bien dans route all users");
+    // res.json({ message: 'This is a protected route -- /ALL USERS LIST', user: req.user, userId: req.userId });
 });
 
 router.get('/match', authenticateWithToken, (req, res) => {

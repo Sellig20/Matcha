@@ -179,7 +179,7 @@ const UserProfileUpdate: React.FC = () => {
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                 <button data-mdb-ripple-init 
                     className="btn btn-info btn-lg" 
-                    style={{ color: 'violet', fontFamily: 'trukin'}}
+                    style={{ color: 'violet', fontFamily: "posterable"}}
                 > Submit </button>
             </div>
             </form>

@@ -1,6 +1,6 @@
 h1 {
   color: rgb(156, 36, 152);
-  font-family: 'trukin';
+  font-family: "posterable";
 }
 
 .navbar {
@@ -15,9 +15,6 @@ h1 {
   }
   .card-registration .select-arrow {
   top: 13px;
-}
-
-.btn-warning{
 }
 
 .btn-info {
