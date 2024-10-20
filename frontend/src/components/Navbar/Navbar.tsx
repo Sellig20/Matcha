@@ -24,8 +24,10 @@ const Navbar = () => {
 
     useEffect(() => {
         try {
-            fetchId();
-            console.log("aaa")
+            if (isAuthenticated) {
+                fetchId();
+                console.log("aaa")
+            }
         } catch (error) {
             setMessage(`Navbar.tsx | Erreur frontend navbar : ${error}`);
         }
