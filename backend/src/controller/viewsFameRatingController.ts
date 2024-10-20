@@ -18,10 +18,20 @@ export class viewsFameRatingController {
     static async getListUsers(req: Request, res: Response) {
         try {
             const list = await userSignupModel.readAllUsers();
-            console.log("\n\n\n LA LISTE => ", list);
             res.status(201).json({ message: `List of all users`, list});
         } catch (error) {
             res.status(500).json({ message: `viewsFameRatingController.ts | Error during get list users : ${error}` });
+            return;
+        }
+    }
+
+    static async readProductProfile(req: Request, res:Response) {
+        try {
+            const value = req.params.idd;
+            const productProfile = await userSignupModel.readUserByEmail("id", value);
+            res.status(201).json({ productProfile });
+        } catch (error) {
+            res.status(500).json({ message: `viewsFameRatingController.ts | Error during product profile user : ${error}` });
             return;
         }
     }

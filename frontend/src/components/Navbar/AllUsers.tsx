@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../security/axiosInstance";
+import { Link, useNavigate } from "react-router-dom";
 
 const AllUSers: React.FC = () => {
     const [message, setMessage] = useState('');
     const [users, setUsers] = useState<{ id: number; name:string }[]>([]);
+    const navigate = useNavigate();
 
     const getListUsers = async () => {
         try {
@@ -15,12 +17,17 @@ const AllUSers: React.FC = () => {
                 id: user.id,
                 name: user.first_name,
             }))
-            
+
             setUsers(filteredUsers);
         } catch (error) {
             setMessage(`AllUsers.tsx | Erreur frontend allusers : ${error}`);
         }
     }
+
+    const handleNavigate = (userid: number) => {
+        console.log("Je m'envole voir le profil de : ", userid);
+        navigate(`/apiServeur/userproduct/${userid}`);
+    };
 
     useEffect(() => {
         getListUsers();
@@ -32,30 +39,41 @@ const AllUSers: React.FC = () => {
 
     return (
         <div>
-            <h1>
-                AllUSers of the app --- sera supprimee
-            </h1>
-            <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.name}</td>
+            <h1>All Users of the App</h1>
+            {message && <p>{message}</p>}
+
+            <div className="col-md-8 d-flex align-items-center justify-content-center">
+                <table className="table table-striped table-bordered table-hover shadow-sm">
+                    <thead className="thead-dark">
+                        <tr>
+                            <th>
+                                ID dans l'ordre du dernier connecte
+                            </th>
+                            <th>Name</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {users.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.name}</td>
+                                <td>
+                                    <button
+                                        data-mdb-ripple-init
+                                        className="btn btn-info btn-lg"
+                                        style={{ color: 'violet', fontFamily: "posterable" }}
+                                        onClick={() => handleNavigate(user.id)}
+                                    >
+                                        Voir profil de {user.id}
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        {message && <p>{message}</p>}
-        </div>
-    )
+    );
 }
 
 export default AllUSers;

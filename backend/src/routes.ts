@@ -42,8 +42,10 @@ router.get('/mymatchaprofile', authenticateWithToken, (req, res) => {
 
 router.get('/allusers', authenticateWithToken, (req, res) => {
     viewsFameRatingController.getListUsers(req, res);
-    console.log("\n\n\n\n---------- je passe bien dans route all users");
-    // res.json({ message: 'This is a protected route -- /ALL USERS LIST', user: req.user, userId: req.userId });
+});
+
+router.get('/userproduct/:idd', authenticateWithToken, (req, res) => {
+    viewsFameRatingController.readProductProfile(req, res);
 });
 
 router.get('/match', authenticateWithToken, (req, res) => {

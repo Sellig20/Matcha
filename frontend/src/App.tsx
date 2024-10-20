@@ -23,6 +23,7 @@ import Report from './components/Sidebar/Report';
 import UserProfileUpdate from './components/Navbar/User/UserProfileUpdate';
 import UserSettingsUpdate from './components/Sidebar/UserSettingsUpdate';
 import AllUSers from './components/Navbar/AllUsers';
+import UserProduct from './components/Navbar/UserProduct';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -41,6 +42,7 @@ const ContentComplete: React.FC = () => {
           <Route path="/apiServeur/mymatchaprofile/:id" element={<ProtectedRoute component={MatchaProfile} />} />
           <Route path="/apiServeur/match" element={<ProtectedRoute component={Match} />} />
           <Route path="/apiServeur/allusers" element={<ProtectedRoute component={AllUSers} />} />
+          <Route path="/apiServeur/userproduct/:idd" element={<ProtectedRoute component={UserProduct} />} />
           <Route path="/apiServeur/chat" element={<ProtectedRoute component={Chat} />} />
           <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
           <Route path="/apiServeur/map" element={<ProtectedRoute component={Map} />} />
