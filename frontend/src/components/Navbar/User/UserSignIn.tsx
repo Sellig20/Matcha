@@ -20,7 +20,7 @@ const UserSignIn: React.FC = () => {
             const response = await axios.post('http://localhost:8000/apiServeur/signin', formValues);
             setMessage(response.data.message);
             if (response.data.message) {
-                localStorage.setItem('token', response.data.token);
+                sessionStorage.setItem('token', response.data.token);
                 checkAuth();
             }
         } catch (error) {

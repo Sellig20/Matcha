@@ -7,7 +7,7 @@ const UserProduct: React.FC = () => {
 
     //l'id recup => l'id que je vais recupe en bdd
     const [message, setMessage] = useState('');
-    const { fetchProfile } = useProfile();
+    const profile = useProfile();
     const { idd } = useParams<{idd:string}>();
     const [user, setUser] = useState<{ id: number; first_name:string }>();
 
@@ -15,19 +15,35 @@ const UserProduct: React.FC = () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/userproduct/${idd}`)
             setUser(response.data.productProfile[0]);
-            // console.log("=======> ", response.data.productProfile[0].id);
+            console.log("|", profile?.profile?.first_name,"| matte", response.data.productProfile[0].first_name, "( id :", response.data.productProfile[0].id, ")");
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur frontend get product profile : ${error}`);
+        }
+    }
+
+    const postViewsProfiles = async () => {
+        try {
+            const response = await axiosInstance.post(`http://localhost:8000/apiServeur/views`, {
+                viewed_id: idd,
+                viewed_first_name: user?.first_name,
+                viewer_id: profile?.profile?.id,
+                viewer_first_name: profile?.profile?.first_name
+            });
+            setUser(response.data.productProfile[0]);
+            // console.log("|", profile?.profile?.first_name,"| matte", response.data.productProfile[0].first_name, "( id :", response.data.productProfile[0].id, ")");
+        } catch (error) {
+            setMessage(`UserProduct.tsx | Erreur frontend post views : ${error}`);
         }
     }
 
     useEffect(() => {
         try {
             getProductProfile();
+            postViewsProfiles();
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur use effect : ${error}`);
         }
-    }, [idd]);
+    }, [profile, idd, user]);
 
     return (
         <section className="gradient-custom">

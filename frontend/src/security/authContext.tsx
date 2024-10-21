@@ -25,7 +25,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const checkAuth = async () => {
         try {
-            const token = localStorage.getItem('token'); 
+            const token = sessionStorage.getItem('token'); 
             if (!token) {
                     console.log("\n\n\nAuthContext.tsx | Error pas de token dans protected routes");
                 setIsAuthenticated(false);                    
