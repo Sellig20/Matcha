@@ -30,3 +30,5 @@ export const query = async (text: string, params?: any[]): Promise<any> => {
     throw (error);
   }
 };
+
+

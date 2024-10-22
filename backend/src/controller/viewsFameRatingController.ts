@@ -4,14 +4,14 @@ import { userSignupModel } from "../model/userSignupModel";
 export class viewsFameRatingController {
     static async recordProfileViews(req: Request, res: Response) {
         try {
-            //ajouter les vues dueuser dans le schema de la bdd en fonction de leur ID
+            //ajouter les vues du user dans le schema de la bdd en fonction de leur ID
             console.log("\n\n\n\n\n\n\n\n---------------------------");
             console.log("\nje matte : ", req.body.viewed_id);
             console.log("\nje matte : ", req.body.viewed_first_name);
             console.log("\nje suis : ", req.body.viewer_id);
             console.log("\nje suis : ", req.body.viewer_first_name);
             console.log("\n\n\n\n\n\n\n\n---------------------------");
-        
+            res.status(2001).json({ message: `vews ok` });
         } catch (error) {
             res.status(500).json({ message: `viewsFameRatingController.ts | Error during recording views : ${error}` });
             return;

@@ -43,7 +43,7 @@ export class userSignupController {
                 age_upper_bound: 0,
               }
             
-            const response = userSignupModel.createUser(newUser);
+            await userSignupModel.createUser(newUser);
             res.status(201).json({ message: 'UserSignupController.ts | Inscription success', token });
         } catch (err) {
             res.status(500).json({ message: 'UserSignupController.ts | Error during inscription' });

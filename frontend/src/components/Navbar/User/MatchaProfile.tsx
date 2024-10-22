@@ -23,6 +23,7 @@ const MatchaProfile: React.FC = () => {
         <section className="gradient-custom">
         <div>
         <h1>Hello <span className="colorH1">{profile.profile?.first_name}</span> ! </h1> 
+        <h1>Hello <span className="colorH1">id numero{profile.profile?.userprofileid}</span> ! </h1> 
         <h3>
             MY matcha profile = sur la gauche mon PROFIL, sur la droite QUI JE MATCHE AUJOURDHUI
         </h3>

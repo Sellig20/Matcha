@@ -55,6 +55,7 @@ export enum tagsEnum {
 }
 
 export interface UserProfileInterface {
+    id: number;
     userprofileid: number;
     usersettingsid: number;
     user_name: string;

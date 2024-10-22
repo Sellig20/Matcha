@@ -79,7 +79,7 @@ export class userProfileController {
             }
             const displayProfile = await userProfileModel.displayProfile("id", userId);
             if (displayProfile) {
-                // console.log("\n\n-------------------------------------------------------------\n\n DISPLAY PROFILE from userProfileController.ts => ", displayProfile);
+                console.log("\n\n-------------------------------------------------------------\n\n DISPLAY PROFILE from userProfileController.ts => ", displayProfile);
                 const isProfileComplete = true;
                 res.status(201).json({ message: 'UserProfileController.ts | profile complete', displayProfile, isProfileComplete });
             }
@@ -114,7 +114,7 @@ export class userProfileController {
                 age_lower_bound: 0,
                 age_upper_bound: 0,
               }
-            const userProfileId = await userProfileModel.createNewProfile(newUser);
+            await userProfileModel.createNewProfile(newUser);
             const isProfileComplete = true;
             res.status(201).json({ message: 'UserProfileController.ts | new profile ok', isProfileComplete });
         } catch(err) {

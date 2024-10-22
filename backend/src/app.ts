@@ -3,6 +3,8 @@ import express, { NextFunction, Request, Response } from "express";
 import createHttpError, { isHttpError } from "http-errors";
 import cors from "cors";
 import cookieParser from 'cookie-parser';
+import http from 'http';
+import { Server, Socket } from 'socket.io';
 import routes from "./routes";
 
 const app = express();
