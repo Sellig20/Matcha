@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         try {
             const token = sessionStorage.getItem('token'); 
             if (!token) {
-                    console.log("\n\n\nAuthContext.tsx | Error pas de token dans protected routes");
+                    console.log("\n\n\nAuthContext.tsx | Error pas de token dans session storage");
                 setIsAuthenticated(false);                    
                 return;
             }
@@ -35,7 +35,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 headers: { Authorization: `Bearer ${token}` }
             });
             setIsAuthenticated(response.data.valid);
-            console.log("\n\n\nAuthContext.tsx | Response from /apiServeur/checktok: ", response.data);
             } catch (err) {
                 console.log("authContext.tsx | Error during auth check: ", err);    
                 if (axios.isAxiosError(err)) {

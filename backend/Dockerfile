@@ -11,4 +11,4 @@ RUN npm install -g nodemon ts-node typescript
 
 EXPOSE 3000
 
-CMD ["nodemon", "--watch", "./", "--exec", "ts-node", "./index.ts"]
+CMD ["nodemon", "--watch", "./", "--exec", "ts-node", "./server.ts"]

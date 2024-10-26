@@ -123,17 +123,16 @@ class ORM {
 
 	async read<T extends keyof Schema, K extends keyof Schema[T]>(
         tableName: T,
-        propertyName: K,
+        propertyName?: K,
         propertyValue?: string | number
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
     ): Promise<any[] | null> {
         const tableSchema = this.schema[tableName];
         try {
-            if (!(propertyName in tableSchema)) {
+            if ( propertyName && !(propertyName in tableSchema)) {
                 throw new Error(`Table '${tableName}' does not have a '${String(propertyName)}' field.`);
             }
         } catch (error) {
-			console.log("-------------------------------------- je suis dans le erreur de read ----------------------------------------");
             errorHandler(error, "");
         }
 

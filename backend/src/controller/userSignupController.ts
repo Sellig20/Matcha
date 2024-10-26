@@ -12,6 +12,8 @@ export class userSignupController {
     static async signup(req: Request, res: Response) {
         try {
             const { firstname, lastname, email, password } = req.body;
+            console.log("\n\n ----------- SIGNUP CON?TROLLER --------\n");
+            console.log(" ----------- req body : ", req.body, "\n\n");
             const existingUserAlready = await userSignupModel.readUserByEmail("email", email);
             if (existingUserAlready) {
                 res.status(400).json({ message: 'UserSignupController.ts | Email already existing in the database' });

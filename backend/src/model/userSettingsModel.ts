@@ -1,4 +1,4 @@
-import orm from '../../index';
+import orm from '../../server';
 import { UserCreate } from '../orm/schema';
 export class userSettingsModel {
 

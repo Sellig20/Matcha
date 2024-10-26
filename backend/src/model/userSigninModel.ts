@@ -1,6 +1,6 @@
 import { query } from '../db';
 import bcrypt from 'bcryptjs';
-import orm from '../../index';
+import orm from '../../server';
 import { UserCreate } from '../orm/schema';
 
 export class userSigninModel {

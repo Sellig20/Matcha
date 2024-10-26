@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
+import {client} from '../../redis'
 
 export class viewsFameRatingController {
     static async recordProfileViews(req: Request, res: Response) {
@@ -20,9 +21,11 @@ export class viewsFameRatingController {
 
     static async getListUsers(req: Request, res: Response) {
         try {
-            const list = await userSignupModel.readAllUsers();
-            const myId = req.userId;
-            res.status(201).json({ message: `List of all users`, list, myId});
+            // const list = await userSignupModel.readAllUsers();
+            // const myId = req.userId;
+            const list = await client.sMembers('activeUsers');
+            console.log('\n\n\nListe des utilisateurs connectés:', list, '\n\n');
+            res.status(201).json({ message: `List of all users`, list});
         } catch (error) {
             res.status(500).json({ message: `viewsFameRatingController.ts | Error during get list users : ${error}` });
             return;

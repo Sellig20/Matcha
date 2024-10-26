@@ -24,6 +24,7 @@ import UserProfileUpdate from './components/Navbar/User/UserProfileUpdate';
 import UserSettingsUpdate from './components/Sidebar/UserSettingsUpdate';
 import AllUSers from './components/Navbar/AllUsers';
 import UserProduct from './components/Navbar/UserProduct';
+import { WebSocketProvider } from './security/wsContext';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -69,11 +70,13 @@ const App: React.FC = () => {
       <AuthProvider>
         <ProfileProvider>
           <Router>
-            <Navbar />
-            <AuthWrapper>
-              <Sidebar />
-            </AuthWrapper>
-            <ContentComplete />
+            <WebSocketProvider>
+              <Navbar />
+              <AuthWrapper>
+                <Sidebar />
+              </AuthWrapper>
+              <ContentComplete />
+            </WebSocketProvider>
           </Router>
         </ProfileProvider>
       </AuthProvider>

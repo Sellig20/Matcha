@@ -72,7 +72,7 @@ const UserSettingsUpdate: React.FC = () => {
                     <div className="highlight-text-settings">
                     <input 
                         type="text" 
-                        id="first_name"
+                        id="last_name"
                         className="form-control form-control-lg" 
                         value={formValues.last_name}
                         onChange={handleChange}

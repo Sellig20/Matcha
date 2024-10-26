@@ -15,7 +15,7 @@ const Navbar = () => {
     const fetchId = async () => {
         try {
             const response = await axiosInstance.get('http://localhost:8000/apiServeur/navbar');
-            console.log("\n\n\n\n response navbar is ", response.data.userId);
+            console.log("\n\n\n\n id of the user : ", response.data.userId);
             setId(response.data.userId);
         } catch (error) {
             setMessage(`Navbar.tsx | Erreur frontend navbar FETCH ID: ${error}`);
@@ -26,7 +26,6 @@ const Navbar = () => {
         try {
             if (isAuthenticated) {
                 fetchId();
-                console.log("aaa")
             }
         } catch (error) {
             setMessage(`Navbar.tsx | Erreur frontend navbar : ${error}`);

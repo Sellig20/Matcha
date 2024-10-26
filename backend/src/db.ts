@@ -1,4 +1,3 @@
-// import dotenv from 'dotenv';
 import dotenv from 'dotenv';
 import { Pool } from 'pg';
 
@@ -30,5 +29,3 @@ export const query = async (text: string, params?: any[]): Promise<any> => {
     throw (error);
   }
 };
-
-

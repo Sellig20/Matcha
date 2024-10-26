@@ -2,6 +2,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.3.3",
     "@types/pg": "^8.11.6",
+    "@types/redis": "^4.0.11",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -17,6 +18,9 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
+    "redi": "^0.1.0",
+    "redis": "^4.7.0",
+    "redis-server": "^1.2.2",
     "socket.io": "^4.8.0",
     "socket.io-client": "^4.8.0"
   },

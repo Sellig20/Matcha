@@ -4,6 +4,7 @@ import '../../../assets/styles/Navbar/User/UserSignup.css'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../security/useAuth';
 import { useForm } from './useForm';
+import { useWebSocketContext } from '../../../security/wsContext';
 
 const UserSignup: React.FC = () => {
     const { isAuthenticated, checkAuth } = useAuth();

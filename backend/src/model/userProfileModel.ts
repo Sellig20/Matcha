@@ -1,5 +1,5 @@
 import { UserProfileInterface } from '../databaseInterfaces';
-import orm from '../../index';
+import orm from '../../server';
 import { query } from '../db';
 import { UserCreate } from '../orm/schema';
 
