@@ -42,10 +42,7 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
                 try {
                     const usertab = await userSignupModel.readUserByEmail();
                     await client.set(`user:${user.id}`, 'connected');
-                    console.log("\n\n ++ middleware ++ ID +++ ", user.id);
-                    console.log("\n +++ middleware + EMAIL ++ ", user.email, "\n\n");
-                    console.log("\n ++ middleware ++ NAME ++ ", user.first_name, "\n\n");
-                    io.emit('newUser', usertab?.map(user => "user:" + user.id.toString()));
+                    io.emit('newUser', usertab?.map(user => user.id));
                 } catch (error) {
                     console.error('Error setting user state in Redis:', error);
                     return res.status(500).json({ valid: false, message: 'Internal server error' });

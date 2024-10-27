@@ -21,10 +21,8 @@ export class viewsFameRatingController {
 
     static async getListUsers(req: Request, res: Response) {
         try {
-            // const list = await userSignupModel.readAllUsers();
-            // const myId = req.userId;
-            const list = await client.sMembers('activeUsers');
-            console.log('\n\n\nListe des utilisateurs connectés:', list, '\n\n');
+            const listTab = await userSignupModel.readUserByEmail();
+            const list = listTab?.map(user => user.id);
             res.status(201).json({ message: `List of all users`, list});
         } catch (error) {
             res.status(500).json({ message: `viewsFameRatingController.ts | Error during get list users : ${error}` });

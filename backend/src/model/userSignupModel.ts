@@ -30,12 +30,12 @@ export class userSignupModel {
 
     static async updateUserToken(id: number, updateData: Partial<UserCreate>) {
         const response = await orm?.update<"users">("users", id, updateData);
-        console.log("\n\n\n\n\n\n\n\n***********\n", id, " | ", updateData);
         return response;
     }
 
     static async readUserByEmail(key?: string, value?: string | number) {
         const response = await orm?.read<"users", any>("users", key, value);
+        console.log("\n\nresponse db is : ", response, "\n\n");
         return response;
     }
 
