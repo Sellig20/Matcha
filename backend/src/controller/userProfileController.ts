@@ -115,8 +115,8 @@ export class userProfileController {
                 age_upper_bound: 0,
               }
             await userProfileModel.createNewProfile(newUser);
-            const isProfileComplete = true;
-            res.status(201).json({ message: 'UserProfileController.ts | new profile ok', isProfileComplete });
+            // const isProfileComplete = true;
+            res.status(201).json({ message: 'UserProfileController.ts | new profile ok'});
         } catch(err) {
             const isProfileComplete = false;
             res.status(500).json({ message: 'UserProfileController.ts | Erreur pdt la creation du profile', isProfileComplete });

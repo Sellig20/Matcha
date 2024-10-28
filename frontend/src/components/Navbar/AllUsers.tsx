@@ -24,7 +24,7 @@ const AllUSers: React.FC = () => {
         }//quand je viens de la bdd il y a du retard 10s + time out pour le nouvel user seulement
     }
 
-    const handleNavigate = (userid: number) => {
+    const handleNavigate = (userid: string) => {
         navigate(`/apiServeur/userproduct/${userid}`);
     };
 
@@ -67,23 +67,26 @@ const AllUSers: React.FC = () => {
     return (
         <div>
             <h1>Liste des profils</h1>
-                <table style={{margin: '50px'}}>
-                    <tbody>
+            <table style={{ margin: '50px', borderCollapse: 'collapse' }}>
+                <thead>
                     <tr>
-                        <th>Id</th>
+                        <th style={{ border: '1px solid black', padding: '8px' }}>ID</th>
                     </tr>
-                    {users.map((user) => (
-                        <tr key={(Number(user))}>
+                </thead>
+                <tbody>
+                    {users.map((userId) => (
+                        <tr key={userId}>
                             <td
-                                onClick={() => handleNavigate(Number(user))}
-                                style={{ cursor: 'pointer'}}
-                                >
-                                {user}
+                                onClick={() => handleNavigate(userId)}
+                                style={{ cursor: 'pointer', border: '1px solid black', padding: '8px' }}
+                            >
+                                {userId}
                             </td>
                         </tr>
                     ))}
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
+            {message && <p>{message}</p>}
         </div>
     );
 };

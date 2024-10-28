@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../security/axiosInstance";
 import { useProfile } from "./User/profileContext";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { UserProfileInterface, UserProfileProduct } from "./User/UserInterface";
 
 const UserProduct: React.FC = () => {
@@ -12,7 +12,9 @@ const UserProduct: React.FC = () => {
     // console.log("\n\n PROFILE USER PRODUCT=> ", profile?.profile?.id);
 
     const { idd } = useParams<{idd:string}>();
-    const [user, setUser] = useState<UserProfileProduct | null>(null)
+    const [user, setUser] = useState<UserProfileProduct | null>(null);
+    const [notification, setNotification] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const getProductProfile = async () => {
         try {
@@ -41,11 +43,21 @@ const UserProduct: React.FC = () => {
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur frontend post views : ${error}`);
         }
-    }
+    };
+
+    const handleNavigate = () => {
+        navigate(`/apiServeur/userprofile/display`);
+    };
 
     useEffect(() => {
         const executeData = async () => {
             try {
+                console.log("\n\n idd ", idd, "\n\n")
+                console.log("\n\n profile profile", profile, "\n\n")
+                if (!profile || !profile.profile || !user) {
+                    setNotification("Warning: You must fill your profile before going on");
+                    // setLinkUrl('/profil');
+                }
                 if (idd && profile.profile) {
                     await getProductProfile();
                     if (user) {
@@ -57,10 +69,21 @@ const UserProduct: React.FC = () => {
             }
         }
         executeData();
-    }, [idd, profile.profile, user]);
+    }, [idd, profile, profile.profile, user]);
 
     return (
         <section className="gradient-custom">
+        <div className="alert alert-warning" role="alert">
+        {notification && (<div className="alert-warning" role="alert"> 
+            <a
+                href=""
+                onClick={() => handleNavigate()}//wtf
+                className="alert-warning"> 
+                    {notification}
+            </a>
+            </div>)}
+        </div>
+
         <div>UserProduct, donc la fiche des produits = des profils de l'app pour que moi en tant que user je DRAGUE</div>
         <h1>tu mattes <span className="colorH1">{user?.first_name}</span> ! </h1>
         <div className="container py-5 h-100">
