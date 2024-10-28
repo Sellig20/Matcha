@@ -13,7 +13,7 @@ export interface UserProfileResponse {
     message: string;
     displayProfile: UserProfileInterface;
     isProfileComplete: boolean;
-  }
+}
 
 export const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 

@@ -78,7 +78,7 @@ export class userProfileController {
                 return res.status(400).json({ message: 'UserProfileController.ts | Error user id not found in request' });
             }
             const displayProfile = await userProfileModel.displayProfile("id", userId);
-            if (displayProfile) {
+            if (displayProfile && displayProfile[0].user_name) {
                 console.log("\n\n-------------------------------------------------------------\n\n DISPLAY PROFILE from userProfileController.ts => ", displayProfile);
                 const isProfileComplete = true;
                 res.status(201).json({ message: 'UserProfileController.ts | profile complete', displayProfile, isProfileComplete });
