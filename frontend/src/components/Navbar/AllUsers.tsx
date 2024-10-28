@@ -14,21 +14,17 @@ const AllUSers: React.FC = () => {
     const { socket } = useWebSocketContext();
     
     const getListUsers = async () => {
-        console.log("\n\n je suis dans get list");
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/allusers`);
-            console.log("\n\n\n REPONSE ALL USERS IS = ", response.data.list);
             setMessage(response.data.message);
             setMyId(response.data.myId);
             setUsers(response.data.list);
-            console.log("\n\n\n voici les setUsers ==> ", users);
         } catch (error) {
             setMessage(`AllUsers.tsx | Erreur frontend allusers : ${error}`);
         }//quand je viens de la bdd il y a du retard 10s + time out pour le nouvel user seulement
     }
 
     const handleNavigate = (userid: number) => {
-        console.log("Je m'envole voir le profil de : ", userid);
         navigate(`/apiServeur/userproduct/${userid}`);
     };
 
@@ -37,7 +33,6 @@ const AllUSers: React.FC = () => {
         
         getListUsers();
         if (socket) {
-            console.log("coucou la socket");
             // const emitMessage = () => {
             //     const message = 'Hello from frontend!';
             //     socket.emit('messagerie', message);
@@ -50,9 +45,7 @@ const AllUSers: React.FC = () => {
 
             // socket.emit('newUser');
             socket.on('newUser', (updateUsers) => {
-                console.log("\n\n UPDATR USERS ======> ", updateUsers);
                 setUsers(updateUsers);
-                console.log("\n\n\n voici les setSocketUsers ==> ", socketUsers);
             })
             
             // socket.on('coucoux', (msg) => {
@@ -74,20 +67,23 @@ const AllUSers: React.FC = () => {
     return (
         <div>
             <h1>Liste des profils</h1>
-            <table style={{margin: '50px'}}>
-                <tr> <th>Id</th>  </tr>
-                {users.map((user, index) => (
-                    <tr> 
-                        <td
-                            key={index}
-                            onClick={() => handleNavigate(Number(user))}
-                            style={{ cursor: 'pointer'}}
-                            >
-                            {user}
-                        </td>
+                <table style={{margin: '50px'}}>
+                    <tbody>
+                    <tr>
+                        <th>Id</th>
                     </tr>
-                ))}
-            </table>
+                    {users.map((user) => (
+                        <tr key={(Number(user))}>
+                            <td
+                                onClick={() => handleNavigate(Number(user))}
+                                style={{ cursor: 'pointer'}}
+                                >
+                                {user}
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
         </div>
     );
 };

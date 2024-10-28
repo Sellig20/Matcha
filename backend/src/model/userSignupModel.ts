@@ -1,7 +1,7 @@
 import { query } from '../db';
 import { UserSettingsInterface } from '../databaseInterfaces';
 import orm from '../../server'
-import { UserCreate } from '../orm/schema';
+import { UserCreate, UsersProfilesViewsCreate } from '../orm/schema';
 
 // export class userSignupModel {
     // static async findByEmail(email: string) {
@@ -28,6 +28,11 @@ export class userSignupModel {
         return response;
     }
 
+    static async createViews(newViews: UsersProfilesViewsCreate) {
+        const response = await orm?.create<"users_profiles_views">("users_profiles_views", newViews);
+        return response;
+    }
+
     static async updateUserToken(id: number, updateData: Partial<UserCreate>) {
         const response = await orm?.update<"users">("users", id, updateData);
         return response;
@@ -35,7 +40,6 @@ export class userSignupModel {
 
     static async readUserByEmail(key?: string, value?: string | number) {
         const response = await orm?.read<"users", any>("users", key, value);
-        console.log("\n\nresponse db is : ", response, "\n\n");
         return response;
     }
 

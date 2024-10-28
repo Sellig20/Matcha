@@ -11,6 +11,47 @@ export interface UserSettingsInterface {
     pass_word: string;
 }
 
+export interface UserProfileInterface {
+    id: number;
+    userprofileid: number;
+    usersettingsid: number;
+    user_name: string;
+    age: number;
+    gender : genderEnum;
+    sexual_interest : sexualInterestEnum;
+    biography: string;
+    tags: tagsEnum;
+    hasProfilePicture: boolean;
+    validationtoken: number;
+    isvalidatedtoken: boolean;
+    first_name: string;
+    last_name: string;
+    email: string;
+    pass_word: string;
+}
+
+export interface UserProfileProduct {
+    id: number;
+    hasProfilePicture: boolean;
+    isvalidatedtoken: boolean;
+    pass_word: string;
+    user_name: string,
+    email: string,
+    first_name: string,
+    last_name: string,
+	age: number,
+    password_hash: string,
+	validation_token: string,
+    gender: string,
+    biography: string,
+	sexual_interest: string,
+    fame_rating: number,
+    stated_location: string,
+    real_location: string,
+	age_lower_bound: number,
+    age_upper_bound: number,
+}
+
 export enum genderEnum {
     female = "female",
     nonBinary = "non-binary",
@@ -52,25 +93,6 @@ export enum tagsEnum {
     danse = "danse", 
     cinema = "cinema", 
     yoga = "yoga"
-}
-
-export interface UserProfileInterface {
-    id: number;
-    userprofileid: number;
-    usersettingsid: number;
-    user_name: string;
-    age: number;
-    gender : genderEnum;
-    sexual_interest : sexualInterestEnum;
-    biography: string;
-    tags: tagsEnum;
-    hasProfilePicture: boolean;
-    validationtoken: number;
-    isvalidatedtoken: boolean;
-    first_name: string;
-    last_name: string;
-    email: string;
-    pass_word: string;
 }
 
 export interface UserSettingsArray {

@@ -30,8 +30,6 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
         const decoded = jwt.verify(token, JWT_SECRET) as { email: string };
         const userArray = await userSignupModel.readUserByEmail("email", decoded.email);
         const user = userArray ? userArray[0] : null;
-        console.log(" \n\n je suis dans authmiddlewre voici le user que je recupere de la bdd ", user);
-        // console.log(`\n\n                ********** token (${token}) \n                ********** user.validation_token (${user.validation_token}**********`)
         if (user && user.validation_token === token) {
                 req.user = user;
                 req.userId = user.id;
@@ -42,7 +40,7 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
                 try {
                     const usertab = await userSignupModel.readUserByEmail();
                     await client.set(`user:${user.id}`, 'connected');
-                    io.emit('newUser', usertab?.map(user => user.id));
+                    io.emit('newUser', usertab?.map(user => user.id));//From bdd to socket to AllUser.tsx
                 } catch (error) {
                     console.error('Error setting user state in Redis:', error);
                     return res.status(500).json({ valid: false, message: 'Internal server error' });

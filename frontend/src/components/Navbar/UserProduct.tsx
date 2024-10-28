@@ -2,21 +2,26 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../security/axiosInstance";
 import { useProfile } from "./User/profileContext";
 import { useParams } from "react-router-dom";
+import { UserProfileInterface, UserProfileProduct } from "./User/UserInterface";
 
 const UserProduct: React.FC = () => {
 
     //l'id recup => l'id que je vais recupe en bdd
     const [message, setMessage] = useState('');
-    // const profile = useProfile();
+    const profile = useProfile();
     // console.log("\n\n PROFILE USER PRODUCT=> ", profile?.profile?.id);
 
     const { idd } = useParams<{idd:string}>();
-    const [user, setUser] = useState<{ id: number; first_name:string }>();
+    const [user, setUser] = useState<UserProfileProduct | null>(null)
 
     const getProductProfile = async () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/userproduct/${idd}`)
-            setUser(response.data.productProfile[0]);
+            console.log(" ===> ", response.data.productProfile);
+            if (JSON.stringify(response.data.productProfile) !== JSON.stringify(user)) {
+                setUser(response.data.productProfile); 
+            }
+            console.log(" user ==> ", user);
             // console.log("|", profile?.profile?.first_name,"| matte", response.data.productProfile[0].first_name, "( id :", response.data.productProfile[0].id, ")");
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur frontend get product profile : ${error}`);
@@ -28,8 +33,8 @@ const UserProduct: React.FC = () => {
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/views`, {
                 viewed_id: idd,
                 viewed_first_name: user?.first_name,
-                // viewer_id: profile?.profile?.id,
-                // viewer_first_name: profile?.profile?.first_name
+                viewer_id: profile?.profile?.id,
+                viewer_first_name: profile?.profile?.first_name
             });
             setMessage(response.data.message);
             // console.log("|", profile?.profile?.first_name,"| matte", response.data.productProfile[0].first_name, "( id :", response.data.productProfile[0].id, ")");
@@ -41,10 +46,9 @@ const UserProduct: React.FC = () => {
     useEffect(() => {
         const executeData = async () => {
             try {
-                if (idd) {
+                if (idd && profile.profile) {
                     await getProductProfile();
                     if (user) {
-                        console.log("\n-------------------------------------------------------------------------------------- je passe par la lol\n");
                         await postViewsProfiles();
                     }
                 }
@@ -53,7 +57,7 @@ const UserProduct: React.FC = () => {
             }
         }
         executeData();
-    }, [idd]);
+    }, [idd, profile.profile, user]);
 
     return (
         <section className="gradient-custom">

@@ -49,8 +49,6 @@ router.get('/userproduct/:idd', authenticateWithToken, (req, res) => {
 });
 
 router.post('/views', authenticateWithToken, (req, res) => {
-    console.log("\n\nje suis dans ma rouuuuuuuuteeeeee-------------\n\n");
-    console.log("\n\nreq => ", req.body);
     viewsFameRatingController.recordProfileViews(req, res);
 });
 
