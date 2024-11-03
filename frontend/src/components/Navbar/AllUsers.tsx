@@ -9,6 +9,7 @@ const AllUSers: React.FC = () => {
     const [messages, setMessages] = useState<string[]>([]);
     const [myId, setMyId] = useState<number | undefined>(undefined);
     const [users, setUsers] = useState<string[]>([]);
+    const [usersNames, setUsersNames] = useState<string[]>([]);
     const [socketUsers, setSocketUsers] = useState<string[]>([]);
     const navigate = useNavigate();
     const { socket } = useWebSocketContext();
@@ -19,6 +20,8 @@ const AllUSers: React.FC = () => {
             setMessage(response.data.message);
             setMyId(response.data.myId);
             setUsers(response.data.list);
+            setUsersNames(response.data.listName);
+            console.log("\n\n users =>>>>>> ", response.data.listName, "\n\n");
         } catch (error) {
             setMessage(`AllUsers.tsx | Erreur frontend allusers : ${error}`);
         }//quand je viens de la bdd il y a du retard 10s + time out pour le nouvel user seulement
@@ -65,29 +68,68 @@ const AllUSers: React.FC = () => {
     }, [socket]);
     
     return (
+        
+
+    <section className="gradient-custom">
         <div>
-            <h1>Liste des profils</h1>
-            <table style={{ margin: '50px', borderCollapse: 'collapse' }}>
-                <thead>
-                    <tr>
-                        <th style={{ border: '1px solid black', padding: '8px' }}>ID</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((userId) => (
-                        <tr key={userId}>
-                            <td
-                                onClick={() => handleNavigate(userId)}
-                                style={{ cursor: 'pointer', border: '1px solid black', padding: '8px' }}
-                            >
-                                {userId}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {message && <p>{message}</p>}
+            <h3>Structure avec une jauge et trois rectangles alignés horizontalement</h3>
         </div>
+        <div className="container py-5 h-100">
+            <div className="row justify-content-center align-items-center">
+                {/* Grand carré */}
+                <div className="biggy col-12 col-xl-80 d-flex justify-content-center">
+                    <div className="card shadow-2-strong" style={{ borderRadius: '20px', padding: '20px', height: '100%', width: '100%' }}>
+                        
+                        {/* Jauge horizontale */}
+                        <div className="progress mb-4" style={{ height: '30px' }}>
+                           search bar
+                        </div>
+
+                        <div className="fm-row row">
+                            {/* Premier rectangle vertical */}
+                            <div className="col-md-4 d-flex align-items-center justify-content-center">
+                                <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                                    <h3 className="text-center">Rectangle 1 : VIEWS</h3>
+                                    <div className="card-body d-flex align-items-center justify-content-center">
+                                        
+                                    <div>
+                                    <h1>Liste des profils dispo</h1>
+
+                                    <table className="table-au">
+                                            <thead>
+                                                <tr>
+                                                    <th className="th-fm">ID ?</th>
+                                                    <th className="th-fm">WHO ?</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {users.map((userId, index) => (
+                                                <tr key={`user-${userId}`}>
+                                                    <td
+                                                        onClick={() => handleNavigate(userId)}
+                                                        style={{ cursor: 'pointer', border: '1px solid black', padding: '8px' }}
+                                                    >
+                                                        {userId}
+                                                    </td>
+                                                    <td
+                                                        style={{ border: '1px solid black', padding: '8px' }}
+                                                    >
+                                                        {usersNames[index] || ''} {/* Affichez le nom correspondant ou laissez la cellule vide */}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                            </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
     );
 };
 

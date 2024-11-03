@@ -15,6 +15,7 @@ const UserProduct: React.FC = () => {
     const [user, setUser] = useState<UserProfileProduct | null>(null);
     const [notification, setNotification] = useState<string | null>(null);
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(!!notification);
 
     const getProductProfile = async () => {
         try {
@@ -46,7 +47,6 @@ const UserProduct: React.FC = () => {
     };
 
     const handleModifyClick = async () => {
-        console.log("\n\nbonjour monde I clicked the heart\n\n");
         try {
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/likes`, {
                 user_id: profile?.profile?.id,
@@ -62,7 +62,7 @@ const UserProduct: React.FC = () => {
         const executeData = async () => {
             try {
                 if (isProfileComplete === false) {
-                    setNotification("Warning: You must fill your profile before going on");
+                    setNotification("Warning : You must fill your profile before going on");
                 }
                 else {
                     if (idd && profile.profile) {
@@ -82,13 +82,21 @@ const UserProduct: React.FC = () => {
     return (
         <section className="gradient-custom">
         
-        {notification && (<div className="alert-warning" role="alert"> 
+        {/* {notification && (<div className="alert-warning" role="alert"> 
             <a
                 onClick={() => handleNavigate()}//wtf
                 className="alert-warning"> 
                     {notification}
             </a>
-        </div>)}
+        </div>)} */}
+            {notification && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <p>{notification}</p>
+                        <button className="btn-userproduct" onClick={handleNavigate}>OK</button>
+                    </div>
+                </div>
+            )}
         <div>UserProduct, donc la fiche des produits = des profils de l'app pour que moi en tant que user je DRAGUE</div>
         <h1>tu mattes <span className="colorH1">{user?.first_name}</span> ! </h1>
         <div className="container py-5 h-100">
