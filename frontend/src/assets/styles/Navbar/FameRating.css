@@ -8,3 +8,32 @@
     justify-content: center;
     height: 70%;
 }
+
+.biggy {
+   
+}
+
+.table-fm {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.th-fm {
+    font-family: "posterable";
+    color: rgb(232, 118, 137);
+    font-size: 29px;
+    padding: 10px;
+    text-align: center; /* Centre le texte horizontalement */
+    vertical-align: middle; /* Centre le texte verticalement */
+    width: 33.33%;
+}
+
+.td-fm {
+    font-family: 'Courier New';
+    font-size: 20px;
+    padding: 10px;
+    text-align: center; /* Centre le texte horizontalement */
+    vertical-align: middle; /* Centre le texte verticalement */
+    width: 33.33%;
+}

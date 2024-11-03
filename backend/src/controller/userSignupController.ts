@@ -12,8 +12,6 @@ export class userSignupController {
     static async signup(req: Request, res: Response) {
         try {
             const { firstname, lastname, email, password } = req.body;
-            console.log("\n\n ----------- SIGNUP CON?TROLLER --------\n");
-            console.log(" ----------- req body : ", req.body, "\n\n");
             const existingUserAlready = await userSignupModel.readUserByEmail("email", email);
             if (existingUserAlready) {
                 res.status(400).json({ message: 'UserSignupController.ts | Email already existing in the database' });
@@ -43,12 +41,29 @@ export class userSignupController {
                 real_location: "",
                 age_lower_bound: 0,
                 age_upper_bound: 0,
-              }
-            
+                is_profile_completed: false,
+            };
             await userSignupModel.createUser(newUser);
             res.status(201).json({ message: 'UserSignupController.ts | Inscription success', token });
         } catch (err) {
             res.status(500).json({ message: 'UserSignupController.ts | Error during inscription' });
+            return;
+        }
+    }
+
+    static async isProfileComplete(req: Request, res: Response) {
+        try {
+            const id = req.userId;
+            const userArray = await userSignupModel.readUserByEmail("id", id);
+            if (userArray && userArray.length > 0) {
+                const isProfileCompleted = userArray[0].is_profile_completed;
+                res.status(201).json({ message: 'UserSignupController.ts | Success getting is profile complete', isProfileCompletedDB: isProfileCompleted});
+            }
+            else {
+                return res.status(400).json({ message: 'UserSignupController.ts | Error getting profile for isprofilecompleted'});
+            }
+        } catch (err) {
+            res.status(500).json({ message: 'UserSignupController.ts | Error during getting is profile complete' });
             return;
         }
     }

@@ -1,27 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../../../assets/styles/Navbar/User/UserSignin.css'
 import { useAuth } from '../../../security/useAuth';
 import { useForm } from './useForm';
 import { useProfile } from './profileContext';
+import axiosInstance from '../../../security/axiosInstance';
 
 const UserSignIn: React.FC = () => {
-    const { isAuthenticated, checkAuth } = useAuth();
-    const { isProfileComplete } = useProfile();
+    const { checkAuth } = useAuth();
+    const { isProfileComplete, fetchProfile, profile } = useProfile();
     const [message, setMessage] = useState('');
+    const [isAuthenticated, setIsAuthenticated] = useState('');
     const [formValues, handleChange] = useForm({email: '', password: '' });
     const navigate = useNavigate();
-
+    
     const handleSubmit = async (e: React.FormEvent) => {
 
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/apiServeur/signin', formValues);
+            const response = await axiosInstance.post('http://localhost:8000/apiServeur/signin', formValues);
             setMessage(response.data.message);
+
             if (response.data.message) {
                 sessionStorage.setItem('token', response.data.token);
                 checkAuth();
+                const isPC = await fetchProfile();
+                if (!isPC) {
+                    console.log(`userSignin.tsx -> ${profile?.id}is authenticated and profile is UNcompleted please fill your profile`);
+                    navigate('/apiServeur/userprofile');
+                }
+                else {
+                    console.log(`userSignin.tsx -> profile ${profile?.id} is completed let's go to matcha`);
+                    navigate(`/apiServeur/mymatchaprofile/${profile?.id}`);
+                }
             }
         } catch (error) {
             setMessage(`UserSignin.tsx | Erreur frontend signin : ${error}`);
@@ -29,15 +41,8 @@ const UserSignIn: React.FC = () => {
     };
 
     useEffect(() => {
-        if (isAuthenticated && isProfileComplete === false) {
-            console.log("userSignin.tsx -> is authenticated and profile is UNcompleted please fill your profile");
-            navigate('/apiServeur/userprofile');
-        }
-        else if (isAuthenticated && isProfileComplete) {
-            console.log("userSignin.tsx -> profile is completed let's go to matcha");
-            navigate('/apiServeur/mymatchaprofile');
-        }
-    })
+        
+    }, [isProfileComplete, profile]);
 
     return (
         <section className="gradient-custom" >

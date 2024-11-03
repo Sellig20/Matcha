@@ -20,7 +20,7 @@ export class userSigninController {
             }
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
             await userSigninModel.storeNewToken(email, token, validUser.id);
-            res.json({
+            res.status(200).json({
                 message: "UserSigninController.ts | Auth successfull welcome in the app",
                 token: token,
                 user: validUser

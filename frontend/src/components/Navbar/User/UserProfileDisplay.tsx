@@ -7,7 +7,6 @@ const UserProfileDisplay: React.FC = () => {
 
     const profile = useProfile();
     const navigate = useNavigate();
-    console.log("\n\n PROFILE => ", profile);
     const handleModifyClick = () => {
         navigate('/apiServeur/userprofile/display/update');
     }

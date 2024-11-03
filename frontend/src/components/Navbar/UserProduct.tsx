@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../security/axiosInstance";
+import "../../assets/styles/Navbar/UserProduct.css"
 import { useProfile } from "./User/profileContext";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { UserProfileInterface, UserProfileProduct } from "./User/UserInterface";
+import { useNavigate, useParams } from "react-router-dom";
+import { UserProfileProduct } from "./User/UserInterface";
 
 const UserProduct: React.FC = () => {
 
@@ -44,6 +45,19 @@ const UserProduct: React.FC = () => {
         navigate(`/apiServeur/userprofile`);
     };
 
+    const handleModifyClick = async () => {
+        console.log("\n\nbonjour monde I clicked the heart\n\n");
+        try {
+            const response = await axiosInstance.post(`http://localhost:8000/apiServeur/likes`, {
+                user_id: profile?.profile?.id,
+                liked_user_id: idd,
+            });
+            setMessage(response.data.message);
+        } catch (error) {
+            setMessage(`UserProduct.tsx | Erreur frontend post likes : ${error}`);
+        }
+    }
+
     useEffect(() => {
         const executeData = async () => {
             try {
@@ -80,7 +94,7 @@ const UserProduct: React.FC = () => {
         <div className="container py-5 h-100">
             <div className="row justify-content-center align-items-center h-100">
                 {/* Grand carré */}
-                <div className="col-12 col-xl-8">
+                <div className="col-12 col-xl-80">
                     <h3>1 il faudra la search bar ici</h3>
                     <div className="card shadow-2-strong" style={{ borderRadius: '20px', padding: '20px', height: '600px' }}>
                     <h3>2</h3>
@@ -91,7 +105,7 @@ const UserProduct: React.FC = () => {
                                 <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
                                 <h3>3 ...</h3>
                                     <div className="card-body d-flex align-items-center justify-content-center">
-                                        <h3 className="text-center">Rectangle Vertical</h3>
+                                        <h3 className="text-center"> photos du user que je matte</h3>
                                     </div>
                                 </div>
                             </div>
@@ -101,16 +115,42 @@ const UserProduct: React.FC = () => {
                                 {/* Premier rectangle horizontal */}
                                 <div className="card shadow-2-strong mb-3" style={{ borderRadius: '20px', height: '48%' }}>
                                 <h3>4 ...</h3>
-                                    <div className="card-body d-flex align-items-center justify-content-center">
-                                        <h3 className="text-center">Rectangle 1</h3>
+                                    <div className="card-body">
+                                        <p> AGE : 
+                                            <br />
+                                            {user?.age}
+                                            <br />
+                                            <br />
+                                        </p>
+                                        <p> SEXUAL INTERESTS : 
+                                            <br />
+                                            {user?.sexual_interest}
+                                            <br />
+                                            <br />
+                                        </p>
+                                        <p> GENDER : 
+                                            <br />
+                                            {user?.gender}
+                                            <br />
+                                        </p>
                                     </div>
                                 </div>
 
                                 {/* Deuxième rectangle horizontal */}
                                 <div className="card shadow-2-strong" style={{ borderRadius: '20px', height: '48%' }}>
                                 <h3>5 ...</h3>
-                                    <div className="card-body d-flex align-items-center justify-content-center">
-                                        <h3 className="text-center">Rectangle 2</h3>
+                                    <div className="card-body">
+
+                                        <p> BIOGRAPHY : 
+                                            <br />
+                                            {user?.biography}
+                                            <br />
+                                            <br />
+                                        </p>
+                                            <button data-mdb-ripple-init 
+                                                className="coeur btn btn-info btn-lg"
+                                                onClick={handleModifyClick}
+                                            > 🩷 </button>
                                     </div>
                                 </div>
                             </div>

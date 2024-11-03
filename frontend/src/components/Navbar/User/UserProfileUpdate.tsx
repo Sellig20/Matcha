@@ -9,7 +9,7 @@ const UserProfileUpdate: React.FC = () => {
 
     const [message, setMessage] = useState('');
     const { profile , fetchProfile } = useProfile();
-    const [formValues, handleChange] = useForm({ usersettingsid: '', username: profile?.user_name || '', age: profile?.age || 0, gender: profile?.gender || '', sexualInterest: profile?.sexualinterest || '', biography: profile?.biography || '', tags: profile?.tags || '' });
+    const [formValues, handleChange] = useForm({ usersettingsid: '', username: profile?.user_name || '', age: profile?.age || 0, gender: profile?.gender || '', sexualInterest: profile?.sexual_interest || '', biography: profile?.biography || '', tags: profile?.tags || '' });
     const navigate = useNavigate();
 
     const handleSubmit = async (e:React.FormEvent) => {

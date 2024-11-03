@@ -29,6 +29,7 @@ export interface UserCreate {
     real_location: string,
 	age_lower_bound: number,
     age_upper_bound: number,
+	is_profile_completed: boolean,
   }
   
 export interface UsersSexualPreferencesCreate {
@@ -54,6 +55,7 @@ export interface UsersPicturesLikesCreate {
 }
 
 export interface UsersProfilesViewsCreate {
+	id: number,
     user_viewer_id: number,
     user_viewed_id: number,
     view_started_on: string,
@@ -133,6 +135,7 @@ export const schema: Schema = {
 		real_location: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		age_lower_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // check >= 18
 		age_upper_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // enum <= 61
+		is_profile_completed: [ColumnType.BOOLEAN, ColumnConstraint.NOT_NULL],
 	},
 
 	users_sexual_preferences: {
@@ -170,7 +173,7 @@ export const schema: Schema = {
 		view_ended_on: [ColumnType.TIMESTAMP, ColumnConstraint.NOT_NULL],
 	},
 
-	user_likes: {
+	users_likes: {
 		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
 		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		liked_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],

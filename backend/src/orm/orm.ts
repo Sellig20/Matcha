@@ -123,8 +123,8 @@ class ORM {
 
 	async read<T extends keyof Schema, K extends keyof Schema[T]>(
         tableName: T,
-        propertyName?: K,
-        propertyValue?: string | number
+        propertyName?: K, //champ de la table que je veux lire
+        propertyValue?: string | number //variable
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
     ): Promise<any[] | null> {
         const tableSchema = this.schema[tableName];

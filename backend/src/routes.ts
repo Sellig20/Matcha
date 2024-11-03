@@ -17,9 +17,14 @@ router.post('/signin', (req: Request, res: Response) => {
     userSigninController.getLogin(req, res);
 });
 
+
 //------------------------- once authenticated ------------------------------------//
 
 //------------------------- NAVBAR ------------------------------------------------//
+router.get('/isprofilecomplete', authenticateWithToken, (req, res) => {
+    userSignupController.isProfileComplete(req, res);
+});
+
 router.post('/userprofile', authenticateWithToken, (req, res) => {
     userProfileController.joinNewProfile(req, res);
 });
@@ -50,6 +55,18 @@ router.get('/userproduct/:idd', authenticateWithToken, (req, res) => {
 
 router.post('/views', authenticateWithToken, (req, res) => {
     viewsFameRatingController.recordProfileViews(req, res);
+});
+
+router.post('/likes', authenticateWithToken, (req, res) => {
+    viewsFameRatingController.recordProfileLikes(req, res);
+});
+
+router.get('/views/:idd', authenticateWithToken, (req, res) => {
+    viewsFameRatingController.getWhoViewedMe(req, res);
+});
+
+router.get('/likes/:idd', authenticateWithToken, (req, res) => {
+    viewsFameRatingController.getWhoLikedMe(req, res);
 });
 
 router.get('/match', authenticateWithToken, (req, res) => {

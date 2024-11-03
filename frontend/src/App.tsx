@@ -25,6 +25,8 @@ import UserSettingsUpdate from './components/Sidebar/UserSettingsUpdate';
 import AllUSers from './components/Navbar/AllUsers';
 import UserProduct from './components/Navbar/UserProduct';
 import { WebSocketProvider } from './security/wsContext';
+import { useEffect, useState } from 'react';
+import axiosInstance from './security/axiosInstance';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -45,15 +47,15 @@ const ContentComplete: React.FC = () => {
           <Route path="/apiServeur/allusers" element={<ProtectedRoute component={AllUSers} />} />
           <Route path="/apiServeur/userproduct/:idd" element={<ProtectedRoute component={UserProduct} />} />
           <Route path="/apiServeur/chat" element={<ProtectedRoute component={Chat} />} />
-          <Route path="/apiServeur/fm" element={<ProtectedRoute component={FameRating} />} />
+          <Route path="/apiServeur/fm/:idd" element={<ProtectedRoute component={FameRating} />} />
           <Route path="/apiServeur/map" element={<ProtectedRoute component={Map} />} />
           <Route path="/apiServeur/usersettings" element={<ProtectedRoute component={UserSettings} />} />
           <Route path="/apiServeur/usersettings/update" element={<ProtectedRoute component={UserSettingsUpdate} />} />
           <Route path="/apiServeur/confidentialitypolitic" element={<ProtectedRoute component={ConfidentialityPolitic} />} />
           <Route path="/apiServeur/report" element={<ProtectedRoute component={Report} />} />
-        {( isProfileComplete === false &&
+        {/* {( isProfileComplete === false && */}
           <Route path="/apiServeur/userprofile" element={<ProtectedRoute component={UserProfile} />} />
-        )}
+        {/* )} */}
         {( isProfileComplete === true &&
           <Route path="/apiServeur/userprofile/display" element={<ProtectedRoute component={UserProfileDisplay} />} />
         )}
@@ -68,17 +70,17 @@ const App: React.FC = () => {
 
     return (
       <AuthProvider>
-        <ProfileProvider>
-          <Router>
-            <WebSocketProvider>
-              <Navbar />
-              <AuthWrapper>
-                <Sidebar />
-              </AuthWrapper>
-              <ContentComplete />
-            </WebSocketProvider>
-          </Router>
-        </ProfileProvider>
+        <WebSocketProvider>
+          <ProfileProvider>
+            <Router>
+                <Navbar />
+                <AuthWrapper>
+                  <Sidebar />
+                </AuthWrapper>
+                <ContentComplete />
+            </Router>
+          </ProfileProvider>
+        </WebSocketProvider>
       </AuthProvider>
     );
 };

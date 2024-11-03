@@ -1,7 +1,7 @@
 import { query } from '../db';
 import { UserSettingsInterface } from '../databaseInterfaces';
 import orm from '../../server'
-import { UserCreate, UsersProfilesViewsCreate } from '../orm/schema';
+import { UserCreate, UsersLikesCreate, UsersProfilesViewsCreate } from '../orm/schema';
 
 // export class userSignupModel {
     // static async findByEmail(email: string) {
@@ -33,6 +33,11 @@ export class userSignupModel {
         return response;
     }
 
+    static async createLikes(newLikes: UsersLikesCreate) {
+        const response = await orm?.create<"users_likes">("users_likes", newLikes);
+        return response;
+    }
+
     static async updateUserToken(id: number, updateData: Partial<UserCreate>) {
         const response = await orm?.update<"users">("users", id, updateData);
         return response;
@@ -50,6 +55,16 @@ export class userSignupModel {
 
     static async readAllUsers() {
         const response = await orm?.read<"users", any>("users", "first_name");
+        return response;
+    }
+
+    static async readViewed(key?: string, value?: string | number) {
+        const response = await orm?.read<"users_profiles_views", any>("users_profiles_views", key, value);
+        return response;
+    }
+
+    static async readLikes(key?: string, value?: string | number) {
+        const response = await orm?.read<"users_likes", any>("users_likes", key, value);
         return response;
     }
 

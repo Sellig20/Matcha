@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {userProfileModel }from '../model/userProfileModel';
 import { UserCreate } from "../orm/schema";
 import { userSignupModel } from "../model/userSignupModel";
+import { io } from '../../server';
 
 export class userProfileController {
     static async joinNewProfile(req: Request, res: Response) {//TO CREATE NEW PROFILE
@@ -29,7 +30,9 @@ export class userProfileController {
                 real_location: "",
                 age_lower_bound: 0,
                 age_upper_bound: 0,
+                is_profile_completed: true,
             }
+            io.emit('is_profile_complete', 'true');
             const response = await userSignupModel.updateUserToken(userIdNumber, achieveUser);
             res.status(201).json({ message: `userProfileController.ts | Fill profile success`, response});
         } catch (err) {
@@ -62,9 +65,9 @@ export class userProfileController {
                 real_location: "",
                 age_lower_bound: 0,
                 age_upper_bound: 0,
+                is_profile_completed: midUser.is_profile_completed,
             }
             const response = await userSignupModel.updateUserToken(userIdNumber, updateData);
-            console.log("\n\n\n\n response usersignup model update settings ==> ", response, "\n\n\n");
             res.status(201).json({ message: `userProfileController.ts | Update user settings success`, response});
         } catch (err) {//ne remplit pas si ya pas le reste
             return res.status(500).json({ message: 'Server error', err });
@@ -78,16 +81,16 @@ export class userProfileController {
                 return res.status(400).json({ message: 'UserProfileController.ts | Error user id not found in request' });
             }
             const displayProfile = await userProfileModel.displayProfile("id", userId);
-            if (displayProfile && displayProfile[0].user_name) {
-                console.log("\n\n-------------------------------------------------------------\n\n DISPLAY PROFILE from userProfileController.ts => ", displayProfile);
-                const isProfileComplete = true;
-                res.status(201).json({ message: 'UserProfileController.ts | profile complete', displayProfile, isProfileComplete });
-            }
-            else {
-                const isProfileComplete = false;
-                res.status(422).json({ message: 'UserProfileController.ts | profile incomplete', displayProfile, isProfileComplete });
-                return ;
-            }
+            res.status(201).json({ message: 'UserProfileController.ts | profile complete', displayProfile });
+        } catch (err) {
+            res.status(500).json({ error: 'UserProfileController.ts | Error something went srong '});
+        }
+    }
+
+    static async displayOtherProfile(req: Request, res: Response, id: number) {
+        try {
+            const displayProfile = await userProfileModel.displayProfile("id", id);
+            res.status(201).json({ message: 'UserProfileController.ts | profile complete', displayProfile });
         } catch (err) {
             res.status(500).json({ error: 'UserProfileController.ts | Error something went srong '});
         }
@@ -113,13 +116,12 @@ export class userProfileController {
                 real_location: "",
                 age_lower_bound: 0,
                 age_upper_bound: 0,
+                is_profile_completed: false,
               }
             await userProfileModel.createNewProfile(newUser);
-            // const isProfileComplete = true;
             res.status(201).json({ message: 'UserProfileController.ts | new profile ok'});
         } catch(err) {
-            const isProfileComplete = false;
-            res.status(500).json({ message: 'UserProfileController.ts | Erreur pdt la creation du profile', isProfileComplete });
+            res.status(500).json({ message: 'UserProfileController.ts | Erreur pdt la creation du profile' });
             return;
         }
     }

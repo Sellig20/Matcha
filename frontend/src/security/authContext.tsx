@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { createContext } from 'react';
+import axiosInstance from './axiosInstance';
 
 export interface AuthContextType {
     isAuthenticated: boolean | null;
@@ -31,15 +32,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 setIsAuthenticated(false);                    
                 return;
             }
-            const response = await axios.get('http://localhost:8000/apiServeur/checktok', {
+            const response = await axiosInstance.get('http://localhost:8000/apiServeur/checktok', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setIsAuthenticated(response.data.valid);
             } catch (err) {
                 console.log("authContext.tsx | Error during auth check: ", err);    
-                if (axios.isAxiosError(err)) {
-                    console.error("\n\n\nAuthContext.tsx | Error response:", err.response?.data);
-                }
                 setIsAuthenticated(false);
             }
         };

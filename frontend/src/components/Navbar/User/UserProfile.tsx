@@ -1,31 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../../security/axiosInstance';
 import { useForm } from './useForm';
 import { genderEnum, sexualInterestEnum, tagsEnum } from './UserInterface';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from './profileContext';
-import "../../../assets/styles/Navbar/User/UserProfile.css"
+import "../../../assets/styles/Navbar/User/UserProfile.css";
+import { useWebSocketContext } from '../../../security/wsContext';
+import axios from 'axios';
 
 const UserProfile: React.FC = () => {
     const [message, setMessage] = useState('');
     const [formValues, handleChange] = useForm({ usersettingsid: '', username: '', age: '', gender: '', sexualInterest: '', biography: '', tags: '' });
     const navigate = useNavigate();
     const { fetchProfile } = useProfile();
+    const { socket } = useWebSocketContext();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            console.log("\n\n\n les form values envoyees depuis front4end = ", formValues);
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/userprofile`, formValues);
             setMessage(response.data.message);
             if (response.data) {
-                await fetchProfile();
+                // await fetchProfile();
                 navigate('/apiServeur/userprofile/display');
             }
         } catch (error) {
             setMessage(`UserProfile.tsx | Erreur frontend userprofile : ${error}`);
         }
     };
+
+    useEffect(() => {
+        const res = fetchProfile();
+    }, []);
 
     return (
         <section className="gradient-custom" >

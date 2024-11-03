@@ -1,4 +1,4 @@
-import { Link, UNSAFE_ErrorResponseImpl } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../assets/styles/Navbar/Navbar.css'
 import { useAuth } from '../../security/useAuth';
 import { useEffect, useState } from 'react';
@@ -15,7 +15,8 @@ const Navbar = () => {
     const fetchId = async () => {
         try {
             const response = await axiosInstance.get('http://localhost:8000/apiServeur/navbar');
-            console.log("\n\n\n\n id of the user : ", response.data.userId);
+            console.log("\n\n\n\n || NAVBAR : id of the user : ", response.data.userId);
+            
             setId(response.data.userId);
         } catch (error) {
             setMessage(`Navbar.tsx | Erreur frontend navbar FETCH ID: ${error}`);
@@ -42,7 +43,7 @@ const Navbar = () => {
                     {isAuthenticated === true && <li><Link to={`/apiServeur/mymatchaprofile/${id}`} type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>My Matcha profile</Link></li>}
                     {isAuthenticated === true && <li><Link to="/apiServeur/match" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Mes Match</Link></li>}
                     {isAuthenticated === true && <li><Link to="/apiServeur/allusers" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>--x-- All user --x--</Link></li>}
-                    {isAuthenticated === true && <li><Link to="/apiServeur/fm" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Fame Rating</Link></li>}
+                    {isAuthenticated === true && <li><Link to={`/apiServeur/fm/${id}`} type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Fame Rating</Link></li>}
                     {isAuthenticated === true && <li><Link to="/apiServeur/chat" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Chat</Link></li>}
                     {isAuthenticated === true && <li><Link to="/apiServeur/map" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Map</Link></li>}
                     {isAuthenticated === true && isProfileComplete === false && <li><Link to="/apiServeur/userprofile" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>My UserProfile Settings</Link></li> ||

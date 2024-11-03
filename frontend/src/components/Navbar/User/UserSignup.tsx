@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../security/useAuth';
 import { useForm } from './useForm';
 import { useWebSocketContext } from '../../../security/wsContext';
+import axiosInstance from '../../../security/axiosInstance';
 
 const UserSignup: React.FC = () => {
     const { isAuthenticated, checkAuth } = useAuth();
@@ -15,7 +16,7 @@ const UserSignup: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/apiServeur/signup', formValues);
+            const response = await axiosInstance.post('http://localhost:8000/apiServeur/signup', formValues);
             setMessage(response.data.message);
             if (response.data.token) {
                 sessionStorage.setItem('token', response.data.token);

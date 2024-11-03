@@ -54,7 +54,6 @@ const server = startServer();
 		console.log('\n\n♦️♦️♦️♦️♦️♦️♦️♦️ WebSocket BACKEND connected:', socket.id, "♦️♦️♦️♦️♦️♦️♦️♦️\n\n");
 
 		socket.on('newUser', (data) => {
-			// Par exemple, émettre l'événement 'newUser' à tous les clients
 			socket.broadcast.emit('newUser', { id: socket.id, ...data });
 		});
 
