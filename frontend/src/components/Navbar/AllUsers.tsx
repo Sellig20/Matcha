@@ -10,7 +10,6 @@ const AllUSers: React.FC = () => {
     const [myId, setMyId] = useState<number | undefined>(undefined);
     const [users, setUsers] = useState<string[]>([]);
     const [usersNames, setUsersNames] = useState<string[]>([]);
-    const [socketUsers, setSocketUsers] = useState<string[]>([]);
     const navigate = useNavigate();
     const { socket } = useWebSocketContext();
     
@@ -114,7 +113,7 @@ const AllUSers: React.FC = () => {
                                                     <td
                                                         style={{ border: '1px solid black', padding: '8px' }}
                                                     >
-                                                        {usersNames[index] || ''} {/* Affichez le nom correspondant ou laissez la cellule vide */}
+                                                        {usersNames[index] || ''}
                                                     </td>
                                                 </tr>
                                             ))}

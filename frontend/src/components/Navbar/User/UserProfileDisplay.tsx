@@ -89,7 +89,29 @@ const UserProfileDisplay: React.FC = () => {
                     <label>Tags</label>
                     </div>
                     <div className="highlight-text-profile">
-                    <p>{profile.profile?.tags}</p>
+                    <p>{profile.profile?.tags_1}</p>
+                    </div>
+                </div>
+                </div>
+
+                <div className="col-md-6 mb-4 pb-2">
+                <div data-mdb-input-init className="form-outline-profile-display">
+                    <div className="fields-profile-display">
+                    <label>Tags</label>
+                    </div>
+                    <div className="highlight-text-profile">
+                    <p>{profile.profile?.tags_2}</p>
+                    </div>
+                </div>
+                </div>
+
+                <div className="col-md-6 mb-4 pb-2">
+                <div data-mdb-input-init className="form-outline-profile-display">
+                    <div className="fields-profile-display">
+                    <label>Tags</label>
+                    </div>
+                    <div className="highlight-text-profile">
+                    <p>{profile.profile?.tags_3}</p>
                     </div>
                 </div>
                 </div>

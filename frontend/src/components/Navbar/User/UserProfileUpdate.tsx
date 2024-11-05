@@ -9,7 +9,7 @@ const UserProfileUpdate: React.FC = () => {
 
     const [message, setMessage] = useState('');
     const { profile , fetchProfile } = useProfile();
-    const [formValues, handleChange] = useForm({ usersettingsid: '', username: profile?.user_name || '', age: profile?.age || 0, gender: profile?.gender || '', sexualInterest: profile?.sexual_interest || '', biography: profile?.biography || '', tags: profile?.tags || '' });
+    const [formValues, handleChange] = useForm({ usersettingsid: '', username: profile?.user_name || '', age: profile?.age || 0, gender: profile?.gender || '', sexual_interest: profile?.sexual_interest || '', biography: profile?.biography || '', tags_1: profile?.tags_1 || '', tags_2: profile?.tags_2 || '', tags_3: profile?.tags_3 || '' });
     const navigate = useNavigate();
 
     const handleSubmit = async (e:React.FormEvent) => {
@@ -112,17 +112,17 @@ const UserProfileUpdate: React.FC = () => {
                 </div>
                 <div className="highlight-text-profile">
                 <select 
-                    id="sexualInterest"
-                    name="sexualInterest"
+                    id="sexual_interest"
+                    name="sexual_interest"
                     className="form-control form-control-lg" 
-                    value={formValues.sexualinterest}
+                    value={formValues.sexual_interest}
                     onChange={handleChange}
                     required
                 >
                     <option value="">Select Sexual Interest</option>
-                    {Object.values(sexualInterestEnum).map((interest) => (
-                        <option key={interest} value={interest}>
-                            {interest}
+                    {Object.values(sexualInterestEnum).map((sexual_interest) => (
+                        <option key={sexual_interest} value={sexual_interest}>
+                            {sexual_interest}
                         </option>
                     ))}
                 </select>
@@ -153,27 +153,78 @@ const UserProfileUpdate: React.FC = () => {
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
                 <div className="fields-profile-display">
-                <label>Tags</label>
+                <label>Tags 1</label>
                 </div>
                 <div className="highlight-text-profile">
                 <select 
-                    id="tags"
-                    name="tags"
+                    id="tags_1"
+                    name="tags_1"
                     className="form-control form-control-lg" 
-                    value={formValues.tags}
+                    value={formValues.tags_1}
                     onChange={handleChange}
                     required
                 >
                     <option value="">Select Tags</option>
-                    {Object.values(tagsEnum).map((tag) => (
-                        <option key={tag} value={tag}>
-                            {tag}
+                    {Object.values(tagsEnum).map((tag_1) => (
+                        <option key={tag_1} value={tag_1}>
+                            {tag_1}
                         </option>
                     ))}
                 </select>
                 </div>
             </div>
             </div>
+
+            <div className="col-md-6 mb-4 pb-2">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
+                <label>Tags 2</label>
+                </div>
+                <div className="highlight-text-profile">
+                <select 
+                    id="tags_2"
+                    name="tags_2"
+                    className="form-control form-control-lg" 
+                    value={formValues.tags_2}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="">Select Tags</option>
+                    {Object.values(tagsEnum).map((tag_2) => (
+                        <option key={tag_2} value={tag_2}>
+                            {tag_2}
+                        </option>
+                    ))}
+                </select>
+                </div>
+            </div>
+            </div>
+
+            <div className="col-md-6 mb-4 pb-2">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
+                <label>Tags 3</label>
+                </div>
+                <div className="highlight-text-profile">
+                <select 
+                    id="tags_3"
+                    name="tags_3"
+                    className="form-control form-control-lg" 
+                    value={formValues.tags_3}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="">Select Tags</option>
+                    {Object.values(tagsEnum).map((tag_3) => (
+                        <option key={tag_3} value={tag_3}>
+                            {tag_3}
+                        </option>
+                    ))}
+                </select>
+                </div>
+            </div>
+            </div>
+
             </div>
 
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">

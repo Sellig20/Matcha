@@ -20,7 +20,9 @@ export interface UserProfileInterface {
     gender : genderEnum;
     sexual_interest : sexualInterestEnum;
     biography: string;
-    tags: tagsEnum;
+    tags_1: tagsEnum;
+    tags_2: tagsEnum;
+    tags_3: tagsEnum;
     hasProfilePicture: boolean;
     validationtoken: number;
     isvalidatedtoken: boolean;

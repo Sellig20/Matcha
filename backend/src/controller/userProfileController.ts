@@ -24,7 +24,10 @@ export class userProfileController {
                 validation_token: midUser.validation_token,
                 gender: req.body.gender,
                 biography: req.body.biography,
-                sexual_interest: req.body.sexualInterest,
+                sexual_interest: req.body.sexual_interest,
+                tags_1: req.body.tags_1,
+                tags_2: req.body.tags_2,
+                tags_3: req.body.tags_3,
                 fame_rating: 0,
                 stated_location: "",
                 real_location: "",
@@ -60,6 +63,9 @@ export class userProfileController {
                 gender: midUser.gender,
                 biography: midUser.biography,
                 sexual_interest: midUser.sexual_interest,
+                tags_1: midUser.tags_1,
+                tags_2: midUser.tags_2,
+                tags_3: midUser.tags_3,
                 fame_rating: 0,
                 stated_location: "",
                 real_location: "",
@@ -98,7 +104,7 @@ export class userProfileController {
 
     static async createNewProfile(req: Request, res: Response, displayUser: any) {
         try {
-            const { firstname, lastname, email, password, hashedPwd, username, age, gender, sexualInterest, biography, tags, hasProfilePicture } = req.body;
+            const { firstname, lastname, email, hashedPwd } = req.body;
             
             const newUser: UserCreate = {
                 user_name: "",
@@ -111,6 +117,9 @@ export class userProfileController {
                 gender: "",
                 biography: "",
                 sexual_interest: "",
+                tags_1: "",
+                tags_2: "",
+                tags_3: "",
                 fame_rating: 0,
                 stated_location: "",
                 real_location: "",
