@@ -3,6 +3,7 @@ import axiosInstance from "../../security/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useWebSocketContext } from "../../security/wsContext";
 import "../../assets/styles/index.css"
+import { useProfile } from "./User/profileContext";
 
 const AllUSers: React.FC = () => {
     const [message, setMessage] = useState('');
@@ -12,6 +13,7 @@ const AllUSers: React.FC = () => {
     const [usersNames, setUsersNames] = useState<string[]>([]);
     const navigate = useNavigate();
     const { socket } = useWebSocketContext();
+    const profile = useProfile();
     
     const getListUsers = async () => {
         try {
@@ -21,9 +23,10 @@ const AllUSers: React.FC = () => {
             setUsers(response.data.list);
             setUsersNames(response.data.listName);
             console.log("\n\n users =>>>>>> ", response.data.listName, "\n\n");
+            // console.log("\n\n i am ", profile);
         } catch (error) {
             setMessage(`AllUsers.tsx | Erreur frontend allusers : ${error}`);
-        }//quand je viens de la bdd il y a du retard 10s + time out pour le nouvel user seulement
+        }
     }
 
     const handleNavigate = (userid: string) => {

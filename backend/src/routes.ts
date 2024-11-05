@@ -4,6 +4,7 @@ import { viewsFameRatingController } from './controller/viewsFameRatingControlle
 import { userSigninController } from './controller/userSigninController';
 import { userSignupController } from './controller/userSignupController';
 import { userProfileController } from './controller/userProfileController';
+import { MatchingController } from './controller/MatchingController';
 import { Request, Response } from "express";
 import { authenticateWithToken } from "./authMiddleware";
 
@@ -46,7 +47,7 @@ router.get('/mymatchaprofile', authenticateWithToken, (req, res) => {
 });
 
 router.get('/allusers', authenticateWithToken, (req, res) => {
-    viewsFameRatingController.getListUsers(req, res);
+    MatchingController.getListUsers(req, res);
 });
 
 router.get('/userproduct/:idd', authenticateWithToken, (req, res) => {

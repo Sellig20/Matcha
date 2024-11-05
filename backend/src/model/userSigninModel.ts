@@ -10,7 +10,6 @@ export class userSigninModel {
         if (user && user.email.length === 0) {
             throw new Error('Wrong email');
         }
-        const myUser = "";
         const hashedPwd = user.password_hash;
         const resPassword = await bcrypt.compare(password, hashedPwd);
         if (!resPassword) {

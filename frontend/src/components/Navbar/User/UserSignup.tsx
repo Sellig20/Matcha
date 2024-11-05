@@ -23,7 +23,7 @@ const UserSignup: React.FC = () => {
                 checkAuth();
             }
         } catch (err) {
-            setMessage("UserSignup.tsx | Erreur frontend signup");
+            setMessage("UserSignup.tsx | ### POURQUOI ?? Erreur frontend signup");
         }
     };
     

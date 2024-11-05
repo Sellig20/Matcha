@@ -23,7 +23,7 @@ export class userSignupController {
             if (!JWT_SECRET || JWT_SECRET === null) {
                 throw new Error('UserSignupController.ts | JWT_SECRET is not defined in the environment variables');
             }
-            const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '10h' });
         
             const newUser: UserCreate = {
                 user_name: "",

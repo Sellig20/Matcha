@@ -38,8 +38,8 @@ export class userProfileController {
             io.emit('is_profile_complete', 'true');
             const response = await userSignupModel.updateUserToken(userIdNumber, achieveUser);
             res.status(201).json({ message: `userProfileController.ts | Fill profile success`, response});
-        } catch (err) {
-            return res.status(500).json({ message: 'Server error', err });
+        } catch (error) {
+            return res.status(500).json({ message: 'Server error', error });
         }
     }
 

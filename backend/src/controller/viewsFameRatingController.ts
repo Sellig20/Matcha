@@ -42,18 +42,6 @@ export class viewsFameRatingController {
         }
     }
 
-    static async getListUsers(req: Request, res: Response) {//For AllUsers.tsx, from bdd
-        try {
-            const listTab = await userSignupModel.readUserByEmail();
-            const list = listTab?.map(user => user.id);
-            const listName = listTab?.map(user => user.user_name)
-            res.status(201).json({ message: `List of all users`, list, listName});
-        } catch (error) {
-            res.status(500).json({ message: `viewsFameRatingController.ts | Error during get list users : ${error}` });
-            return;
-        }
-    }
-
     static async readProductProfile(req: Request, res:Response) {
         try {
             const value = req.params.idd;

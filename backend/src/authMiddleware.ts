@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserSettingsInterface } from "./databaseInterfaces";
+import { UserProfileInterface, UserSettingsInterface } from "./databaseInterfaces";
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { userSignupModel } from './model/userSignupModel';
@@ -12,7 +12,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 declare module 'express-serve-static-core' {
     interface Request {
-        user?: UserSettingsInterface;
+        user?: UserProfileInterface;
         userId?: string;
     }
 }
@@ -34,21 +34,18 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
                 req.user = user;
                 req.userId = user.id;
             if (user.id) {
-                console.log("\n\n************************************");
-                console.log(`\n\n*    req.userid = ${user.id}                *`)
-                console.log("\n\n************************************");
                 try {
                     const usertab = await userSignupModel.readUserByEmail();
-                    await client.set(`user:${user.id}`, 'connected');
+                    // await client.set(`user:${user.id}`, 'connected');
                     io.emit('newUser', usertab?.map(user => user.id));//From bdd to socket to AllUser.tsx
+                // } catch (error) {
+                //     console.error('Error setting user state in Redis:', error);
+                //     return res.status(500).json({ valid: false, message: 'Internal server error' });
+                // }
+                // try {
+                //     await client.sAdd('activeUsers', `user:${user.id}`);
                 } catch (error) {
-                    console.error('Error setting user state in Redis:', error);
-                    return res.status(500).json({ valid: false, message: 'Internal server error' });
-                }
-                try {
-                    await client.sAdd('activeUsers', `user:${user.id}`);
-                } catch (error) {
-                    console.error('Error adding user to activeUsers in Redis:', error);
+                //     console.error('Error adding user to activeUsers in Redis:', error);
                     return res.status(500).json({ valid: false, message: 'Internal server error' });
                 }
             }
