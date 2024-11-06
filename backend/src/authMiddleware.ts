@@ -36,16 +36,8 @@ export async function authenticateWithToken(req: Request, res: Response, next: N
             if (user.id) {
                 try {
                     const usertab = await userSignupModel.readUserByEmail();
-                    // await client.set(`user:${user.id}`, 'connected');
                     io.emit('newUser', usertab?.map(user => user.id));//From bdd to socket to AllUser.tsx
-                // } catch (error) {
-                //     console.error('Error setting user state in Redis:', error);
-                //     return res.status(500).json({ valid: false, message: 'Internal server error' });
-                // }
-                // try {
-                //     await client.sAdd('activeUsers', `user:${user.id}`);
                 } catch (error) {
-                //     console.error('Error adding user to activeUsers in Redis:', error);
                     return res.status(500).json({ valid: false, message: 'Internal server error' });
                 }
             }

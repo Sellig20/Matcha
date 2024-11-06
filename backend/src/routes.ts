@@ -50,6 +50,10 @@ router.get('/allusers', authenticateWithToken, (req, res) => {
     MatchingController.getListUsers(req, res);
 });
 
+router.get('/matchsusers', authenticateWithToken, (req, res) => {
+    MatchingController.getMatchsUsers(req, res);
+});
+
 router.get('/userproduct/:idd', authenticateWithToken, (req, res) => {
     viewsFameRatingController.readProductProfile(req, res);
 });

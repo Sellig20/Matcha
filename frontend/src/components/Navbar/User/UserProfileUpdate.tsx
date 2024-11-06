@@ -9,7 +9,7 @@ const UserProfileUpdate: React.FC = () => {
 
     const [message, setMessage] = useState('');
     const { profile , fetchProfile } = useProfile();
-    const [formValues, handleChange] = useForm({ usersettingsid: '', username: profile?.user_name || '', age: profile?.age || 0, gender: profile?.gender || '', sexual_interest: profile?.sexual_interest || '', biography: profile?.biography || '', tags_1: profile?.tags_1 || '', tags_2: profile?.tags_2 || '', tags_3: profile?.tags_3 || '' });
+    const [formValues, handleChange] = useForm({ usersettingsid: '', username: profile?.user_name || '', age: profile?.age || 0, age_lower_bound: profile?.age_lower_bound || 0, age_upper_bound: profile?.age_upper_bound || 0, gender: profile?.gender || '', sexual_interest: profile?.sexual_interest || '', biography: profile?.biography || '', tags_1: profile?.tags_1 || '', tags_2: profile?.tags_2 || '', tags_3: profile?.tags_3 || '' });
     const navigate = useNavigate();
 
     const handleSubmit = async (e:React.FormEvent) => {
@@ -98,6 +98,42 @@ const UserProfileUpdate: React.FC = () => {
                     id="age"
                     className="form-control form-control-lg" 
                     value={formValues.age}
+                    onChange={handleChange}
+                    required
+                />
+                </div>
+            </div>
+            </div>
+
+            <div className="col-md-6 mb-4 pb-2">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
+                <label>Age minimal accepted</label>
+                </div>
+                <div className="highlight-text-profile">
+                <input
+                    type="text" 
+                    id="age_lower_bound"
+                    className="form-control form-control-lg" 
+                    value={formValues.age_lower_bound}
+                    onChange={handleChange}
+                    required
+                />
+                </div>
+            </div>
+            </div>
+
+            <div className="col-md-6 mb-4 pb-2">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
+                <label>Age maximum accepted</label>
+                </div>
+                <div className="highlight-text-profile">
+                <input
+                    type="text" 
+                    id="age_upper_bound"
+                    className="form-control form-control-lg" 
+                    value={formValues.age_upper_bound}
                     onChange={handleChange}
                     required
                 />

@@ -51,10 +51,24 @@ export enum tagsEnum {
     yoga = "yoga"
 }
 export interface UserProfileInterface {
-    userprofileid?: number;
+    // userprofileid?: number;
+    // usersettingsid: number;
+    // username: string;
+    // age: number;
+    // gender : genderEnum;
+    // sexual_interest : sexualInterestEnum;
+    // biography: string;
+    // tags_1: tagsEnum;
+    // tags_2: tagsEnum;
+    // tags_3: tagsEnum;
+    // hasProfilePicture: boolean;
+    id: number;
+    userprofileid: number;
     usersettingsid: number;
-    username: string;
+    user_name: string;
     age: number;
+    age_lower_bound: number;
+    age_upper_bound: number;
     gender : genderEnum;
     sexual_interest : sexualInterestEnum;
     biography: string;
@@ -62,6 +76,12 @@ export interface UserProfileInterface {
     tags_2: tagsEnum;
     tags_3: tagsEnum;
     hasProfilePicture: boolean;
+    validationtoken: number;
+    isvalidatedtoken: boolean;
+    first_name: string;
+    last_name: string;
+    email: string;
+    pass_word: string;
 }
 //SIGNUP | SIGNIN
 //Signup -> asked to fill usersettings table. Then redirected to userprofile table to fill.

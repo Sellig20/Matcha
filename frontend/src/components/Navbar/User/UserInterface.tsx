@@ -17,6 +17,8 @@ export interface UserProfileInterface {
     usersettingsid: number;
     user_name: string;
     age: number;
+    age_lower_bound: number;
+    age_upper_bound: number;
     gender : genderEnum;
     sexual_interest : sexualInterestEnum;
     biography: string;

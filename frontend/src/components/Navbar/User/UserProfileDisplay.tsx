@@ -62,6 +62,28 @@ const UserProfileDisplay: React.FC = () => {
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
                 <div className="fields-profile-display">
+                <label>Age minimal accepted</label>
+                </div>
+                <div className="highlight-text-profile">
+                <p>{profile.profile?.age_lower_bound}</p>
+                </div>
+            </div>
+            </div>
+
+            <div className="col-md-6 mb-4 pb-2">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
+                <label>Age maximum accepted</label>
+                </div>
+                <div className="highlight-text-profile">
+                <p>{profile.profile?.age_upper_bound}</p>
+                </div>
+            </div>
+            </div>
+
+            <div className="col-md-6 mb-4 pb-2">
+            <div data-mdb-input-init className="form-outline-profile-display">
+                <div className="fields-profile-display">
                 <label>Sexual Interest</label>
                 </div>
                 <div className="highlight-text-profile">

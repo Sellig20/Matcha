@@ -31,6 +31,8 @@ export class userSignupController {
                 first_name: firstname,
                 last_name: lastname,
                 age: 0,
+                age_lower_bound: 0,
+                age_upper_bound: 0,
                 password_hash: hashedPwd,
                 validation_token: token,
                 gender: "",
@@ -42,8 +44,6 @@ export class userSignupController {
                 fame_rating: 0,
                 stated_location: "",
                 real_location: "",
-                age_lower_bound: 0,
-                age_upper_bound: 0,
                 is_profile_completed: false,
             };
             await userSignupModel.createUser(newUser);

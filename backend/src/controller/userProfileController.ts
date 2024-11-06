@@ -20,6 +20,8 @@ export class userProfileController {
                 first_name: midUser.first_name,
                 last_name: midUser.last_name,
                 age: req.body.age,
+                age_lower_bound: req.body.age_lower_bound,
+                age_upper_bound: req.body.age_upper_bound,
                 password_hash: midUser.password_hash,
                 validation_token: midUser.validation_token,
                 gender: req.body.gender,
@@ -31,8 +33,6 @@ export class userProfileController {
                 fame_rating: 0,
                 stated_location: "",
                 real_location: "",
-                age_lower_bound: 0,
-                age_upper_bound: 0,
                 is_profile_completed: true,
             }
             io.emit('is_profile_complete', 'true');
@@ -58,6 +58,8 @@ export class userProfileController {
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
                 age: midUser.age,
+                age_lower_bound: midUser.age_lower_bound,
+                age_upper_bound: midUser.age_upper_bound,
                 password_hash: midUser.password_hash,
                 validation_token: midUser.validation_token,
                 gender: midUser.gender,
@@ -69,8 +71,6 @@ export class userProfileController {
                 fame_rating: 0,
                 stated_location: "",
                 real_location: "",
-                age_lower_bound: 0,
-                age_upper_bound: 0,
                 is_profile_completed: midUser.is_profile_completed,
             }
             const response = await userSignupModel.updateUserToken(userIdNumber, updateData);
@@ -112,6 +112,8 @@ export class userProfileController {
                 first_name: firstname,
                 last_name: lastname,
                 age: 0,
+                age_lower_bound: 0,
+                age_upper_bound: 0,
                 password_hash: hashedPwd,
                 validation_token: "",
                 gender: "",
@@ -123,8 +125,6 @@ export class userProfileController {
                 fame_rating: 0,
                 stated_location: "",
                 real_location: "",
-                age_lower_bound: 0,
-                age_upper_bound: 0,
                 is_profile_completed: false,
               }
             await userProfileModel.createNewProfile(newUser);
