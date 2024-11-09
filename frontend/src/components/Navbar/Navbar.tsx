@@ -40,7 +40,7 @@ const Navbar = () => {
                 <Link to="/apiServeur/match" className="navbar-brand">Matcha</Link>
                 </div>
                 <ul className="nav navbar d-flex">
-                    {isAuthenticated === true && <li><Link to={`/apiServeur/mymatchaprofile/${id}`} type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Proposition de Matcha</Link></li>}
+                    {isAuthenticated === true && <li><Link to={`/apiServeur/mymatchaprofile/${id}`} type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Proposition de Matcha et mon profil</Link></li>}
                     {isAuthenticated === true && <li><Link to="/apiServeur/match" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Mes Match I matched</Link></li>}
                     {isAuthenticated === true && <li><Link to="/apiServeur/allusers" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>--x-- All user --x--</Link></li>}
                     {isAuthenticated === true && <li><Link to={`/apiServeur/fm/${id}`} type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Fame Rating</Link></li>}

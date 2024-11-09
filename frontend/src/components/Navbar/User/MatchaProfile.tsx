@@ -40,9 +40,38 @@ const MatchaProfile: React.FC = () => {
                             {/* Rectangle vertical à gauche */}
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
                                 <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
-                                <h3>3 Profil de la Lola</h3>
+                                <h3> MON PROFIL </h3>
                                     <div className="card-body d-flex align-items-center justify-content-center">
                                         <h3 className="text-center">Rectangle Vertical</h3>
+                                            {/* <div className="card-body">
+                                            <p> mon age : 
+                                                <br />
+                                                {user?.age}
+                                                <br />
+                                                <br />
+                                            </p>
+                                            <p> my sexual interests : 
+                                                <br />
+                                                {user?.sexual_interest}
+                                                <br />
+                                                <br />
+                                            </p>
+                                            <p> my gender : 
+                                                <br />
+                                                {user?.gender}
+                                                <br />
+                                            </p>
+                                            <p> my number views : 
+                                                <br />
+                                                {user?.gender}
+                                                <br />
+                                            </p>
+                                            <p> my number likes : 
+                                                <br />
+                                                {user?.gender}
+                                                <br />
+                                            </p>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

@@ -25,7 +25,7 @@ const Match: React.FC = () => {
             setMyId(response.data.myId);
             setUsers(response.data.listName);
             // setUsersNames(response.data.listName);
-            console.log("\n\n users =>>>>>> ", response.data.listName, "\n\n");
+            console.log("\n\n users =>> MATCH?S USERS >>>> ", response.data.listName, "\n\n");
             // console.log("\n\n i am ", profile);
         } catch (error) {
             setMessage(`AllUsers.tsx | Erreur frontend allusers : ${error}`);
@@ -41,8 +41,9 @@ const Match: React.FC = () => {
         getListUsers();
         if (socket) {
 
-            socket.on('newUser', (updateUsers) => {
-                setUsers(updateUsers);
+            socket.on('newMatchUser', (listName) => {
+                console.log("\n\nje suis la socket");
+                setUsers(listName);
             })
             
             return () => {

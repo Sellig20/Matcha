@@ -61,6 +61,8 @@ export class viewsFameRatingController {
         try {
             const value = req.params.idd;
             const numberViewed = await userSignupModel.readViewed("user_viewed_id", value);
+            console.log("\n\n\n\n\n number viewed => ", numberViewed);
+            //rajouter leur nom via la fonction d'au dessus faire un tableau deux en un et les afficher en frontend puis faire un count total en frontend puis fame rating
             res.status(201).json({ message: `get who viewed me ok`, numberViewed });
         } catch (error) {
             res.status(500).json({ message: `viewsFameRatingController.ts | Error during get who viewed me : ${error}` });

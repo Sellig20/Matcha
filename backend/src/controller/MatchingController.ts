@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
 import { userSigninController } from "./userSigninController";
+import { io } from '../../server';
 
 export class MatchingController {
 
@@ -57,7 +58,7 @@ export class MatchingController {
             return null;
         }
     }
-
+    
     static async getListUsers(req: Request, res: Response) {//For AllUsers.tsx, from bdd
         try {
             const listTab = await userSignupModel.readUserByEmail();
@@ -69,7 +70,7 @@ export class MatchingController {
             return;
         }
     }
-
+    
     static async sortFirst(req: Request, res: Response, tab: any[] | null) {
         try {
             const myAge = req.user?.age;
@@ -92,7 +93,19 @@ export class MatchingController {
             return null;
         }
     }
+    
+        static async sortFameRating(req: Request, res: Response, tab: any | null) {
+            try {
+                const myFameRating = req.user?.fame_rating;
+                let tmpTab = [];
+                let finalTab = [];
+                //si 
 
+            } catch (error) {
+                console.log(`\n\n\nMatchingController.ts sort fame rating | Error : ${error}\n\n\n`);
+            }
+        }
+    
     static async getMatchsUsers(req: Request, res: Response) {//For AllUsers.tsx, from bdd
         try {
             const listTab = await userSignupModel.readUserByEmail();
@@ -127,8 +140,9 @@ export class MatchingController {
             );
             
             console.log("\n\nles potentiels sont que la : ", algo_age);
+            io.to(req.userId).emit('newMatchUser', listName);//From bdd to socket to AllUser.tsx
 
-            res.status(201).json({ message: `List of all users`, list, listName });
+            res.status(201).json({ message: `List of all users`, listName });
         } catch (error) {
             res.status(500).json({ message: `viewsFameRatingController.ts | Error during get list users : ${error}` });
             return;

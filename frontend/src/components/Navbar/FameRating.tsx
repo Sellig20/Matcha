@@ -41,6 +41,14 @@ const FameRating = () => {
         }
     };
 
+    const getUserNames = async () => {
+        try {
+            
+        } catch (error) {
+            setMessage(`FameRating.tsx | Erreur try to get user names : ${error}`);
+        }
+    }
+
     useEffect(() => {
         getWhoViewedMe();
         getWhoLikedMe();

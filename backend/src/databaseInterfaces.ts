@@ -75,6 +75,7 @@ export interface UserProfileInterface {
     tags_1: tagsEnum;
     tags_2: tagsEnum;
     tags_3: tagsEnum;
+    fame_rating: number;
     hasProfilePicture: boolean;
     validationtoken: number;
     isvalidatedtoken: boolean;

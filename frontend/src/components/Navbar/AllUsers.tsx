@@ -22,7 +22,7 @@ const AllUSers: React.FC = () => {
             setMyId(response.data.myId);
             setUsers(response.data.list);
             setUsersNames(response.data.listName);
-            console.log("\n\n users =>>>>>> ", response.data.listName, "\n\n");
+            console.log("\n\n users =>>> ALL USERS >>> ", response.data.listName, "\n\n");
             // console.log("\n\n i am ", profile);
         } catch (error) {
             setMessage(`AllUsers.tsx | Erreur frontend allusers : ${error}`);
@@ -33,7 +33,6 @@ const AllUSers: React.FC = () => {
         navigate(`/apiServeur/userproduct/${userid}`);
     };
 
-    
     useEffect(() => {
         
         getListUsers();
