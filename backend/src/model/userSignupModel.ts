@@ -63,9 +63,22 @@ export class userSignupModel {
         return response;
     }
 
+    static async readAnything(table: string, key?: string, value?: string | number) {
+        const response = await orm?.read<typeof table, any>(table, key, value);
+        return response;
+    }
+
     static async readLikes(key?: string, value?: string | number) {
         const response = await orm?.read<"users_likes", any>("users_likes", key, value);
         return response;
+    }
+
+    static async readFirstName(key?: string, value?: string | number) {
+        const response = await orm?.read<"users", any>("users", key, value);
+        if (response) 
+            return response[0].first_name;
+        else
+            return null;
     }
 
 }

@@ -1,4 +1,44 @@
+@font-face {
+    font-family: 'joyline';
+    src: url('./../fonts/joyline_notes/Joyline.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
+@font-face {
+    font-family: 'everi';
+    src: url('./../fonts/everithing/EverithingRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'boneflower';
+    src: url('./../fonts/boneflower/Boneflower.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'gedean';
+    src: url('./../fonts/gGedean.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'memories';
+    src: url('./../fonts/memories_note/Memories.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'rolling';
+    src: url('./../fonts/rolling_stright/Rolling.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 table, caption, th, td {
     border: 2px solid skyblue;

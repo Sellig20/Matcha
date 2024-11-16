@@ -58,7 +58,7 @@ export interface UsersPicturesLikesCreate {
 }
 
 export interface UsersProfilesViewsCreate {
-	id: number,
+	first_name: string,
     user_viewer_id: number,
     user_viewed_id: number,
     view_started_on: string,
@@ -67,7 +67,9 @@ export interface UsersProfilesViewsCreate {
 
 export interface UsersLikesCreate {
     user_id: number,
+	first_name: string,
     liked_user_id: number,
+    liker_user_id: number,
     liked_on: string,
 }
 
@@ -173,6 +175,7 @@ export const schema: Schema = {
 
 	users_profiles_views: {
 		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
+		first_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		user_viewer_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		user_viewed_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		view_started_on: [ColumnType.TIMESTAMP, ColumnConstraint.NOT_NULL],
@@ -183,6 +186,7 @@ export const schema: Schema = {
 		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
 		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		liked_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
+		liker_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		liked_on: [ColumnType.TIMESTAMP, ColumnConstraint.NOT_NULL],
 	},
 

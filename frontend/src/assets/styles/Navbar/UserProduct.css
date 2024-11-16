@@ -1,18 +1,39 @@
 @keyframes battement {
     to {
-      box-shadow: 0 0 0 30px rgba(255, 71, 84, 0);
+      box-shadow: 0 0 0 30px rgba(24, 151, 51, 0);
     }
 }
 
 .coeur {
     text-align: center;
     padding: 12px 24px;
+    width: 80px;
+    height: 70px;
     color: #fff;
-    border-radius: 5px;
-    background: #F34D4D;
+    border-radius: 15px;
+    font-size: 30px;
+    border: none;
+    background: #ed8080;
     box-shadow: 0 0 0 0 rgba(255, 71, 84, .7);
     animation: battement 2s infinite cubic-bezier(.66, 0, 0, 1);
-    text-decoration: none;
+}
+
+.firstname {
+  font-size: 60px;
+  font-family: "gedean";
+}
+
+.main-fields {
+  font-size: 25px;
+  font-family: "joyline";
+}
+
+.text-up {
+  font-size: 40px;
+  text-indent: 70px;
+  font-family: "everi";
+  color: rgb(145, 57, 72);
+  /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif */
 }
 
 .modal-overlay {

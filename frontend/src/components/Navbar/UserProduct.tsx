@@ -3,7 +3,7 @@ import axiosInstance from "../../security/axiosInstance";
 import "../../assets/styles/Navbar/UserProduct.css"
 import { useProfile } from "./User/profileContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserProfileProduct } from "./User/UserInterface";
+import { UserProfileInterface } from "./User/UserInterface";
 
 const UserProduct: React.FC = () => {
 
@@ -12,7 +12,7 @@ const UserProduct: React.FC = () => {
     const { isProfileComplete } = useProfile();
 
     const { idd } = useParams<{idd:string}>();
-    const [user, setUser] = useState<UserProfileProduct | null>(null);
+    const [user, setUser] = useState<UserProfileInterface | null>(null);
     const [notification, setNotification] = useState<string | null>(null);
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(!!notification);
@@ -34,9 +34,11 @@ const UserProduct: React.FC = () => {
                 viewed_id: idd,
                 viewed_first_name: user?.first_name,
                 viewer_id: profile?.profile?.id,
-                viewer_first_name: profile?.profile?.first_name
+                viewer_first_name: profile?.profile?.first_name,
             });
             setMessage(response.data.message);
+            console.log("\n\nresponse ---> ", response.data.message);
+            console.log("\n\nresponse ---> ", response.data);
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur frontend post views : ${error}`);
         }
@@ -51,6 +53,7 @@ const UserProduct: React.FC = () => {
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/likes`, {
                 user_id: profile?.profile?.id,
                 liked_user_id: idd,
+                liker_user_id: profile?.profile?.id,
             });
             setMessage(response.data.message);
         } catch (error) {
@@ -81,14 +84,11 @@ const UserProduct: React.FC = () => {
 
     return (
         <section className="gradient-custom">
-        
-        {/* {notification && (<div className="alert-warning" role="alert"> 
-            <a
-                onClick={() => handleNavigate()}//wtf
-                className="alert-warning"> 
-                    {notification}
-            </a>
-        </div>)} */}
+            <div>
+            {/* Affichage du message */}
+            {message && <p style={{ color: 'red' }}>{message}</p>}
+            </div>
+
             {notification && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -97,76 +97,71 @@ const UserProduct: React.FC = () => {
                     </div>
                 </div>
             )}
-        <div>UserProduct, donc la fiche des produits = des profils de l'app pour que moi en tant que user je DRAGUE</div>
         <h1>tu mattes <span className="colorH1">{user?.first_name}</span> ! </h1>
+
         <div className="container py-5 h-100">
             <div className="row justify-content-center align-items-center h-100">
                 {/* Grand carré */}
-                <div className="col-12 col-xl-80">
+                <div className="col-10 col-xl-80">
                     <h3>1 il faudra la search bar ici</h3>
-                    <div className="card shadow-2-strong" style={{ borderRadius: '20px', padding: '20px', height: '600px' }}>
-                    <h3>2</h3>
-                    <div className="row h-100">
 
-                            {/* Rectangle vertical à gauche */}
-                            <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
-                                <h3>3 ...</h3>
+                    <div className="card shadow-2-strong" style={{ borderRadius: '60px', padding: '20px'}}> {/* box bleue */}
+                    <h3> --------Presentation profile------------------------</h3>
+                    <div className="d-flex" style={{ gap: "20px" }}> {/*les deux boites verticales*/}
+
+                            <div className="col-md-4" style={{ width: "300px"}}>{/*BOITE 1*/}
+                                <div className="card shadow-2-strong mb-3" style={{ borderRadius: '30px', width: '100%', height: '100%' }}>
                                     <div className="card-body d-flex align-items-center justify-content-center">
-                                        <h3 className="text-center"> photos du user que je matte</h3>
+                                        <p className="text-center"> photos du user que je matte</p>
+                                    </div>
+                                    <div className="d-flex justify-content-center mb-3">
+                                    <button
+                                        className="coeur"
+                                        onClick={handleModifyClick}
+                                        > ♥️ </button>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Rectangles horizontaux à droite */}
-                            <div className="col-md-8 d-flex flex-column justify-content-between">
-                                {/* Premier rectangle horizontal */}
-                                <div className="card shadow-2-strong mb-3" style={{ borderRadius: '20px', height: '48%' }}>
-                                <h3>4 ...</h3>
-                                    <div className="card-body">
-                                        <p> AGE : 
-                                            <br />
-                                            {user?.age}
-                                            <br />
-                                            <br />
-                                        </p>
-                                        <p> SEXUAL INTERESTS : 
-                                            <br />
-                                            {user?.sexual_interest}
-                                            <br />
-                                            <br />
-                                        </p>
-                                        <p> GENDER : 
-                                            <br />
-                                            {user?.gender}
-                                            <br />
-                                        </p>
+
+                            <div className="d-flex flex-column" style={{ gap:"5px", flex: 1}}>{/*BOITE 2*/}
+
+                                <div className="card shadow-2-strong mb-2" style={{ borderRadius: '30px', width: '100%', height: '100%', paddingLeft: "10px" }}>
+                                    <div className="d-flex flex-row">
+                                        <div className="card-body" style={{ flex: 1 }}>
+                                            <p className="firstname" style={{ textIndent: "20px" }}>
+                                                {user?.first_name}, {user?.age} ans
+                                            </p>
+                                            <p className="main-fields">I look for</p>
+                                            <p className="text-up">{user?.sexual_interest}</p>
+                                            <p className="main-fields"> I identify as :</p>
+                                            <p className="text-up">{user?.gender}</p>
+                                        </div>
+
+                                        <div className="card-body" style={{ flex: 1 }}>
+                                            <p className="main-fields">My passions</p>
+                                                <br />
+                                                <p className="text-up" style={{ textIndent: "60px" }}>{user?.tags_1}</p>
+                                                <br />
+                                                <p className="text-up" style={{ textIndent: "160px" }}>{user?.tags_2}</p>
+                                                <br />
+                                                <p className="text-up" style={{ textIndent: "100px" }}>{user?.tags_3}</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* Deuxième rectangle horizontal */}
-                                <div className="card shadow-2-strong" style={{ borderRadius: '20px', height: '48%' }}>
-                                <h3>5 ...</h3>
-                                    <div className="card-body">
-
-                                        <p> BIOGRAPHY : 
-                                            <br />
-                                            {user?.biography}
-                                            <br />
-                                            <br />
-                                        </p>
-                                            <button data-mdb-ripple-init 
-                                                className="coeur btn btn-info btn-lg"
-                                                onClick={handleModifyClick}
-                                            > 🩷 </button>
-                                    </div>
+                                <div className="card shadow-2-strong" style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}>{/*BOITE 2*/}
+                                        <div className="card-body">
+                                        <p className="firstname" style={{ fontSize: "40px" }}> 🗨️ Bio : </p>
+                                        <p className="main-fields" style={{ fontSize: "30px" }}>{user?.biography}</p>
+                                        </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </section>
     );
 

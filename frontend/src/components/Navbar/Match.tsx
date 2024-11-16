@@ -32,9 +32,9 @@ const Match: React.FC = () => {
         }
     }
 
-    // const handleNavigate = (userid: string) => {
-    //     navigate(`/apiServeur/userproduct/${userid}`);
-    // };
+    const handleNavigate = (userid: string) => {
+        navigate(`/apiServeur/userproduct/${userid}`);
+    };
     
     useEffect(() => {
         
@@ -60,7 +60,6 @@ const Match: React.FC = () => {
 
     <section className="gradient-custom">
         <div>
-            <h3>Structure avec une jauge et trois rectangles alignés horizontalement</h3>
         </div>
         <div className="container py-5 h-100">
             <div className="row justify-content-center align-items-center">
@@ -77,7 +76,6 @@ const Match: React.FC = () => {
                             {/* Premier rectangle vertical */}
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
                                 <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
-                                    <h3 className="text-center">Rectangle 1 : VIEWS</h3>
                                     <div className="card-body d-flex align-items-center justify-content-center">
                                         
                                     <div>
@@ -95,6 +93,7 @@ const Match: React.FC = () => {
                                             {users.map((user, index) => (
                                                 <tr key={`user-${index}`}>
                                                     <td
+                                                        onClick={() => handleNavigate(user.id.toString())}
                                                         style={{ cursor: 'pointer', border: '1px solid black', padding: '8px' }}>
                                                         {user.id}
                                                     </td>

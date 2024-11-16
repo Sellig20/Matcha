@@ -82,8 +82,8 @@ class ORM {
 
 		try {
 			const result = await query(queryText);
-			console.log(`Successfully created record in ${tableName}`);
-			console.log("Inserted row:", result.rows[0]);
+			// console.log(`\n\nSuccessfully created record in ${tableName}`);
+			// console.log("\n\nInserted row:", result.rows[0]);
 			return result;
 		} catch (error) {
 			errorHandler(error, `Failed to create record in ${tableName}`);
@@ -110,8 +110,8 @@ class ORM {
 		const queryText = `UPDATE ${tableName} SET ${setClause} WHERE id = ${id} RETURNING *`;
 		try {
 			const result = await query(queryText);
-			console.log(`Successfully updated record in ${tableName} with id ${id}`);
-			console.log("Updated row:", result.rows[0]);
+			// console.log(`\n\nSuccessfully updated record in ${tableName} with id ${id}`);
+			// console.log("\n\nUpdated row:", result.rows[0]);
 			return result;
 		} catch (error) {
 			errorHandler(
@@ -146,19 +146,19 @@ class ORM {
             const result = await query(queryText);
 
             if (!result) {
-                console.log(`Result is undefined`); // TODO: Handle better
+                console.log(`\n\nResult is undefined`); // TODO: Handle better
                 return null;
             }
 
             if (result.rows.length === 0) {
-                console.log(`No record found in ${tableName} with ${String(propertyName)} ${propertyValue}`);
+                console.log(`\n\nNo record found in ${tableName} with ${String(propertyName)} ${propertyValue}`);
                 return null;
             }
 
-            console.log(`Successfully retrieved record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);
+            // console.log(`\n\nSuccessfully retrieved record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);
             return result.rows;
         } catch (error) {
-            errorHandler(error, `Failed to retrieve record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);
+            errorHandler(error, `\n\nFailed to retrieve record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);
             return null;
         }
     }
@@ -177,22 +177,22 @@ class ORM {
 			errorHandler(error, "");
 		}
 
-		const queryText = `DELETE FROM ${tableName} WHERE id = ${id}`;
+		const queryText = `\n\nDELETE FROM ${tableName} WHERE id = ${id}`;
 
 		try {
 			const result = await query(queryText);
 
 			if (result.rowCount === 0) {
-				console.log(`No record found in ${tableName} with id ${id}`);
+				console.log(`\n\nNo record found in ${tableName} with id ${id}`);
 			} else {
-				console.log(
-					`Successfully deleted record from ${tableName} with id ${id}`
-				);
+				// console.log(
+					// `\n\nSuccessfully deleted record from ${tableName} with id ${id}`
+				// );
 			}
 		} catch (error) {
 			errorHandler(
 				error,
-				`Failed to delete record from ${tableName} with id ${id}`
+				`\n\nFailed to delete record from ${tableName} with id ${id}`
 			);
 		}
 	}

@@ -31,7 +31,6 @@ export class MatchingController {
             else if (tmpList && my_gender === "non-binary") {
                 finalList = tmpList.filter(ind => ind.sexual_interest === "women" || ind.sexual_interest === "male");
             }
-            console.log("\n\n tmplist = ", finalList);
             return finalList;
         } catch (error) {
             console.log(`\n\n\nMatchingController.ts sort SI and gender | Error : ${error}\n\n\n`);
@@ -78,7 +77,6 @@ export class MatchingController {
             const myAgeU = req.user?.age_upper_bound;
             if (tab && myAge && myAgeL && myAgeU) {
                 const myBoundaries = myAgeU - myAgeL;
-                console.log("\n\n myBoundary is ", myBoundaries);
                 const maxAgeRange = (myAgeU - myAgeL) / 2;
                 tab.forEach(ind => {
                     const diff = ((myAge - ind.age) * (-1));
@@ -139,7 +137,6 @@ export class MatchingController {
                 })
             );
             
-            console.log("\n\nles potentiels sont que la : ", algo_age);
             io.to(req.userId).emit('newMatchUser', listName);//From bdd to socket to AllUser.tsx
 
             res.status(201).json({ message: `List of all users`, listName });

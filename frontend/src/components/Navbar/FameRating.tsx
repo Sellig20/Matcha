@@ -8,21 +8,24 @@ import { useWebSocketContext } from '../../security/wsContext';
 
 const FameRating = () => {
 
-    //recuperer le nombre de vues en bdd : combien / qui / cliquer sur qui
-
     const [message, setMessage] = useState('');
     const profile = useProfile();
     const { idd } = useParams<{idd:string}>();
+    const [countViews, setCountViews] = useState<number>();
+    const [countLikes, setCountLikes] = useState<number>();
     const [views, setViews] = useState<UsersProfilesViewsCreate[]>([]);
     const [likes, setLikes] = useState<UsersLikesCreate[]>([]);
     const { socket } = useWebSocketContext();
 
     const getWhoViewedMe = async () => {
+        console.log("\n\n get who viewed me\n\n");
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/views/${idd}`);
             setMessage(response.data.message);
-            console.log("\n\n message FM is : ", message);
-            setViews(response.data.numberViewed || []);
+            console.log("\n\n message FM is : ", message, " and tab is : ", response.data.ProfilesViewsTab);
+
+            setViews(response.data.ProfilesViewsTab || []);
+            setCountViews(response.data.count);
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
             console.log("\n\n message FM is : ", message);
@@ -34,31 +37,40 @@ const FameRating = () => {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/likes/${idd}`);
             setMessage(response.data.message);
             console.log("\n\n message FM is : ", message);
-            setLikes(response.data.numberLikes || []);
+            setLikes(response.data.ProfilesLikesTab || []);
+            setCountLikes(response.data.count);
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get who liked me : ${error}`);
             console.log("\n\n message FM is : ", message);
         }
     };
 
-    const getUserNames = async () => {
-        try {
-            
-        } catch (error) {
-            setMessage(`FameRating.tsx | Erreur try to get user names : ${error}`);
-        }
-    }
-
     useEffect(() => {
+
         getWhoViewedMe();
         getWhoLikedMe();
         if (socket) {
             socket.on('insert_view', (newView) => {
+                console.log("\n\n ---**--**---- new view fame rating : ", newView);
                 setViews((prevViews) => [...prevViews, newView]);
             })
 
             socket.on('insert_likes', (newLike) => {
                 setLikes((prevLikes) => [...prevLikes, newLike]);
+            })
+
+            socket.on('insert_name', (newName) => {
+                setViews((prevNames) => [...prevNames, newName]);
+            })
+
+            socket.on('update_countViews', (newCount) => {
+                console.log("\n\n nombre de vues get who viewed me : ", newCount);
+                setCountViews(newCount);
+            })
+
+            socket.on('update_countLikes', (newCount) => {
+                console.log("\n\n nombre de vues get who viewed me : ", newCount);
+                setCountLikes(newCount);
             })
         };
 
@@ -89,7 +101,7 @@ const FameRating = () => {
                             {/* Premier rectangle vertical */}
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
                                 <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
-                                    <h3 className="text-center">Rectangle 1 : VIEWS</h3>
+                                    <h2 className="text-center">Nombre de views : {countViews}</h2>
                                     <div className="card-body d-flex align-items-center justify-content-center">
                                         <table className="table-fm">
                                             <thead>
@@ -100,11 +112,11 @@ const FameRating = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {views.map((view, index) => (
+                                                {views.map((views, index) => (
                                                     <tr key={index}>
                                                         {/* <td className="td-fm">{index + 1}</td> */}
-                                                        <td className="td-fm">{view.user_viewer_id}</td>
-                                                        <td className="td-fm">{new Date(view.view_started_on).toLocaleString()}</td>
+                                                        <td className="td-fm">{views.first_name}</td>
+                                                        <td className="td-fm">{new Date(views.view_started_on).toLocaleString()}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -116,6 +128,7 @@ const FameRating = () => {
                             {/* Deuxième rectangle vertical */}
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
                                 <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                                    <h2 className="text-center">Nombre de likes : {countLikes}</h2>
                                         <h3 className="text-center">Rectangle 2 : LIKES</h3>
                                         <div className="card-body d-flex align-items-center justify-content-center">
                                         <table className="table-fm">
@@ -128,7 +141,7 @@ const FameRating = () => {
                                             <tbody>
                                                 {likes.map((likes, index) => (
                                                     <tr key={index}>
-                                                        <td className="td-fm">{likes.user_id}</td>
+                                                        <td className="td-fm">{likes.first_name}</td>
                                                         <td className="td-fm">{new Date(likes.liked_on).toLocaleString()}</td>
                                                     </tr>
                                                 ))}

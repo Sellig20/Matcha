@@ -71,6 +71,10 @@ const server = startServer();
 		socket.on('coucou', (msg: string) => {
 			console.log(`\n\n\n je suis le serveur je suis en event - coucou - : ${msg}\n\n`);
 		});
+
+		socket.on('update_pvt', () => {
+			console.log("\n\n\n\n io pvt\n\n");
+		})
 		
 		// socket.emit('coucoux', 'je suis belle comme un coucou');//socket-event genere une fois
 	});

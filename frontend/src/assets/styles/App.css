@@ -1,3 +1,17 @@
+/* 
+
+#7D4FFE
+#C49FFF
+#FFD0E6
+#FF9CB6
+#F08488
+
+ */
+
+
+
+
+
 h1 {
   color: rgb(156, 36, 152);
   font-family: "posterable";
@@ -72,7 +86,6 @@ h1 {
 }
 
 .openbtn {
-  
   font-size: 20px;
   cursor: pointer;
   position: fixed;

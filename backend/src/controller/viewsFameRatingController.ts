@@ -2,46 +2,74 @@ import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
 import {client} from '../../redis'
 import { UsersLikesCreate, UsersProfilesViewsCreate } from "../orm/schema";
-import { SocketClosedUnexpectedlyError } from "redis";
 import { io } from '../../server';
 import { table } from "console";
-
 
 export class viewsFameRatingController {
     static async recordProfileViews(req: Request, res: Response) {
         try {
+            //creation de la vue + recup du first_name
+            const value = req.body.viewed_id;
+            const firstNameBdd = await userSignupModel.readFirstName("id", req.body.viewer_id);
+            console.log("\n\n FIRST NAME BDD = ", firstNameBdd, "\n\n");
+            
             const tableView: UsersProfilesViewsCreate = {
-                id: req.body.id,
+                first_name: firstNameBdd,
                 user_viewer_id: req.body.viewer_id,
                 user_viewed_id: req.body.viewed_id,
                 view_started_on: new Date().toISOString(),
                 view_ended_on: new Date(Date.now() + 3600000).toISOString(),
             };
-            await userSignupModel.createViews(tableView);
+            console.log("\n\n tableView, = ", tableView, "\n\n");
+
+            // try {
+                const result = await userSignupModel.createViews(tableView);
+            // } catch (error) {
+                // console.log("\n\n Error in createViews: ", error, "\n\n");
+                // throw error;
+            // }
+            //socket pour update le tableau 
             io.emit('insert_view', tableView);
-            res.status(201).json({ message: `views ok` });
+            //count des views
+            // try {
+                const count = await this.countViews(value);
+                io.emit('update_countViews', count);
+            // } catch (error) {
+                // console.log("\n\n Error in countViews or emit: ", error, "\n\n");
+                // throw error;
+            // }
+            res.status(201).json({ message: `views ok`});
         } catch (error) {
-            res.status(500).json({ message: `viewsFameRatingController.ts | Error during recording views : ${error}` });
+            console.log("\n\n\n xoxoxoxoxoxoxoxox erreur viewsfamerating recording\n\n");
+            res.status(500).json({ message: `\n\nviewsFameRatingController.ts | Error during recording views : ${error}\n\n` });
             return;
         }
     }
-
+    
     static async recordProfileLikes(req: Request, res: Response) {
         try {
+            const firstNameBdd = await userSignupModel.readFirstName("id", req.body.liker_user_id);
+            console.log("fn => ", firstNameBdd);
             const tableLikes: UsersLikesCreate = {
                 user_id: req.body.user_id,
+                first_name: firstNameBdd,
                 liked_user_id: req.body.liked_user_id,
+                liker_user_id: req.body.liker_user_id,
                 liked_on: new Date().toISOString(),
             };
             await userSignupModel.createLikes(tableLikes);
-            io.emit('insert_likes', tableLikes);
+            console.log("\n\n likes => ", tableLikes);
+            const value = req.body.liker_user_id;
+            io.emit('insert_likes', tableLikes, "\n\n");
+            const count = await this.countLikes(value);
+            io.emit('update_countLikes', count);
             res.status(201).json({ message: `likes ok` });
         } catch (error) {
-            res.status(500).json({ message: `viewsFameRatingController.ts | Error during recording likes : ${error}` });
+            res.status(500).json({ message: `\n\nviewsFameRatingController.ts | Error during recording likes : ${error}\n\n` });
             return;
         }
     }
-
+    
     static async readProductProfile(req: Request, res:Response) {
         try {
             const value = req.params.idd;
@@ -52,20 +80,78 @@ export class viewsFameRatingController {
                 res.status(400).json({ message: "User to view not found "});
             }
         } catch (error) {
-            res.status(500).json({ message: `viewsFameRatingController.ts | Error during product profile user : ${error}` });
+            res.status(500).json({ message: `\n\nviewsFameRatingController.ts | Error during product profile user : ${error}\n\n` });
             return;
         }
     }
+    
+    static async getViewerProfile(user_viewer_id: number) {
+        const profile = await userSignupModel.readUserByEmail("id", user_viewer_id.toString());
+        if (profile)
+            return profile[0].first_name;
+    }
+    
+    static async countViews(value: any) {
+        try {
+            const profile = await userSignupModel.readAnything("users_profiles_views", "user_viewed_id", value);
+            const viewerCounts: { [key: string]: number } = {};
+            profile?.forEach(ind => {
+                const viewer = ind.user_viewer_id;
+                if (viewerCounts[viewer]) {
+                    viewerCounts[viewer] += 1;
+                }
+                else {
+                    viewerCounts[viewer] = 1;
+                }
+            })
+            let total: number = 0;
+            Object.entries(viewerCounts).forEach(([viewerId, count]) => {
+                const countInt = Number(count);
+                total += countInt;
+            })
+            return total;
+        } catch (error) {
+            return null;
+        }
+    }
 
+    static async countLikes(value: any) {
+        try {
+            let count: number = 0;
+            count += 1;
+
+            const profile = await userSignupModel.readAnything("users_profiles_views", "user_viewed_id", value);
+            //count le nombre d'entrees de la table like
+            return count;
+        } catch (error) {
+            return null;
+        }
+    }
+    
     static async getWhoViewedMe(req: Request, res: Response) {
         try {
             const value = req.params.idd;
             const numberViewed = await userSignupModel.readViewed("user_viewed_id", value);
-            console.log("\n\n\n\n\n number viewed => ", numberViewed);
+            if (numberViewed) {
+                const ProfilesViewsTab = await Promise.all(numberViewed.map(async (view) => {
+                    const profiles = await userSignupModel.readUserByEmail("id", view.user_viewer_id);
+                    if (profiles) {
+                        return {
+                            ...view,
+                            first_name: profiles[0].first_name,
+                        }
+                    }
+                }));
+                // io.emit('insert_name', ProfilesViewsTab);
+                // io.emit('update_count', count);
+                const count = await this.countViews(value);
+                res.status(201).json({ message: `get who viewed me ok`, ProfilesViewsTab, count});
+            }
+            else
+                res.status(204).json( {message : `viewsFameRatingController.ts | No content for views `} );
             //rajouter leur nom via la fonction d'au dessus faire un tableau deux en un et les afficher en frontend puis faire un count total en frontend puis fame rating
-            res.status(201).json({ message: `get who viewed me ok`, numberViewed });
         } catch (error) {
-            res.status(500).json({ message: `viewsFameRatingController.ts | Error during get who viewed me : ${error}` });
+            res.status(201).json({ message: `\n\nviewsFameRatingController.ts | Error during get who viewed me : ${error}\n\n` });
         }
     }
 
@@ -73,7 +159,21 @@ export class viewsFameRatingController {
         try {
             const value = req.params.idd;
             const numberLikes = await userSignupModel.readLikes("liked_user_id", value);
-            res.status(201).json({ message: `get who likes me ok`, numberLikes });
+            if (numberLikes) {
+                const ProfilesLikesTab = await Promise.all(numberLikes.map(async (like) => {
+                    const profiles = await userSignupModel.readUserByEmail("id", like.user_id);
+                    if (profiles) {
+                        return {
+                            ...like,
+                            first_name: profiles[0].first_name,
+                        }
+                    }
+                    // console.log("===****>> ", ProfilesLikesTab);
+                }))
+                res.status(201).json({ message: `get who viewed me ok`, ProfilesLikesTab });
+            }
+            else
+                res.status(204).json( {message : `viewsFameRatingController.ts | No content for likes `} );
         } catch (error) {
             res.status(500).json({ message: `viewsFameRatingController.ts | Error during get who likes me : ${error}` });
         }
