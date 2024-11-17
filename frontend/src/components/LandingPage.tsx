@@ -12,7 +12,7 @@ const LandingPage: React.FC = () => {
                 <p>The application that'll help you to find the most suitable partner 💜 Based on several questions and criterions, join us to enjoy an incredible experience and meet extraordinaries people ! 💜</p>
             </div>
             <div className="bubble right">
-                <p>Chat, Map, Fame-rating, the application offers a lot of features to find the perfect match. Let us take control of your love and sex journey, you won't regret it ! 🩵</p>
+                <p>Chat, Map, Fame-rating, the application offers a lot of features to find the perfect match. Let us take control of your love and sex journey, you won't regret it ! </p>
             </div>
             <div className="bubble left">
                 <p>The most important is the consent and the respect of our collaborators. We trust you to experience that in the best way. Don't hesitate to reach us if you find any disturbance 💖</p>

@@ -39,19 +39,19 @@ const Navbar = () => {
                 <div className="navbar-header">
                 <Link to="/apiServeur/match" className="navbar-brand">Matcha</Link>
                 </div>
-                <ul className="nav navbar d-flex">
-                    {isAuthenticated === true && <li><Link to={`/apiServeur/mymatchaprofile/${id}`} type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Proposition de Matcha et mon profil</Link></li>}
-                    {isAuthenticated === true && <li><Link to="/apiServeur/match" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Mes Match I matched</Link></li>}
-                    {isAuthenticated === true && <li><Link to="/apiServeur/allusers" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>--x-- All user --x--</Link></li>}
-                    {isAuthenticated === true && <li><Link to={`/apiServeur/fm/${id}`} type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Fame Rating</Link></li>}
-                    {isAuthenticated === true && <li><Link to="/apiServeur/chat" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Chat</Link></li>}
-                    {isAuthenticated === true && <li><Link to="/apiServeur/map" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Map</Link></li>}
-                    {isAuthenticated === true && isProfileComplete === false && <li><Link to="/apiServeur/userprofile" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>My UserProfile Settings</Link></li> ||
-                    isAuthenticated === true && isProfileComplete === true && <li><Link to="/apiServeur/userprofile/display" type="button" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>My UserProfile Settings</Link></li>}
+                <ul className="nav d-flex">
+                    {isAuthenticated === true && <li><Link to={`/apiServeur/mymatchaprofile/${id}`} type="button" className="btn-navbar me-2">Proposition de Matcha et mon profil</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/match" type="button" className="btn-navbar me-2">Mes Match I matched</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/allusers" type="button" className="btn-navbar me-2">--x-- All user --x--</Link></li>}
+                    {isAuthenticated === true && <li><Link to={`/apiServeur/fm/${id}`} type="button" className="btn-navbar me-2">Fame Rating</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/chat" type="button" className="btn-navbar me-2">Chat</Link></li>}
+                    {isAuthenticated === true && <li><Link to="/apiServeur/map" type="button" className="btn-navbar me-2">Map</Link></li>}
+                    {isAuthenticated === true && isProfileComplete === false && <li><Link to="/apiServeur/userprofile" type="button" className="btn-navbar me-2">My UserProfile Settings</Link></li> ||
+                    isAuthenticated === true && isProfileComplete === true && <li><Link to="/apiServeur/userprofile/display" type="button" className="btn-navbar me-2">My UserProfile Settings</Link></li>}
                 </ul>
                 <div className="d-flex">
-                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signup" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Sign up</Link>}
-                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signin" className="btn btn-info me-2" style={{ color: 'white', fontFamily: "posterable"}}>Sign in</Link>}
+                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signup" className="btn-navbar me-2">Sign up</Link>}
+                    {isAuthenticated === false || isAuthenticated === null && <Link to="/signin" className="btn-navbar me-2">Sign in</Link>}
                 </div>
             </div>
         </nav>

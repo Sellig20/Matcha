@@ -14,7 +14,7 @@ const UserProfileDisplay: React.FC = () => {
     return (
         <section className="gradient-custom" >
         <div>
-        <h1>🩵 User profile settings 🩵</h1>
+        <h1>User profile settings</h1>
         </div>
         <div className="container py-5 h-100 ">
         <div className="row justify-content-center align-items-center h-100" >
@@ -25,22 +25,22 @@ const UserProfileDisplay: React.FC = () => {
         <div className="bigBox-profile-display">
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Username</label>
                 </div>
-                <div className="highlight-text-profile">
+                <div className="high highlight-text-profile">
                 <p>{profile.profile?.user_name}</p>
                 </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Gender</label>
                 </div>
-                <div className="highlight-text-profile">
+                <div className="high highlight-text-profile">
                 <p>{profile.profile?.gender}</p>
                 </div>
             </div>
@@ -49,44 +49,44 @@ const UserProfileDisplay: React.FC = () => {
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Age</label>
                 </div>
-                <div className="highlight-text-profile">
+                <div className="high highlight-text-profile">
                 <p>{profile.profile?.age}</p>
                 </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Age minimal accepted</label>
                 </div>
-                <div className="highlight-text-profile">
+                <div className="high highlight-text-profile">
                 <p>{profile.profile?.age_lower_bound}</p>
                 </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Age maximum accepted</label>
                 </div>
-                <div className="highlight-text-profile">
+                <div className="high highlight-text-profile">
                 <p>{profile.profile?.age_upper_bound}</p>
                 </div>
             </div>
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Sexual Interest</label>
                 </div>
-                <div className="highlight-text-profile">
+                <div className="high highlight-text-profile">
                 <p>{profile.profile?.sexual_interest}</p>
                 </div>
             </div>
@@ -95,44 +95,44 @@ const UserProfileDisplay: React.FC = () => {
 
             <div className="row">
                 <div className="col-md-6 mb-4 pb-2">
-                <div data-mdb-input-init className="form-outline-profile-display">
-                    <div className="fields-profile-display">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
                     <label>Biography</label>
                     </div>
-                    <div className="highlight-text-profile">
+                    <div className="high highlight-text-profile">
                     <p>{profile.profile?.biography}</p>
                     </div>
                 </div>
                 </div>
 
                 <div className="col-md-6 mb-4 pb-2">
-                <div data-mdb-input-init className="form-outline-profile-display">
-                    <div className="fields-profile-display">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
                     <label>Tags</label>
                     </div>
-                    <div className="highlight-text-profile">
+                    <div className="high highlight-text-profile">
                     <p>{profile.profile?.tags_1}</p>
                     </div>
                 </div>
                 </div>
 
                 <div className="col-md-6 mb-4 pb-2">
-                <div data-mdb-input-init className="form-outline-profile-display">
-                    <div className="fields-profile-display">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
                     <label>Tags</label>
                     </div>
-                    <div className="highlight-text-profile">
+                    <div className="high highlight-text-profile">
                     <p>{profile.profile?.tags_2}</p>
                     </div>
                 </div>
                 </div>
 
                 <div className="col-md-6 mb-4 pb-2">
-                <div data-mdb-input-init className="form-outline-profile-display">
-                    <div className="fields-profile-display">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
                     <label>Tags</label>
                     </div>
-                    <div className="highlight-text-profile">
+                    <div className="high highlight-text-profile">
                     <p>{profile.profile?.tags_3}</p>
                     </div>
                 </div>
@@ -141,8 +141,7 @@ const UserProfileDisplay: React.FC = () => {
 
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                     <button data-mdb-ripple-init 
-                        className="btn btn-info btn-lg" 
-                        style={{ color: 'violet', fontFamily: "posterable"}}
+                        className="btn btn-lg" 
                         onClick={handleModifyClick}
                     > Modify </button>
                 </div>

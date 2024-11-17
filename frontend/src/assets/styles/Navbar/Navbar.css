@@ -1,6 +1,23 @@
 .navbar-brand {
     font-family: "city mango";
     font-size: 60px;
-    color:#18e8f3;
+    color:#FF9CB6;
 }
 
+.navbar {
+    background: linear-gradient(to bottom left, #FF9CB6, #7D4FFE);
+}
+
+.nav {
+    font-family: "memories";
+    font-size: 22px;
+}
+
+.btn-navbar {
+    padding: 10px;
+    text-decoration: none;
+    border: 2px solid #C49FFF;
+    margin: 4px;
+    border-radius: 40px;
+    color: #FF9CB6;
+}

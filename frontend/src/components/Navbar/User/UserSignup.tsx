@@ -36,7 +36,7 @@ const UserSignup: React.FC = () => {
         return (
         <section className="gradient-custom" >
         <div>
-        <h1>🩵 Sign up ! 🩵</h1>
+        <h1>Sign up !</h1>
         </div>
         <div className="container py-5 h-100 ">
             <div className="row justify-content-center align-items-center h-100" >
@@ -48,11 +48,11 @@ const UserSignup: React.FC = () => {
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline-signup">
-                            <div className="fields-signup">
+                        <div data-mdb-input-init className="form-card form-outline-signup">
+                            <div className="fields fields fields-signup">
                             <label className="form-label" htmlFor="firstName">First Name</label>
                             </div>
-                            <div className="highlight-text-signup">
+                            <div className="high highlight-text-signup">
                             <input
                                 type="text" 
                                 id="firstname"
@@ -68,11 +68,11 @@ const UserSignup: React.FC = () => {
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline-signup">
-                            <div className="fields-signup">
+                        <div data-mdb-input-init className="form-card form-outline-signup">
+                            <div className="fields fields-signup">
                             <label className="form-label" htmlFor="lastName">Last Name</label>
                             </div>
-                            <div className="highlight-text-signup">
+                            <div className="high highlight-text-signup">
                             <input 
                                 type="text" 
                                 id="lastname" 
@@ -88,11 +88,11 @@ const UserSignup: React.FC = () => {
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline-signup">
-                            <div className="fields-signup">
+                        <div data-mdb-input-init className="form-card form-outline-signup">
+                            <div className="fields fields-signup">
                             <label className="form-label" htmlFor="emailAddress">Email</label>
                             </div>
-                            <div className="highlight-text-signup">
+                            <div className="high highlight-text-signup">
                             <input 
                                 type="email" 
                                 id="email" 
@@ -108,11 +108,11 @@ const UserSignup: React.FC = () => {
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline-signup">
-                            <div className="fields-signup">
+                        <div data-mdb-input-init className="form-card form-outline-signup">
+                            <div className="fields fields-signup">
                             <label className="form-label" htmlFor="passwordAddress">Password</label>
                             </div>
-                            <div className="highlight-text-signup">
+                            <div className="high highlight-text-signup">
                             <input 
                                 type="password" 
                                 id="password" 
@@ -128,8 +128,8 @@ const UserSignup: React.FC = () => {
 
                     <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                         <button data-mdb-ripple-init 
-                            className="btn btn-info btn-lg" 
-                            style={{ color: 'violet', fontFamily: "posterable"}}
+                            className="btn btn-lg" 
+                            style={{ color: 'black', fontFamily: "posterable", fontSize: "40px"}}
                         > Submit </button>
                     </div>
                     {message && <p>{message}</p>}

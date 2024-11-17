@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
                 {<a href="#" onClick={handleLogout}>Disconnect</a>}
             </div>
             <div id="main">
-                {!isOpen && <span style={{fontSize: '20px', cursor: 'pointer'}} className="openbtn" onClick={openNav}>&#9776; open</span>}
+                {!isOpen && <span style={{fontSize: '20px', cursor: 'pointer'}} className="openbtn" onClick={openNav}>&#9776;</span>}
             </div>
         </div>
     );

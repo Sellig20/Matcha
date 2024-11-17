@@ -34,7 +34,7 @@ const UserSettingsUpdate: React.FC = () => {
     return (
         <section className="gradient-custom" >
         <div>
-        <h1>🩵 Modify your user account settings 🩵</h1>
+        <h1>Modify your user account settings</h1>
         </div>
             <div className="container py-5 h-100 ">
             <div className="row justify-content-center align-items-center h-100" >
@@ -48,10 +48,10 @@ const UserSettingsUpdate: React.FC = () => {
                 <div className="us row">
                 <div className="col-md-6 mb-4 pb-2">
                 <div data-mdb-input-init className="form-outline-settings">
-                    <div className="fields-settings">
+                    <div className="fields fields-settings">
                     <label>First name</label>
                     </div>
-                    <div className="highlight-text-settings">
+                    <div className="high highlight-text-settings">
                     <input 
                         type="text" 
                         id="first_name"
@@ -66,10 +66,10 @@ const UserSettingsUpdate: React.FC = () => {
 
                 <div className="col-md-6 mb-4 pb-2">
                 <div data-mdb-input-init className="form-outline-settings">
-                    <div className="fields-settings">
+                    <div className="fields fields-settings">
                     <label>Last name</label>
                     </div>
-                    <div className="highlight-text-settings">
+                    <div className="high highlight-text-settings">
                     <input 
                         type="text" 
                         id="last_name"
@@ -85,10 +85,10 @@ const UserSettingsUpdate: React.FC = () => {
 
                 <div className ="vertical">
                 <div data-mdb-input-init className="form-outline-settings">
-                    <div className="fields-settings">
+                    <div className="fields fields-settings">
                     <label>Password</label>
                     </div>
-                    <div className="highlight-text-settings">
+                    <div className="high highlight-text-settings">
                     <input 
                         type="text" 
                         id="first_name"
@@ -101,10 +101,10 @@ const UserSettingsUpdate: React.FC = () => {
                 </div>
 
                 <div data-mdb-input-init className="form-outline-settings">
-                    <div className="fields-settings">
+                    <div className="fields fields-settings">
                     <label>GPS localisation authorised ?</label>
                     </div>
-                    <div className="highlight-text-settings">
+                    <div className="high highlight-text-settings">
                     <p> oui / non </p>
                     </div>
                 </div>
@@ -112,8 +112,7 @@ const UserSettingsUpdate: React.FC = () => {
 
                 <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                     <button data-mdb-ripple-init 
-                            className="btn btn-info btn-lg" 
-                            style={{ color: 'violet', fontFamily: "posterable"}}
+                            className="btn btn-lg" 
                     > Submit </button>
                 </div>
                 {message && <p>{message}</p>}

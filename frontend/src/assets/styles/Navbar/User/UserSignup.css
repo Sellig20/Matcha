@@ -1,43 +1,21 @@
-.gradient-custom {
-    background: #f093fb;
-    min-height: 100vh;
-    background: -webkit-linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
-    background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1))
-}
-    
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-    font-size: 1rem;
-    line-height: 2.15;
-    padding-left: .75em;
-    padding-right: .75em;
-}
-
-.card-registration .select-arrow {
-    top: 13px;
-}
-
 .form-outline-signup {
-    background-color:#eaaaf1;
     border-radius: 50% 6% / 10% 40%;
 }
 
 .fields-signup {
     border: 1px;
-    background-color: rgb(252, 83, 156);
     border-radius: 50% 6% / 10% 40%;
     padding: 7px;
     width: 100%;
     text-align: center;
     font-family: "posterable";
     font-size: 25px;
-    color: rgba(129, 13, 142, 0.681);
 }
 
 .highlight-text-signup {
     padding: 10px;
     text-align: center;
     font-family: "posterable";
-    color: rgba(129, 13, 142, 0.681);
     font-size: 22px;
 }
 

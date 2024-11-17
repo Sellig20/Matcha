@@ -36,7 +36,7 @@ const UserProfile: React.FC = () => {
     return (
         <section className="gradient-custom" >
         <div>
-        <h1>🩵 Let us know more about you ! 🩵</h1>
+        <h1>Let us know more about you !</h1>
         </div>
         <div className="container py-5 h-100 ">
         <div className="row justify-content-center align-items-center h-100" >
@@ -50,7 +50,7 @@ const UserProfile: React.FC = () => {
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Username</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -68,7 +68,7 @@ const UserProfile: React.FC = () => {
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Gender</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -95,7 +95,7 @@ const UserProfile: React.FC = () => {
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Age</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -113,7 +113,7 @@ const UserProfile: React.FC = () => {
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Minimum accepted age</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -131,7 +131,7 @@ const UserProfile: React.FC = () => {
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Maximal accepted age</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -149,7 +149,7 @@ const UserProfile: React.FC = () => {
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Sexual Interest</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -176,7 +176,7 @@ const UserProfile: React.FC = () => {
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Biography</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -194,7 +194,7 @@ const UserProfile: React.FC = () => {
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Tags 1</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -219,7 +219,7 @@ const UserProfile: React.FC = () => {
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Tags 2</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -244,7 +244,7 @@ const UserProfile: React.FC = () => {
 
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-outline-profile-display">
-                <div className="fields-profile-display">
+                <div className="fields fields-profile-display">
                 <label>Tags 3</label>
                 </div>
                 <div className="highlight-text-profile">
@@ -271,8 +271,7 @@ const UserProfile: React.FC = () => {
 
             <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
             <button data-mdb-ripple-init 
-                        className="btn btn-info btn-lg" 
-                        style={{ color: 'violet', fontFamily: "posterable"}}
+                        className="btn btn-lg" 
                     > Submit </button>
             </div>
             </form>

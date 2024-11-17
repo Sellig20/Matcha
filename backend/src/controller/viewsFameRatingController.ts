@@ -11,7 +11,6 @@ export class viewsFameRatingController {
             //creation de la vue + recup du first_name
             const value = req.body.viewed_id;
             const firstNameBdd = await userSignupModel.readFirstName("id", req.body.viewer_id);
-            console.log("\n\n FIRST NAME BDD = ", firstNameBdd, "\n\n");
             
             const tableView: UsersProfilesViewsCreate = {
                 first_name: firstNameBdd,
@@ -21,26 +20,13 @@ export class viewsFameRatingController {
                 view_ended_on: new Date(Date.now() + 3600000).toISOString(),
             };
             console.log("\n\n tableView, = ", tableView, "\n\n");
-
-            // try {
-                const result = await userSignupModel.createViews(tableView);
-            // } catch (error) {
-                // console.log("\n\n Error in createViews: ", error, "\n\n");
-                // throw error;
-            // }
-            //socket pour update le tableau 
+            const result = await userSignupModel.createViews(tableView);
+            //je nenvoie pas result au frontend je ne marche quen socket a voir
             io.emit('insert_view', tableView);
-            //count des views
-            // try {
-                const count = await this.countViews(value);
-                io.emit('update_countViews', count);
-            // } catch (error) {
-                // console.log("\n\n Error in countViews or emit: ", error, "\n\n");
-                // throw error;
-            // }
+            const count = await this.countViews(value);
+            io.emit('update_countViews', count);
             res.status(201).json({ message: `views ok`});
         } catch (error) {
-            console.log("\n\n\n xoxoxoxoxoxoxoxox erreur viewsfamerating recording\n\n");
             res.status(500).json({ message: `\n\nviewsFameRatingController.ts | Error during recording views : ${error}\n\n` });
             return;
         }
