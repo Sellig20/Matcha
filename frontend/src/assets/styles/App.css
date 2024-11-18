@@ -9,23 +9,26 @@
 */
 
 .form-card {
-  background-color: #FFD0E6;
+  background-color: #FF9CB6;
+  padding: 7px;
 }
 
 .fields {
-    background-color: #FF9CB6;
-    color: #7D4FFE;
+  background-color: #eaaaf1;
+  color: #480ced;
 }
 
 .high {
-  color: #FF9CB6;
+  color: #480ced;
 }
+
+
 
 .gradient-custom {
   background: #f093fb;
   min-height: 100vh;
-  background: -webkit-linear-gradient(to bottom right, #7D4FFE, #FF9CB6);
-  background: linear-gradient(to bottom right, #7D4FFE, #FF9CB6);
+  background: -webkit-linear-gradient(to bottom right, #480ced, #FF9CB6);
+  background: linear-gradient(to bottom right, #480ced, #FF9CB6);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,58 +58,14 @@ h1 {
 
 .btn {
   font-family: "posterable";
-  background-color: #FF9CB6;
-  color: #F08488;
+  background-color: #eaaaf1;
+  font-size: 25px;
+  color: #480ced;
 }
 
 .btn:hover {
-  color: #F08488;
-}
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-  white-space: nowrap;
-}
-
-.sidenav-transitioning {
-  visibility: hidden;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-  padding: 14px;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  left: 140px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-#main {
-  transition: margin-right .5s;
-  margin: 0;
-  padding: 0;
+  color: #eaaaf1;
+  background-color: #480ced;
 }
 
 .openbtn {

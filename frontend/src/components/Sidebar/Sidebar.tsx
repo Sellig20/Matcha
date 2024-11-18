@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../security/useAuth';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../security/authContext';
+import '../../assets/styles/Sidebar/Sidebar.css';
 
 const Sidebar: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -37,6 +37,10 @@ const Sidebar: React.FC = () => {
         console.log("-----LOG OUT----")
         navigate('/signup');
     };
+
+    useEffect(() => {
+
+    }, [isOpen])
     
     return (
         <div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
 import "../../assets/styles/Navbar/FameRating.css"
 import { useProfile } from './User/profileContext';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { UsersLikesCreate, UsersProfilesViewsCreate } from '../../../../backend/src/orm/schema';
 import { useWebSocketContext } from '../../security/wsContext';
 
@@ -16,6 +16,9 @@ const FameRating = () => {
     const [views, setViews] = useState<UsersProfilesViewsCreate[]>([]);
     const [likes, setLikes] = useState<UsersLikesCreate[]>([]);
     const { socket } = useWebSocketContext();
+    const navigate = useNavigate();
+    const { isProfileComplete } = useProfile();
+    const [notification, setNotification] = useState<string | null>(null);
 
     const getWhoViewedMe = async () => {
         console.log("\n\n get who viewed me\n\n");
@@ -45,34 +48,51 @@ const FameRating = () => {
         }
     };
 
+    const handleNavigateNotification = () => {
+        navigate(`/apiServeur/userprofile`);
+    };
+
     useEffect(() => {
 
-        getWhoViewedMe();
-        getWhoLikedMe();
-        if (socket) {
-            socket.on('insert_view', (newView) => {
-                console.log("\n\n ---**--**---- new view fame rating : ", newView);
-                setViews((prevViews) => [...prevViews, newView]);
-            })
+        const executeData = async () => {
+            try {
+                if (isProfileComplete === false) {
+                    setNotification("Warning : You must fill your profile before going on");
+                }
+                else {
+                    getWhoViewedMe();
+                    getWhoLikedMe();
+                    if (socket) {
+                        socket.on('insert_view', (newView) => {
+                            console.log("\n\n ---**--**---- new view fame rating : ", newView);
+                            setViews((prevViews) => [...prevViews, newView]);
+                        })
+            
+                        socket.on('insert_likes', (newLike) => {
+                            setLikes((prevLikes) => [...prevLikes, newLike]);
+                        })
+            
+                        socket.on('insert_name', (newName) => {
+                            setViews((prevNames) => [...prevNames, newName]);
+                        })
+            
+                        socket.on('update_countViews', (newCount) => {
+                            console.log("\n\n nombre de vues get who viewed me : ", newCount);
+                            setCountViews(newCount);
+                        })
+            
+                        socket.on('update_countLikes', (newCount) => {
+                            console.log("\n\n nombre de vues get who viewed me : ", newCount);
+                            setCountLikes(newCount);
+                        })
+                    };
+                }
+            } catch (error) {
+                setMessage(`UserProduct.tsx | Erreur use effect : ${error}`);
+            }
+        }
+        executeData();
 
-            socket.on('insert_likes', (newLike) => {
-                setLikes((prevLikes) => [...prevLikes, newLike]);
-            })
-
-            socket.on('insert_name', (newName) => {
-                setViews((prevNames) => [...prevNames, newName]);
-            })
-
-            socket.on('update_countViews', (newCount) => {
-                console.log("\n\n nombre de vues get who viewed me : ", newCount);
-                setCountViews(newCount);
-            })
-
-            socket.on('update_countLikes', (newCount) => {
-                console.log("\n\n nombre de vues get who viewed me : ", newCount);
-                setCountLikes(newCount);
-            })
-        };
 
         return () => {
             socket?.off('insert_view');
@@ -82,6 +102,20 @@ const FameRating = () => {
 
   return (
     <section className="gradient-custom">
+
+        <div>
+            {message && <p style={{ color: 'red' }}>{message}</p>}
+        </div>
+
+        {notification && (
+            <div className="modal-overlay">
+                <div className="modal-content">
+                    <p>{notification}</p>
+                    <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
+                </div>
+            </div>
+        )}
+
         <div>
             <h3>Structure avec une jauge et trois rectangles alignés horizontalement</h3>
         </div>
@@ -129,7 +163,6 @@ const FameRating = () => {
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
                                 <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
                                     <h2 className="text-center">Nombre de likes : {countLikes}</h2>
-                                        <h3 className="text-center">Rectangle 2 : LIKES</h3>
                                         <div className="card-body d-flex align-items-center justify-content-center">
                                         <table className="table-fm">
                                             <thead>

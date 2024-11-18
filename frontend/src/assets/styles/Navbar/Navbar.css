@@ -4,8 +4,12 @@
     color:#FF9CB6;
 }
 
+.navbar-brand:hover {
+    color:#FF9CB6;
+}
+
 .navbar {
-    background: linear-gradient(to bottom left, #FF9CB6, #7D4FFE);
+    background: linear-gradient(to bottom left, #FF9CB6, #480ced);
 }
 
 .nav {
@@ -18,6 +22,12 @@
     text-decoration: none;
     border: 2px solid #C49FFF;
     margin: 4px;
-    border-radius: 40px;
+    border-radius: 50px;
     color: #FF9CB6;
+    font-size: 20px;
+}
+
+.btn-navbar:hover {
+    color: #eaaaf1;
+    background-color: #480ced;
 }

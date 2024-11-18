@@ -16,9 +16,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, .
     if (isAuthenticated === null) {
         return (
             <section className="gradient-custom-error" >
-            <div><Link to="/signup" style={{ textDecoration: 'none'}}>Sign up </Link>
+            <div><Link to="/signup" className="letters" style={{ textDecoration: 'none'}}>Sign up </Link>
                 or
-                <Link to="/signin" style={{ textDecoration: 'none' }}> Sign in </Link>
+                <Link to="/signin" className="letters" style={{ textDecoration: 'none' }}> Sign in </Link>
                 to access the Matchamallow community ! 🩷</div>
             </section>
         )

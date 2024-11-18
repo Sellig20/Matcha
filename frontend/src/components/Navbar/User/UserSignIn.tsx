@@ -59,11 +59,11 @@ const UserSignIn: React.FC = () => {
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline-signin">
-                            <div className="fields-signup">
+                        <div data-mdb-input-init className="form-card form-outline-signin">
+                            <div className="fields fields-signup">
                             <label className="form-label" htmlFor="emailAddress">Email</label>
                             </div>
-                            <div className="highlight-text-signin">
+                            <div className="high highlight-text-signin">
                             <input 
                                 type="email" 
                                 id="email" 
@@ -79,11 +79,11 @@ const UserSignIn: React.FC = () => {
 
                     <div className="row d-flex align-items-center justify-content-center">
                         <div className="col-md-6 mb-4 pb-2">
-                        <div data-mdb-input-init className="form-outline-signin">
-                            <div className="fields-signup">
+                        <div data-mdb-input-init className="form-card form-outline-signin">
+                            <div className="fields fields-signup">
                             <label className="form-label" htmlFor="passwordAddress">Password</label>
                             </div>
-                            <div className="highlight-text-signin">
+                            <div className="high highlight-text-signin">
                             <input 
                                 type="password" 
                                 id="password" 

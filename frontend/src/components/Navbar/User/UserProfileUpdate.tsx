@@ -43,7 +43,7 @@ const UserProfileUpdate: React.FC = () => {
             <form onSubmit={handleSubmit}>
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Username</label>
                 </div>
@@ -61,7 +61,7 @@ const UserProfileUpdate: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Gender</label>
                 </div>
@@ -88,7 +88,7 @@ const UserProfileUpdate: React.FC = () => {
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Age</label>
                 </div>
@@ -106,7 +106,7 @@ const UserProfileUpdate: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Age minimal accepted</label>
                 </div>
@@ -124,7 +124,7 @@ const UserProfileUpdate: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Age maximum accepted</label>
                 </div>
@@ -142,7 +142,7 @@ const UserProfileUpdate: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Sexual Interest</label>
                 </div>
@@ -169,7 +169,7 @@ const UserProfileUpdate: React.FC = () => {
 
             <div className="row">
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Biography</label>
                 </div>
@@ -187,7 +187,7 @@ const UserProfileUpdate: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Tags 1</label>
                 </div>
@@ -212,7 +212,7 @@ const UserProfileUpdate: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Tags 2</label>
                 </div>
@@ -237,7 +237,7 @@ const UserProfileUpdate: React.FC = () => {
             </div>
 
             <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-outline-profile-display">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
                 <label>Tags 3</label>
                 </div>

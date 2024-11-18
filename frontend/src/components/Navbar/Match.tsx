@@ -10,21 +10,20 @@ import { UserCreate } from '../../../../backend/src/orm/schema';
 
 const Match: React.FC = () => {
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState<string[]>([]);
+    const { isProfileComplete } = useProfile();
+
     const [myId, setMyId] = useState<number | undefined>(undefined);
     const [users, setUsers] = useState<UserProfileInterface[]>([]);
-    const [usersNames, setUsersNames] = useState<string[]>([]);
     const navigate = useNavigate();
     const { socket } = useWebSocketContext();
-    const profile = useProfile();
-    
+    const [notification, setNotification] = useState<string | null>(null);
+
     const getListUsers = async () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchsusers`);
             setMessage(response.data.message);
             setMyId(response.data.myId);
             setUsers(response.data.listName);
-            // setUsersNames(response.data.listName);
             console.log("\n\n users =>> MATCH?S USERS >>>> ", response.data.listName, "\n\n");
             // console.log("\n\n i am ", profile);
         } catch (error) {
@@ -35,24 +34,43 @@ const Match: React.FC = () => {
     const handleNavigate = (userid: string) => {
         navigate(`/apiServeur/userproduct/${userid}`);
     };
+
+    const handleNavigateNotification = () => {
+        navigate(`/apiServeur/userprofile`);
+    };
     
     useEffect(() => {
-        
-        getListUsers();
-        if (socket) {
 
-            socket.on('newMatchUser', (listName) => {
-                console.log("\n\nje suis la socket");
-                setUsers(listName);
-            })
+
+
+        const executeData = async () => {
+            try {
+                if (isProfileComplete === false) {
+                    setNotification("Warning : You must fill your profile before going on");
+                }
+                else {
+                    getListUsers();
+                    if (socket) {
             
-            return () => {
-                socket.off('message');
-                socket.off('newUser');
-            };
-        } else {
-            console.error('La socket n est pas connecté.');
+                        socket.on('newMatchUser', (listName) => {
+                            console.log("\n\nje suis la socket");
+                            setUsers(listName);
+                        })
+                        
+                        return () => {
+                            socket.off('message');
+                            socket.off('newUser');
+                        };
+                    } else {
+                        console.error('La socket n est pas connecté.');
+                    }
+                }
+            } catch (error) {
+                setMessage(`UserProduct.tsx | Erreur use effect : ${error}`);
+            }
         }
+        executeData();
+        
     }, [socket]);
     
     return (
@@ -60,7 +78,18 @@ const Match: React.FC = () => {
 
     <section className="gradient-custom">
         <div>
+            {message && <p style={{ color: 'red' }}>{message}</p>}
         </div>
+
+        {notification && (
+            <div className="modal-overlay">
+                <div className="modal-content">
+                    <p>{notification}</p>
+                    <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
+                </div>
+            </div>
+        )}
+
         <div className="container py-5 h-100">
             <div className="row justify-content-center align-items-center">
                 {/* Grand carré */}

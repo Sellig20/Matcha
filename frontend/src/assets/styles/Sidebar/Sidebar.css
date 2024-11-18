@@ -1,0 +1,46 @@
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    opacity: 1;
+    top: 0;
+    right: 0;
+    background-color: #FF9CB6;
+    overflow-x: hidden;
+    transition: 0.7s;
+    padding-top: 60px;
+    white-space: nowrap;
+}
+
+.sidenav-transitioning {
+    visibility: hidden;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-family: "memories";
+    font-size: 25px;
+    color: #480ced;
+    display: block;
+    transition: 0.3s;
+    padding: 14px;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    left: 140px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-right .5s;
+    margin: 0;
+    padding: 0;
+}
