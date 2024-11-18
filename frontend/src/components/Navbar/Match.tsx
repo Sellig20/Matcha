@@ -3,15 +3,13 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../security/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useWebSocketContext } from "../../security/wsContext";
-import "../../assets/styles/index.css"
+import "../../assets/styles/Navbar/Match.css"
 import { useProfile } from "./User/profileContext";
 import { UserProfileInterface } from './User/UserInterface';
-import { UserCreate } from '../../../../backend/src/orm/schema';
 
 const Match: React.FC = () => {
     const [message, setMessage] = useState('');
     const { isProfileComplete } = useProfile();
-
     const [myId, setMyId] = useState<number | undefined>(undefined);
     const [users, setUsers] = useState<UserProfileInterface[]>([]);
     const navigate = useNavigate();
@@ -101,37 +99,34 @@ const Match: React.FC = () => {
                            search bar
                         </div>
 
-                        <div className="fm-row row">
+                        <div className="matchs-row row">
                             {/* Premier rectangle vertical */}
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
                                 <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
                                     <div className="card-body d-flex align-items-center justify-content-center">
                                         
                                     <div>
-                                    <h1>Liste des profils INTERESSANTS</h1>
+                                    <h2 className="text-center">My suggested matchas</h2>
 
-                                    <table className="table-au">
+                                    <table className="table-matchs">
                                             <thead>
                                                 <tr>
-                                                    <th className="th-fm">ID ?</th>
-                                                    <th className="th-fm">WHO ?</th>
-                                                    <th className="th-fm">AGE ?</th>
+                                                    <th className="th-matchs">ID ?</th>
+                                                    <th className="th-matchs">WHO ?</th>
+                                                    <th className="th-matchs">AGE ?</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             {users.map((user, index) => (
                                                 <tr key={`user-${index}`}>
-                                                    <td
-                                                        onClick={() => handleNavigate(user.id.toString())}
-                                                        style={{ cursor: 'pointer', border: '1px solid black', padding: '8px' }}>
+                                                    <td className="td-matchs"
+                                                        onClick={() => handleNavigate(user.id.toString())}>
                                                         {user.id}
                                                     </td>
-                                                    <td
-                                                        style={{ border: '1px solid black', padding: '8px' }}>
+                                                    <td className="td-matchs">
                                                         {user.user_name}
                                                     </td>
-                                                    <td
-                                                        style={{ border: '1px solid black', padding: '8px' }}>
+                                                    <td className="td-matchs">
                                                         {user.age}
                                                     </td>
                                                 </tr>

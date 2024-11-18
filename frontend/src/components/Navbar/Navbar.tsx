@@ -49,7 +49,7 @@ const Navbar = () => {
                     {isAuthenticated === true && isProfileComplete === false && <li><Link to="/apiServeur/userprofile" type="button" className="btn-navbar me-2">My UserProfile Settings</Link></li> ||
                     isAuthenticated === true && isProfileComplete === true && <li><Link to="/apiServeur/userprofile/display" type="button" className="btn-navbar me-2">My UserProfile Settings</Link></li>}
                 </ul>
-                <div className="d-flex">
+                <div className="nav d-flex">
                     {isAuthenticated === false || isAuthenticated === null && <Link to="/signup" className="btn-navbar me-2">Sign up</Link>}
                     {isAuthenticated === false || isAuthenticated === null && <Link to="/signin" className="btn-navbar me-2">Sign in</Link>}
                 </div>

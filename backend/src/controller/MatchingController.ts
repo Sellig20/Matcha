@@ -65,8 +65,41 @@ export class MatchingController {
             const listName = listTab?.map(user => user.user_name);
             res.status(201).json({ message: `List of all users`, list, listName });
         } catch (error) {
-            res.status(500).json({ message: `viewsFameRatingController.ts | Error during get list users : ${error}` });
+            res.status(500).json({ message: `fameRatingController.ts | Error during get list users : ${error}` });
             return;
+        }
+    }
+    
+    static async sortTags(req: Request, res: Response, tab: any[] | null) {
+        try {
+            const myTag1 = req.user?.tags_1;
+            const myTag2 = req.user?.tags_2;
+            const myTag3 = req.user?.tags_3;
+            console.log("\n\n ==> ", tab);
+            let count = 0;
+            tab?.forEach(ind => {
+                const t1 = ind.tags_1;
+                const t2 = ind.tags_2;
+                const t3 = ind.tags_3;
+                console.log("\n t1 = ", t1);
+                console.log("\n t2 = ", t2);
+                console.log("\n t3 = ", t3);
+                if (t1 == myTag1) {
+                    count +=1;
+                }
+                if (t2 == myTag2) {
+                    count += 1;
+                }
+                if (t3 == myTag3) {
+                    count += 1;
+                }
+                //count / 3 = 0,3 ou 0.6 ou 1 puis le + proche de 1 = le gagnant
+                console.log("\n count = ", count);
+            })
+            console.log("\n\n ===> myT 1 = ", myTag1, "myT 2 = ", myTag2, "myT 3 = ", myTag3);
+        } catch (error) {
+            console.log(`\n\n\nMatchingController.ts sort tags | Error : ${error}\n\n\n`);
+            return null;
         }
     }
     
@@ -92,17 +125,17 @@ export class MatchingController {
         }
     }
     
-        static async sortFameRating(req: Request, res: Response, tab: any | null) {
-            try {
-                const myFameRating = req.user?.fame_rating;
-                let tmpTab = [];
-                let finalTab = [];
-                //si 
+    static async sortFameRating(req: Request, res: Response, tab: any | null) {
+        try {
+            const myFameRating = req.user?.fame_rating;
+            let tmpTab = [];
+            let finalTab = [];
+            //si 
 
-            } catch (error) {
-                console.log(`\n\n\nMatchingController.ts sort fame rating | Error : ${error}\n\n\n`);
-            }
+        } catch (error) {
+            console.log(`\n\n\nMatchingController.ts sort fame rating | Error : ${error}\n\n\n`);
         }
+    }
     
     static async getMatchsUsers(req: Request, res: Response) {//For AllUsers.tsx, from bdd
         try {
@@ -127,6 +160,7 @@ export class MatchingController {
             );
             const sorted_SI_gender_tab = await this.sort_SI_GenderController(req, res, listForAlgo);
             const sorted_age_tab = await this.sortAge(req, res, sorted_SI_gender_tab);
+            const algo_tags = this.sortTags(req, res, sorted_age_tab);
             const algo_age = await this.sortFirst(req, res, sorted_age_tab);
             const list = sorted_age_tab?.map(user => user.id);
             const listName = algo_age?.map(user => 
@@ -141,7 +175,7 @@ export class MatchingController {
 
             res.status(201).json({ message: `List of all users`, listName });
         } catch (error) {
-            res.status(500).json({ message: `viewsFameRatingController.ts | Error during get list users : ${error}` });
+            res.status(500).json({ message: `fameRatingController.ts | Error during get list users : ${error}` });
             return;
         }
     }

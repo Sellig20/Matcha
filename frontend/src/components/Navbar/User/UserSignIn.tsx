@@ -14,6 +14,7 @@ const UserSignIn: React.FC = () => {
     const [isAuthenticated, setIsAuthenticated] = useState('');
     const [formValues, handleChange] = useForm({email: '', password: '' });
     const navigate = useNavigate();
+    const [notification, setNotification] = useState<string | null>(null);
     
     const handleSubmit = async (e: React.FormEvent) => {
 
@@ -34,18 +35,34 @@ const UserSignIn: React.FC = () => {
                     console.log(`userSignin.tsx -> profile ${profile?.id} is completed let's go to matcha`);
                     navigate(`/apiServeur/mymatchaprofile/${profile?.id}`);
                 }
+            } else {
+                setNotification(response.data.message);
             }
-        } catch (error) {
+        } catch (error: any) {
             setMessage(`UserSignin.tsx | Erreur frontend signin : ${error}`);
+            const errorMessage = error?.response?.data.message || error?.message;
+            setNotification(errorMessage);
         }
     };
 
+    const handleNavigateNotification = () => {
+        setNotification(null);
+    };
+    
     useEffect(() => {
         
     }, [isProfileComplete, profile]);
 
     return (
         <section className="gradient-custom" >
+            {notification && (
+            <div className="modal-overlay">
+                <div className="modal-content">
+                    <p>{notification}</p>
+                    <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
+                </div>
+            </div>
+        )}
         <div>
         <h1> Sign in ! </h1>
         </div>
@@ -102,7 +119,6 @@ const UserSignIn: React.FC = () => {
                             className="btn btn-lg" 
                         > Submit </button>
                     </div>
-                    {message && <p>{message}</p>}
                     </form>
                 </div>
                 </div>

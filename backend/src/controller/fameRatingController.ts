@@ -5,7 +5,7 @@ import { UsersLikesCreate, UsersProfilesViewsCreate } from "../orm/schema";
 import { io } from '../../server';
 import { table } from "console";
 
-export class viewsFameRatingController {
+export class fameRatingController {
     static async recordProfileViews(req: Request, res: Response) {
         try {
             //creation de la vue + recup du first_name
@@ -27,7 +27,7 @@ export class viewsFameRatingController {
             io.emit('update_countViews', count);
             res.status(201).json({ message: `views ok`});
         } catch (error) {
-            res.status(500).json({ message: `\n\nviewsFameRatingController.ts | Error during recording views : ${error}\n\n` });
+            res.status(500).json({ message: `\n\nfameRatingController.ts | Error during recording views : ${error}\n\n` });
             return;
         }
     }
@@ -51,7 +51,7 @@ export class viewsFameRatingController {
             io.emit('update_countLikes', count);
             res.status(201).json({ message: `likes ok` });
         } catch (error) {
-            res.status(500).json({ message: `\n\nviewsFameRatingController.ts | Error during recording likes : ${error}\n\n` });
+            res.status(500).json({ message: `\n\nfameRatingController.ts | Error during recording likes : ${error}\n\n` });
             return;
         }
     }
@@ -66,7 +66,7 @@ export class viewsFameRatingController {
                 res.status(400).json({ message: "User to view not found "});
             }
         } catch (error) {
-            res.status(500).json({ message: `\n\nviewsFameRatingController.ts | Error during product profile user : ${error}\n\n` });
+            res.status(500).json({ message: `\n\nfameRatingController.ts | Error during product profile user : ${error}\n\n` });
             return;
         }
     }
@@ -134,10 +134,10 @@ export class viewsFameRatingController {
                 res.status(201).json({ message: `get who viewed me ok`, ProfilesViewsTab, count});
             }
             else
-                res.status(204).json( {message : `viewsFameRatingController.ts | No content for views `} );
+                res.status(204).json( {message : `fameRatingController.ts | No content for views `} );
             //rajouter leur nom via la fonction d'au dessus faire un tableau deux en un et les afficher en frontend puis faire un count total en frontend puis fame rating
         } catch (error) {
-            res.status(201).json({ message: `\n\nviewsFameRatingController.ts | Error during get who viewed me : ${error}\n\n` });
+            res.status(201).json({ message: `\n\nfameRatingController.ts | Error during get who viewed me : ${error}\n\n` });
         }
     }
 
@@ -159,9 +159,9 @@ export class viewsFameRatingController {
                 res.status(201).json({ message: `get who viewed me ok`, ProfilesLikesTab });
             }
             else
-                res.status(204).json( {message : `viewsFameRatingController.ts | No content for likes `} );
+                res.status(204).json( {message : `fameRatingController.ts | No content for likes `} );
         } catch (error) {
-            res.status(500).json({ message: `viewsFameRatingController.ts | Error during get who likes me : ${error}` });
+            res.status(500).json({ message: `fameRatingController.ts | Error during get who likes me : ${error}` });
         }
     }
 }

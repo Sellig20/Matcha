@@ -93,7 +93,6 @@ const FameRating = () => {
         }
         executeData();
 
-
         return () => {
             socket?.off('insert_view');
         };
@@ -117,25 +116,24 @@ const FameRating = () => {
         )}
 
         <div>
-            <h3>Structure avec une jauge et trois rectangles alignés horizontalement</h3>
         </div>
         <div className="container py-5 h-100">
             <div className="row justify-content-center align-items-center">
                 {/* Grand carré */}
-                <div className="biggy col-12 col-xl-80 d-flex justify-content-center">
+                <div className="col-12 col-xl-80 d-flex justify-content-center">
                     <div className="card shadow-2-strong" style={{ borderRadius: '20px', padding: '20px', height: '100%', width: '100%' }}>
                         
                         {/* Jauge horizontale */}
                         <div className="progress mb-4" style={{ height: '30px' }}>
-                           jauge
+                           jauge de famreting
                         </div>
 
                         {/* Trois rectangles alignés horizontalement */}
                         <div className="fm-row row">
                             {/* Premier rectangle vertical */}
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
-                                    <h2 className="text-center">Nombre de views : {countViews}</h2>
+                                <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                                    <h2 className="text-center">My number of views : {countViews}</h2>
                                     <div className="card-body d-flex align-items-center justify-content-center">
                                         <table className="table-fm">
                                             <thead>
@@ -161,8 +159,8 @@ const FameRating = () => {
 
                             {/* Deuxième rectangle vertical */}
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
-                                    <h2 className="text-center">Nombre de likes : {countLikes}</h2>
+                                <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                                    <h2 className="text-center">My number of likes : {countLikes}</h2>
                                         <div className="card-body d-flex align-items-center justify-content-center">
                                         <table className="table-fm">
                                             <thead>
@@ -186,9 +184,9 @@ const FameRating = () => {
 
                             {/* Troisième rectangle vertical */}
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                                <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
                                     <div className="card-body d-flex align-items-center justify-content-center">
-                                        <h3 className="text-center">Rectangle 3 : MATCHS</h3>
+                                        <h2 className="text-center">My number of matchs</h2>
                                     </div>
                                 </div>
                             </div>

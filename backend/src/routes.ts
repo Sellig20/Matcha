@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { userSettingsController } from './controller/userSettingsController';
-import { viewsFameRatingController } from './controller/viewsFameRatingController';
+import { fameRatingController } from './controller/fameRatingController';
 import { userSigninController } from './controller/userSigninController';
 import { userSignupController } from './controller/userSignupController';
 import { userProfileController } from './controller/userProfileController';
@@ -55,23 +55,23 @@ router.get('/matchsusers', authenticateWithToken, (req, res) => {
 });
 
 router.get('/userproduct/:idd', authenticateWithToken, (req, res) => {
-    viewsFameRatingController.readProductProfile(req, res);
+    fameRatingController.readProductProfile(req, res);
 });
 
 router.post('/views', authenticateWithToken, (req, res) => {
-    viewsFameRatingController.recordProfileViews(req, res);
+    fameRatingController.recordProfileViews(req, res);
 });
 
 router.post('/likes', authenticateWithToken, (req, res) => {
-    viewsFameRatingController.recordProfileLikes(req, res);
+    fameRatingController.recordProfileLikes(req, res);
 });
 
 router.get('/views/:idd', authenticateWithToken, (req, res) => {
-    viewsFameRatingController.getWhoViewedMe(req, res);
+    fameRatingController.getWhoViewedMe(req, res);
 });
 
 router.get('/likes/:idd', authenticateWithToken, (req, res) => {
-    viewsFameRatingController.getWhoLikedMe(req, res);
+    fameRatingController.getWhoLikedMe(req, res);
 });
 
 router.get('/match', authenticateWithToken, (req, res) => {

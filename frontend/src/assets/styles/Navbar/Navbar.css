@@ -13,18 +13,18 @@
 }
 
 .nav {
-    font-family: "memories";
     font-size: 22px;
 }
 
 .btn-navbar {
+    font-family: "memories";
     padding: 10px;
     text-decoration: none;
     border: 2px solid #C49FFF;
     margin: 4px;
     border-radius: 50px;
     color: #FF9CB6;
-    font-size: 20px;
+    font-size: 21px;
 }
 
 .btn-navbar:hover {

@@ -25,9 +25,14 @@ export class userSigninController {
                 token: token,
                 user: validUser
             });
-        } catch (err) {
-                console.error(err);
-            res.status(401).json('UserSigninController.ts | Error during authentication');
+        } catch (err: any) {
+            console.error("\nuserSigninController -> ", err);
+            if (err == "TypeError: Cannot read properties of null (reading 'password_hash')") {
+                res.status(401).json( { message: "Wrong email" } );
+            }
+            else {
+                res.status(401).json( { message: err.message } );
+            }
             return;
         }
     }

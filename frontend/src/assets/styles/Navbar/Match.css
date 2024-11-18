@@ -1,0 +1,39 @@
+.matchs-row {
+    display: flex;
+    justify-content: center;
+    height: 70%;
+}
+
+.table-matchs {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.th-matchs {
+    font-family: "posterable";
+    color: #FFD0E6;
+    font-size: 29px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 33.33%;
+    border: #FF9CB6 solid 2px;
+}
+
+.td-matchs {
+    font-family: 'Courier New';
+    font-size: 30px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 33.33%;
+    border: #FF9CB6 solid 2px;
+    color: #480ced;
+    font-family: "gedean";
+}
+
+.text-center {
+    font-family: "memories";
+    color: #FFD0E6;
+}
