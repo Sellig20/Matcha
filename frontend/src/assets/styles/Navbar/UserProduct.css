@@ -19,19 +19,22 @@
 }
 
 .firstname {
-  font-size: 60px;
-  font-family: "gedean";
+  font-size: 40px;
+  font-family: "posterable";
+  color: #480ced;
 }
 
 .main-fields {
-  font-size: 25px;
-  font-family: "joyline";
+  font-size: 30px;
+  font-family: "memories";
+  color: #7D4FFE;
+  padding: 10px;
 }
 
 .text-up {
-  font-size: 40px;
-  text-indent: 70px;
-  font-family: "everi";
-  color: rgb(145, 57, 72);
+  color: #FFD0E6;
+  font-size: 30px;
+  text-indent: 90px;
+  font-family: "gedean";
   /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif */
 }

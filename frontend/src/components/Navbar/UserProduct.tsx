@@ -103,10 +103,9 @@ const UserProduct: React.FC = () => {
             <div className="row justify-content-center align-items-center h-100">
                 {/* Grand carré */}
                 <div className="col-10 col-xl-80">
-                    <h3>1 il faudra la search bar ici</h3>
 
+                    {/* <h3>1 il faudra la search bar ici</h3> */}
                     <div className="card shadow-2-strong" style={{ borderRadius: '60px', padding: '20px'}}> {/* box bleue */}
-                    <h3> --------Presentation profile------------------------</h3>
                     <div className="d-flex" style={{ gap: "20px" }}> {/*les deux boites verticales*/}
 
                             <div className="col-md-4" style={{ width: "300px"}}>{/*BOITE 1*/}
@@ -129,17 +128,19 @@ const UserProduct: React.FC = () => {
                                 <div className="card shadow-2-strong mb-2" style={{ borderRadius: '30px', width: '100%', height: '100%', paddingLeft: "10px" }}>
                                     <div className="d-flex flex-row">
                                         <div className="card-body" style={{ flex: 1 }}>
-                                            <p className="firstname" style={{ textIndent: "20px" }}>
+                                            <p className="firstname" >
                                                 {user?.first_name}, {user?.age} ans
                                             </p>
-                                            <p className="main-fields">I look for</p>
+                                            <p className="main-fields">I live in :</p>
+                                            <p className="text-up">---Paris---</p>
+                                            <p className="main-fields">I look for :</p>
                                             <p className="text-up">{user?.sexual_interest}</p>
                                             <p className="main-fields"> I identify as :</p>
                                             <p className="text-up">{user?.gender}</p>
                                         </div>
 
-                                        <div className="card-body" style={{ flex: 1 }}>
-                                            <p className="main-fields">My passions</p>
+                                        <div className="card-body" style={{ flex: 1}}>
+                                            <p className="main-fields">My passions :</p>
                                                 <br />
                                                 <p className="text-up" style={{ textIndent: "60px" }}>{user?.tags_1}</p>
                                                 <br />
@@ -150,10 +151,10 @@ const UserProduct: React.FC = () => {
                                     </div>
                                 </div>
 
-                                <div className="card shadow-2-strong" style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}>{/*BOITE 2*/}
+                                <div className="card shadow-2-strong mb-2" style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}>{/*BOITE 2*/}
                                         <div className="card-body">
                                         <p className="firstname" style={{ fontSize: "40px" }}> 🗨️ Bio : </p>
-                                        <p className="main-fields" style={{ fontSize: "30px" }}>{user?.biography}</p>
+                                        <p className="text-up" style={{ fontSize: "30px" }}>{user?.biography}</p>
                                         </div>
                                 </div>
                             </div>

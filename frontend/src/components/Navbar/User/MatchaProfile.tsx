@@ -11,6 +11,12 @@ const MatchaProfile: React.FC = () => {
     const [message, setMessage] = useState('');
     const profile = useProfile();
 
+    //get my informations
+
+    //get Matchs informations
+
+    //link to all my matched and suggestions and suggestions = userproduct possibility to like and matched = user product heart clicked
+
     useEffect(() => {
         try {
             fetchProfile();
@@ -44,12 +50,12 @@ const MatchaProfile: React.FC = () => {
                                     <div className="card-body d-flex align-items-center justify-content-center">
                                         <h3 className="text-center">Rectangle Vertical</h3>
                                             {/* <div className="card-body">
-                                            <p> mon age : 
-                                                <br />
-                                                {user?.age}
-                                                <br />
-                                                <br />
-                                            </p>
+                                        <p> mon age : 
+                                            <br />
+                                            {user?.age}
+                                            <br />
+                                            <br />
+                                        </p>
                                             <p> my sexual interests : 
                                                 <br />
                                                 {user?.sexual_interest}

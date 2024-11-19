@@ -70,33 +70,55 @@ export class MatchingController {
         }
     }
     
-    static async sortTags(req: Request, res: Response, tab: any[] | null) {
+        static async sortFirstTag(req: Request, res: Response, tab: any[] | null) {
+            try {                
+                const finalTab: string[] = [];
+                //count / 3 = 0,3 ou 0.6 ou 1 puis le + proche de 1 = le gagnant
+                tab?.sort((a, b) => b.value - a.value);
+                return finalTab;
+            } catch (error) {
+                console.log(`\n\n\nMatchingController.ts sort first | Error : ${error}\n\n\n`);
+                return null;
+            }
+        }
+    
+    static async sortTags(req: Request, res: Response, tab: any[] | null | undefined) {
         try {
             const myTag1 = req.user?.tags_1;
             const myTag2 = req.user?.tags_2;
             const myTag3 = req.user?.tags_3;
-            console.log("\n\n ==> ", tab);
-            let count = 0;
+            const myTags: string[] = [];
+            if (myTag1 && myTag2 && myTag3) {
+                myTags.push(myTag1);
+                myTags.push(myTag2);
+                myTags.push(myTag3);
+            }
+            const tabTags: string[] = [];
+            type KeyValuePair = {
+                key: {};
+                value: number;
+            };
+            const CountTab: KeyValuePair[] = [];
             tab?.forEach(ind => {
-                const t1 = ind.tags_1;
-                const t2 = ind.tags_2;
-                const t3 = ind.tags_3;
-                console.log("\n t1 = ", t1);
-                console.log("\n t2 = ", t2);
-                console.log("\n t3 = ", t3);
-                if (t1 == myTag1) {
-                    count +=1;
+                let count = 0;
+                tabTags.push(ind.tags_1);
+                tabTags.push(ind.tags_2);
+                tabTags.push(ind.tags_3);
+                for (let i = 0; i < tabTags.length; i++) {
+                    for (let j = 0; j < myTags.length; j++) { 
+                        if (tabTags[i] == myTags[j]) {
+                            count +=1;
+                        }
+                    }
                 }
-                if (t2 == myTag2) {
-                    count += 1;
-                }
-                if (t3 == myTag3) {
-                    count += 1;
-                }
-                //count / 3 = 0,3 ou 0.6 ou 1 puis le + proche de 1 = le gagnant
-                console.log("\n count = ", count);
+                CountTab.push({ key: ind, value: count});
+                tabTags.length = 0;
             })
-            console.log("\n\n ===> myT 1 = ", myTag1, "myT 2 = ", myTag2, "myT 3 = ", myTag3);
+            CountTab?.sort((a, b) => b.value - a.value);
+            let finalTab: any[] = CountTab.map(ind => ind.key);
+
+            console.log("\n\n -------- finalTab = ", CountTab, "---------\n\n");
+            return finalTab;
         } catch (error) {
             console.log(`\n\n\nMatchingController.ts sort tags | Error : ${error}\n\n\n`);
             return null;
@@ -125,18 +147,6 @@ export class MatchingController {
         }
     }
     
-    static async sortFameRating(req: Request, res: Response, tab: any | null) {
-        try {
-            const myFameRating = req.user?.fame_rating;
-            let tmpTab = [];
-            let finalTab = [];
-            //si 
-
-        } catch (error) {
-            console.log(`\n\n\nMatchingController.ts sort fame rating | Error : ${error}\n\n\n`);
-        }
-    }
-    
     static async getMatchsUsers(req: Request, res: Response) {//For AllUsers.tsx, from bdd
         try {
             const listTab = await userSignupModel.readUserByEmail();
@@ -160,10 +170,10 @@ export class MatchingController {
             );
             const sorted_SI_gender_tab = await this.sort_SI_GenderController(req, res, listForAlgo);
             const sorted_age_tab = await this.sortAge(req, res, sorted_SI_gender_tab);
-            const algo_tags = this.sortTags(req, res, sorted_age_tab);
             const algo_age = await this.sortFirst(req, res, sorted_age_tab);
-            const list = sorted_age_tab?.map(user => user.id);
-            const listName = algo_age?.map(user => 
+            const algo_tags = await this.sortTags(req, res, algo_age);
+            // const list = sorted_age_tab?.map(user => user.id);
+            const listName = algo_tags?.map(user => 
                 ({ 
                     user_name: user.user_name,
                     id: user.id,
@@ -172,7 +182,6 @@ export class MatchingController {
             );
             
             io.to(req.userId).emit('newMatchUser', listName);//From bdd to socket to AllUser.tsx
-
             res.status(201).json({ message: `List of all users`, listName });
         } catch (error) {
             res.status(500).json({ message: `fameRatingController.ts | Error during get list users : ${error}` });
