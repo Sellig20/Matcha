@@ -97,7 +97,7 @@ const UserProduct: React.FC = () => {
                     </div>
                 </div>
             )}
-        <h1>tu mattes <span className="colorH1">{user?.first_name}</span> ! </h1>
+        <h1>tu mattes <span className="colorH1">{user?.user_name}</span> ! </h1>
 
         <div className="container py-5 h-100">
             <div className="row justify-content-center align-items-center h-100">
@@ -127,26 +127,23 @@ const UserProduct: React.FC = () => {
 
                                 <div className="card shadow-2-strong mb-2" style={{ borderRadius: '30px', width: '100%', height: '100%', paddingLeft: "10px" }}>
                                     <div className="d-flex flex-row">
-                                        <div className="card-body" style={{ flex: 1 }}>
+                                        <div className="card-body card-main" style={{ flex: 1}}>
                                             <p className="firstname" >
-                                                {user?.first_name}, {user?.age} ans
+                                                {user?.first_name}, {user?.age} yo
                                             </p>
                                             <p className="main-fields">I live in :</p>
-                                            <p className="text-up">---Paris---</p>
+                                            <p className="text-up">--Paris--</p>
                                             <p className="main-fields">I look for :</p>
                                             <p className="text-up">{user?.sexual_interest}</p>
                                             <p className="main-fields"> I identify as :</p>
                                             <p className="text-up">{user?.gender}</p>
                                         </div>
 
-                                        <div className="card-body" style={{ flex: 1}}>
-                                            <p className="main-fields">My passions :</p>
-                                                <br />
-                                                <p className="text-up" style={{ textIndent: "60px" }}>{user?.tags_1}</p>
-                                                <br />
-                                                <p className="text-up" style={{ textIndent: "160px" }}>{user?.tags_2}</p>
-                                                <br />
-                                                <p className="text-up" style={{ textIndent: "100px" }}>{user?.tags_3}</p>
+                                        <div className="card-body" style={{ flex: 1, margin: "50px"}}>
+                                            <p className="main-fields" style={{ textIndent: "60px", margin:"10px" }}>My passions :</p>
+                                                <p className="text-up" style={{ textIndent: "60px", padding:"15px"  }}>{user?.tags_1}</p>
+                                                <p className="text-up" style={{ textIndent: "160px", padding:"15px"  }}>{user?.tags_2}</p>
+                                                <p className="text-up" style={{ textIndent: "100px", padding:"15px"  }}>{user?.tags_3}</p>
                                         </div>
                                     </div>
                                 </div>

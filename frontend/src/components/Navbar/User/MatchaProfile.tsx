@@ -37,63 +37,48 @@ const MatchaProfile: React.FC = () => {
         <div className="container py-5 h-100">
             <div className="row justify-content-center align-items-center h-100">
                 {/* Grand carré */}
-                <div className="col-12 col-xl-8">
+                <div className="col-10 col-xl-80">
                     <h3>1 il faudra la search bar ici</h3>
-                    <div className="card shadow-2-strong" style={{ borderRadius: '20px', padding: '20px', height: '600px' }}>
-                    <h3>2</h3>
-                    <div className="row h-100">
+                    <div className="card shadow-2-strong"style={{ borderRadius: '60px', padding: '20px'}}>
+                    <div className="d-flex" style={{ gap: "20px" }}> {/*les deux boites verticales*/}
+
 
                             {/* Rectangle vertical à gauche */}
-                            <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                <div className="card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                            <div className="col-md-4" style={{ width: "300px"}}>
+                                <div className="card shadow-2-strong mb-3" style={{ borderRadius: '30px', width: '100%', height: '100%' }}>
                                 <h3> MON PROFIL </h3>
-                                    <div className="card-body d-flex align-items-center justify-content-center">
-                                        <h3 className="text-center">Rectangle Vertical</h3>
-                                            {/* <div className="card-body">
-                                        <p> mon age : 
-                                            <br />
-                                            {user?.age}
-                                            <br />
-                                            <br />
-                                        </p>
-                                            <p> my sexual interests : 
-                                                <br />
-                                                {user?.sexual_interest}
-                                                <br />
-                                                <br />
-                                            </p>
-                                            <p> my gender : 
-                                                <br />
-                                                {user?.gender}
-                                                <br />
-                                            </p>
-                                            <p> my number views : 
-                                                <br />
-                                                {user?.gender}
-                                                <br />
-                                            </p>
-                                            <p> my number likes : 
-                                                <br />
-                                                {user?.gender}
-                                                <br />
-                                            </p>
-                                        </div> */}
+                                    <div className="card-body card-picture">
+                                        <p> ///PHOTO////</p>
+                                    </div>
+                                    <div className="card-body">
+                                        <p>{profile?.profile?.first_name}, {profile?.profile?.age} years old, Paris</p>
+                                        <p>I'm looking for : <span> {profile?.profile?.sexual_interest}</span></p>
+                                        <p> I am : <span>{profile?.profile?.gender}</span></p>
+                                        <button>change my profile</button>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Rectangles horizontaux à droite */}
-                            <div className="col-md-8 d-flex flex-column justify-content-between">
-                                {/* Premier rectangle horizontal */}
-                                <div className="card shadow-2-strong mb-3" style={{ borderRadius: '20px', height: '48%' }}>
-                                <h3>4 it is a match ! photos de Maxence</h3>
-                                    <div className="card-body d-flex align-items-center justify-content-center">
-                                        <h3 className="text-center">Rectangle 1</h3>
+                            <div className="d-flex flex-column" style={{ gap:"5px", flex: 1}}>{/*BOITE 2*/}
+
+                                <div className="card shadow-2-strong mb-2" style={{ borderRadius: '20px', height: '48%' }}>
+                                    <div className="d-flex flex-row">
+                                        <div className="card-body" style={{ flex: 1}}>
+                                           <p>HELLO TODAY WE FOUND YOU :</p>
+                                        </div>
+
+                                        <div className="card-body" style={{ flex: 1, margin: "50px"}}>
+                                            <p>gjgjgjgjgjgjg</p>
+                                        </div>
                                     </div>
+                                    <h3>4 it is a match ! photos de Maxence</h3>
+                                        <div className="card-body d-flex align-items-center justify-content-center">
+                                            <h3 className="text-center">Rectangle 1</h3>
+                                        </div>
                                 </div>
 
-                                {/* Deuxième rectangle horizontal */}
-                                <div className="card shadow-2-strong" style={{ borderRadius: '20px', height: '48%' }}>
+                                <div className="card shadow-2-strong mb-2" style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}>
+                                <div className="card-body"></div>
                                 <h3>5 informations de Maxence + oui / non je like</h3>
                                     <div className="card-body d-flex align-items-center justify-content-center">
                                         <h3 className="text-center">Rectangle 2</h3>

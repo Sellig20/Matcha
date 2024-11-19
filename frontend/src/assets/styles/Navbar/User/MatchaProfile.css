@@ -7,3 +7,9 @@ h3 {
 .colorH1 {
     color: #C49FFF;
 }
+
+.card-picture {
+    border: solid black 20px;
+    width: 100%;
+    height: 70%;
+}
