@@ -150,7 +150,7 @@ const UserProduct: React.FC = () => {
 
                                 <div className="card shadow-2-strong mb-2" style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}>{/*BOITE 2*/}
                                         <div className="card-body">
-                                        <p className="firstname" style={{ fontSize: "40px" }}> 🗨️ Bio : </p>
+                                        <p className="firstname"> 🗨️ Bio : </p>
                                         <p className="text-up" style={{ fontSize: "30px" }}>{user?.biography}</p>
                                         </div>
                                 </div>

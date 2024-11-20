@@ -58,6 +58,10 @@ router.get('/userproduct/:idd', authenticateWithToken, (req, res) => {
     fameRatingController.readProductProfile(req, res);
 });
 
+router.get('/userproduct/suggestions', authenticateWithToken, (req, res) => {
+    fameRatingController.readProductProfile(req, res);
+});
+
 router.post('/views', authenticateWithToken, (req, res) => {
     fameRatingController.recordProfileViews(req, res);
 });

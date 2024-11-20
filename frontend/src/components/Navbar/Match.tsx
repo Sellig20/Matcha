@@ -39,8 +39,6 @@ const Match: React.FC = () => {
     
     useEffect(() => {
 
-
-
         const executeData = async () => {
             try {
                 if (isProfileComplete === false) {

@@ -118,7 +118,7 @@ const FameRating = () => {
         <div>
         </div>
         <div className="container py-5 h-100">
-            <div className="row justify-content-center align-items-center">
+            <div className="row justify-content-center align-items-center h-100">
                 {/* Grand carré */}
                 <div className="col-12 col-xl-80 d-flex justify-content-center">
                     <div className="card shadow-2-strong" style={{ borderRadius: '20px', padding: '20px', height: '100%', width: '100%' }}>
