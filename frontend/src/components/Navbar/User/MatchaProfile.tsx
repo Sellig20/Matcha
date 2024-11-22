@@ -9,6 +9,7 @@ const MatchaProfile: React.FC = () => {
 
     const { fetchProfile } = useProfile();
     const [message, setMessage] = useState('');
+    const [messageNewMatch, setMessageNewMatch] = useState('');
     const [myId, setMyId] = useState<number | undefined>(undefined);
     const [users, setUsers] = useState<UserProfileInterface[]>([]);
     const { isProfileComplete } = useProfile();
@@ -25,6 +26,11 @@ const MatchaProfile: React.FC = () => {
             setMessage(response.data.message);
             setMyId(response.data.myId);
             setUsers(response.data.listName);
+            if (users == null) {
+                setMessageNewMatch("Sorry... no new matchas today !");
+            } else {
+                setMessageNewMatch("New match !");
+            }
             console.log("\n\n users =>> Match users >>>> ", response.data.listName, "\n\n");
         } catch (error) {
             setMessage(`MatchaProfile.tsx | Erreur frontend get  : ${error}`);
@@ -35,19 +41,25 @@ const MatchaProfile: React.FC = () => {
         navigate(`/apiServeur/userprofile`);
     };
 
+    const handleClickHeart = () => {
+        console.log("\n\nI clicked the heart\n\n");
+    };
+
     const handleClickPrevious = () => {
-        if (currentIndex >= 0 && currentIndex <= users.length - 1) {
+        if (currentIndex > 0 && currentIndex <= users.length - 1) {
             setCurrentIndex(currentIndex - 1);
+            setMessageNewMatch("New match !");
         } else {
-            setMessage("Sorry, no more matchas for today !");
+            setMessageNewMatch("Sorry, no more matchas for today !");
         }
     }
 
     const handleClickNext = () => {
         if (currentIndex < users.length - 1) {
             setCurrentIndex(currentIndex + 1);
+            setMessageNewMatch("New match !");
         } else {
-            setMessage("Sorry, no more matchas for today !");
+            setMessageNewMatch("Sorry, no more matchas for today !");
         }
     }
     //link to all my matched and suggestions and suggestions = userproduct possibility to like and matched = user product heart clicked
@@ -62,18 +74,15 @@ const MatchaProfile: React.FC = () => {
                 getSuggestedMatch();
             }
         } catch (error) {
-            setMessage(`UserProfile.tsx | Erreur frontend userprofile : ${error}`);
+            setNotification(`Erreur frontend userprofile : ${error}`);
         }
     }, [])
+    //il faut les sockets pour render des que jarrive sur la page.
 
     return (
         <section className="gradient-custom">
         <div>
-        <h1>Hello <span className="colorH1">{profile.profile?.first_name}</span> ! </h1> 
-        <h1>Hello <span className="colorH1">id n° {profile.profile?.id}</span> ! </h1>
-        <div>
-            {message && <p style={{ color: 'red' }}>{message}</p>}
-        </div>
+        <h1>Hello <span className="colorH1">{profile.profile?.first_name}</span> ! </h1>
 
         {notification && (
             <div className="modal-overlay">
@@ -89,7 +98,6 @@ const MatchaProfile: React.FC = () => {
             <div className="row justify-content-center align-items-center h-100">
                 {/* Grand carré */}
                 <div className="col-12 col-xl-80">
-                    <h3>1 il faudra la search bar ici</h3>
                     <div className="card shadow-2-strong" style={{ borderRadius: '60px', padding: '20px'}}>
                     <div className="d-flex" style={{ gap: "20px" }}> {/*les deux boites verticales*/}
 
@@ -97,56 +105,57 @@ const MatchaProfile: React.FC = () => {
                             <div className="col-md-4" style={{ width: "300px"}}>
                                 <div className="card shadow-2-strong mb-3" style={{ borderRadius: '30px', width: '100%', height: '100%' }}>
                                 <h3> MON PROFIL </h3>
-                                    <div className="card-body card-picture">
+                                    <div className="card-body card-picture-1">
                                         <p> ///PHOTO de moi////</p>
                                     </div>
-                                    <div className="card-body">
-                                        <p><span> {profile?.profile?.first_name}, {profile?.profile?.age} years old, Paris</span></p>
-                                        <p>I'm looking for : <span> {profile?.profile?.sexual_interest}</span></p>
-                                        <p> I am : <span>{profile?.profile?.gender}</span></p>
-                                        <button>change my profile</button>
+                                    <div className="card-body my-side-profile">
+                                        <p><span style={{fontFamily: "memories"}}> {profile?.profile?.first_name}, {profile?.profile?.age} years old, Paris</span></p>
+                                        <p>I'm looking for : <span style={{fontFamily: "memories"}}> {profile?.profile?.sexual_interest}</span></p>
+                                        <p> I am : <span style={{fontFamily: "memories"}}>{profile?.profile?.gender}</span></p>
+                                        <button className="button-matcha-profile">change my profile</button>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="d-flex flex-column" style={{ gap:"5px", flex: 1}}>{/*BOITE 2*/}
-
+                                <div 
+                                    className={`card-body align-items-center animation-new-match ${
+                                        messageNewMatch === "New match !" ? "NewMatch" : "NoMatch"
+                                      }`}>
+                                    {messageNewMatch && <p>{messageNewMatch}</p>}
+                                </div>
                                 <div className="card shadow-2-strong mb-2" style={{ borderRadius: '30px'}}>
-                                    <div className="d-flex flex-row" style={{ flex: 1, border: "solid grey 3px"}}>
-                                        <div className="card-body" style={{ flex: 1, border: "solid red 3px"}}>
-                                           <p>HELLO TODAY WE FOUND YOU :</p>
+                                    <div className="d-flex flex-row" style={{}}>
+                                        <div className="card-body" style={{ border:"solid 4px brown"}}>
+                                           {/* <p>HELLO TODAY WE FOUND YOU :</p>
+                                            */}
                                            <div className="card-body d-flex flex-column firstname"
                                                 key={users[currentIndex]?.id}>
-                                                {users[currentIndex]?.user_name}, {users[currentIndex]?.age}, Paris
+                                                {users[currentIndex]?.user_name}, {users[currentIndex]?.age} yo
+                                            </div>
+                                                Paris
                                                 {users[currentIndex]?.tags_1}
-                                            </div>
-                                                tag 1 <br /> tags 2 <br /> tag3 <br /> biography sex i et genderrrr
-                                            <div className="flex-row">
-                                                <button
-                                                    className="button-prev-next"
-                                                    onClick={() => handleClickPrevious()}
-                                                    >previous match suggested
-                                                </button>
-                                                <button
-                                                    className="button-prev-next"
-                                                    onClick={() => handleClickNext()}
-                                                    >next suggested match
-                                                </button>
-                                            </div>
+
+                                                tag 1 <br /> tags 2 <br /> tag3 <br /> 
+                                                biography si et genderrrr
+                                                <p className="firstname"> 🗨️ Bio : </p>
+                                                <p className="text-up" style={{ fontSize: "30px" }}>{users[currentIndex]?.biography}</p>
                                         </div>
 
-                                        <div className="card-body" style={{ flex: 1, border: "solid red 3px"}}>
-                                            <div className="card-body card-picture"
-                                            style={{width: "100%", height: "100%"}}
+                                        <div className="card-body" style={{ flex: 1}}>
+                                            <div className="card-body card-picture-2"
+                                            // style={{width: "100%", height: "100%"}}
                                             >
                                                 <p> ///PHOTO du match suggested////</p>
+                                            </div>
+                                            <div className="button-picture" style={{ border:"solid 4px brown", width: "400px", height: "100px"}}>
                                                 <button
-                                                    className="button-prev-next"
+                                                    className="button-prev-next button-matcha-profile"
                                                     // onClick={() => handleClickPrevious()}
                                                     >previous picture
                                                 </button>
                                                 <button
-                                                    className="button-prev-next"
+                                                    className="button-prev-next button-matcha-profile"
                                                     // onClick={() => handleClickNext()}
                                                     >next picture
                                                 </button>
@@ -155,22 +164,31 @@ const MatchaProfile: React.FC = () => {
                                     </div>
                                         <div 
                                             className="card-body d-flex align-items-center justify-content-center"
-                                            style={{border: "solid red 3px"}}
                                             >
-                                            <div className="d-flex justify-content-center mb-3">
-                                            <button
-                                                className="coeur"
-                                                // onClick={handleModifyClick}
-                                                > ♥️ </button>
-                                            </div>
-                                        </div>
                                 </div>
 
-                                <div className="card shadow-2-strong mb-2" style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}>
-                                <div className="card-body"></div>
-                                <h3>5 informations de Maxence + oui / non je like</h3>
-                                    <div className="card-body d-flex align-items-center justify-content-center">
-                                        <h3 className="text-center">Rectangle 2</h3>
+                                <div className="shadow-2-strong mb-2" style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}>
+                                    <div className="d-flex align-items-center justify-content-center" style={{ border: "solid 2px purple"}}>
+                                        <div className="d-flex justify-content-center mb-3 flex-row" style={{ border: "solid 2px grey"}}>
+                                        <div className="" style={{ border: "solid 2px red"}}>
+                                            <button
+                                                className="button-prev-next button-matcha-profile"
+                                                onClick={() => handleClickPrevious()}
+                                                >⇠ previous match
+                                            </button>
+                                            <button
+                                                className="heart"
+                                                onClick={handleClickHeart}
+                                                >  
+                                            </button>
+                                            <button
+                                                className="button-prev-next button-matcha-profile"
+                                                onClick={() => handleClickNext()}
+                                                > next match ⇢
+                                            </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>

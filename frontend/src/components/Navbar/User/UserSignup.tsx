@@ -12,6 +12,7 @@ const UserSignup: React.FC = () => {
     const [formValues, handleChange] = useForm({ firstname: '', lastname: '', email: '', password: '' });
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const [notification, setNotification] = useState<string | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -24,7 +25,12 @@ const UserSignup: React.FC = () => {
             }
         } catch (err) {
             setMessage("UserSignup.tsx | ### - email deja connu de nos services - ### ?? Erreur frontend signup");
+            setNotification("Error: Email already in use");
         }
+    };
+
+    const handleNavigateNotification = () => {
+        navigate(`/apiServeur/userprofile`);
     };
     
     useEffect(() => {
@@ -35,6 +41,20 @@ const UserSignup: React.FC = () => {
 
         return (
         <section className="gradient-custom" >
+
+        <div>
+            {message && <p style={{ color: 'red' }}>{message}</p>}
+        </div>
+
+        {notification && (
+            <div className="modal-overlay">
+                <div className="modal-content">
+                    <p>{notification}</p>
+                    <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
+                </div>
+            </div>
+        )}
+
         <div>
         <h1>Sign up !</h1>
         </div>
@@ -131,7 +151,6 @@ const UserSignup: React.FC = () => {
                             className="btn btn-lg" 
                         > Submit </button>
                     </div>
-                    {message && <p>{message}</p>}
                     </form>
                 </div>
                 </div>

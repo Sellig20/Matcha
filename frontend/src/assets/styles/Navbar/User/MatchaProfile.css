@@ -8,9 +8,122 @@ h3 {
     color: #C49FFF;
 }
 
+.my-side-profile {
+  font-family: "gedean";
+  color: #FFD0E6;
+  font-size: 25px;
+}
 
+@keyframes battements {
+  0%, 100% {
+    transform: scale(1) rotate(-45deg);
+    box-shadow: 0 0 0 0 rgba(222, 126, 187, 0.7);
+  }
+  50% {
+    transform: scale(1.1) rotate(-45deg);
+    box-shadow: 0 0 10px 5px rgba(243, 6, 26, 0.7);
+  }
+}
 
-.card-picture {
+.heart {
+  position: relative;
+  width: 55px;
+  height: 55px;
+  background-color: #ec0909;
+  transform: rotate(-45deg);
+  margin: 50px auto;
+  border-radius: 10px;
+  animation: battements 2s infinite cubic-bezier(0.66, 0, 0, 1);
+  border: none;
+}
+
+/* Cercles pour le haut du cœur */
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  background-color: #ec0909;
+  border-radius: 50%;
+  border: none;
+}
+
+/* Cercles positionnés */
+.heart::before {
+  top: -23px;
+  left: 0;
+}
+
+.heart::after {
+  top: 0;
+  left: 23px;
+}
+
+.heart:hover {
+  background-color: #480ced;
+  animation-play-state: paused; /* Pour figer l'animation au survol */
+}
+
+.button-matcha-profile {
+  font-family: "gedean";
+  background-color: #eaaaf1;
+  font-size: 20px;
+  color: #480ced;
+  border-radius: 50px;
+  border: none;
+}
+
+.button-matcha-profile:hover {
+  color: #eaaaf1;
+  background-color: #480ced;
+}
+
+.NewMatch {
+  font-size: 3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-indent: 30%;
+  font-family: "gedean";
+  font-size: 60px;
+  animation: pulse 2s infinite, colorChange 4s infinite;
+}
+
+.NoMatch {
+  color: #480ced;
+  font-size: 50px;
+  font-family: "memories";
+}
+
+@keyframes colorChange {
+  0% {
+    color: #480ced;
+  }
+  25% {
+      color: #FF9CB6;
+  }
+  50% {
+    color: #F08488;
+  }
+  75% {
+      color: #FF9CB6;
+  }
+  100% {
+    color: #480ced;
+  }
+}
+
+.card-picture-1 {
     border: solid black 15px;
-    aspect-ratio: 1 / 1;
+    
+}
+
+.card-picture-2 {
+    border: solid black 15px;
+    width: 400px;
+    height: 400px;
+}
+
+.button-picture {
+    text-indent: 100px;
 }

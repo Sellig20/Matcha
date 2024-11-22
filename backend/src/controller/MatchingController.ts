@@ -165,19 +165,27 @@ export class MatchingController {
                     tags_1: user.tags_1,
                     tags_2: user.tags_2,
                     tags_3: user.tags_3,
-                    fame_rating: user.fame_rating
+                    fame_rating: user.fame_rating,
+                    biography: user.biography
                 })
             );
             const sorted_SI_gender_tab = await this.sort_SI_GenderController(req, res, listForAlgo);
             const sorted_age_tab = await this.sortAge(req, res, sorted_SI_gender_tab);
             const algo_age = await this.sortFirst(req, res, sorted_age_tab);
             const algo_tags = await this.sortTags(req, res, algo_age);
+            console.log("\n\n algo tags = ", algo_tags, "\n\n")
             // const list = sorted_age_tab?.map(user => user.id);
             const listName = algo_tags?.map(user => 
                 ({ 
                     user_name: user.user_name,
                     id: user.id,
                     age: user.age,
+                    gender: user.gender,
+                    sexual_interest: user.sexual_interest,
+                    tags_1: user.tags_1,
+                    tags_2: user.tags_2,
+                    tags_3: user.tags_3,
+                    biography: user.biography
                 })
             );
             
