@@ -26,7 +26,7 @@ const MatchaProfile: React.FC = () => {
             setMessage(response.data.message);
             setMyId(response.data.myId);
             setUsers(response.data.listName);
-            if (users == null) {
+            if (response.data.listName == null || response.data.listName.length == 0) {
                 setMessageNewMatch("Sorry... no new matchas today !");
             } else {
                 setMessageNewMatch("New match !");
@@ -109,9 +109,13 @@ const MatchaProfile: React.FC = () => {
                                         <p> ///PHOTO de moi////</p>
                                     </div>
                                     <div className="card-body my-side-profile">
-                                        <p><span style={{fontFamily: "memories"}}> {profile?.profile?.first_name}, {profile?.profile?.age} years old, Paris</span></p>
-                                        <p>I'm looking for : <span style={{fontFamily: "memories"}}> {profile?.profile?.sexual_interest}</span></p>
-                                        <p> I am : <span style={{fontFamily: "memories"}}>{profile?.profile?.gender}</span></p>
+                                        <p>
+                                            <p className="main-fields-mp"> {profile?.profile?.first_name}, {profile?.profile?.age} yo, Paris</p>
+                                        </p>
+                                        <p className="main-fields-mp"> I am :</p>
+                                            <p className="text-up-mp">{profile?.profile?.gender}</p>
+                                        <p className="main-fields-mp">I'm looking for :</p>
+                                            <p className="text-up-mp">{profile?.profile?.sexual_interest}</p>
                                         <button className="button-matcha-profile">change my profile</button>
                                     </div>
                                 </div>
@@ -124,20 +128,44 @@ const MatchaProfile: React.FC = () => {
                                       }`}>
                                     {messageNewMatch && <p>{messageNewMatch}</p>}
                                 </div>
-                                <div className="card shadow-2-strong mb-2" style={{ borderRadius: '30px'}}>
+                                <div className="card shadow-2-strong mb-2" 
+                                style={{ borderRadius: '30px'}}
+                                >
                                     <div className="d-flex flex-row" style={{}}>
-                                        <div className="card-body" style={{ border:"solid 4px brown"}}>
-                                           {/* <p>HELLO TODAY WE FOUND YOU :</p>
-                                            */}
+                                        <div className="card-body" 
+                                        // style={{ border:"solid 4px brown"}}
+                                        >
                                            <div className="card-body d-flex flex-column firstname"
                                                 key={users[currentIndex]?.id}>
                                                 {users[currentIndex]?.user_name}, {users[currentIndex]?.age} yo
                                             </div>
-                                                Paris
-                                                {users[currentIndex]?.tags_1}
-
-                                                tag 1 <br /> tags 2 <br /> tag3 <br /> 
-                                                biography si et genderrrr
+                                                <p className="text-up">
+                                                    📍Paris
+                                                </p>
+                                                <p className="main-fields">Hobbies</p>
+                                                    <p className="text-up"
+                                                    style={{ textIndent: "120px", margin:"10px"}}
+                                                    >
+                                                        {users[currentIndex]?.tags_1}
+                                                    </p>
+                                                    <p className="text-up"
+                                                    style={{ textIndent: "60px", padding:"15px"}}
+                                                    >
+                                                        {users[currentIndex]?.tags_2}
+                                                    </p>
+                                                    <p className="text-up"
+                                                    style={{ textIndent: "160px", padding:"15px"  }}
+                                                    >
+                                                        {users[currentIndex]?.tags_3}
+                                                    </p>
+                                                <p className="main-fields">Gender</p>
+                                                    <p className="text-up">
+                                                        {users[currentIndex]?.gender}
+                                                    </p>
+                                                <p className="main-fields">Interested by </p>
+                                                    <p className="text-up">
+                                                        {users[currentIndex]?.sexual_interest}
+                                                    </p>
                                                 <p className="firstname"> 🗨️ Bio : </p>
                                                 <p className="text-up" style={{ fontSize: "30px" }}>{users[currentIndex]?.biography}</p>
                                         </div>
@@ -148,7 +176,9 @@ const MatchaProfile: React.FC = () => {
                                             >
                                                 <p> ///PHOTO du match suggested////</p>
                                             </div>
-                                            <div className="button-picture" style={{ border:"solid 4px brown", width: "400px", height: "100px"}}>
+                                            <div className="button-picture" 
+                                            // style={{ border:"solid 4px brown", width: "400px", height: "100px"}}
+                                            >
                                                 <button
                                                     className="button-prev-next button-matcha-profile"
                                                     // onClick={() => handleClickPrevious()}
@@ -162,15 +192,18 @@ const MatchaProfile: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-                                        <div 
-                                            className="card-body d-flex align-items-center justify-content-center"
-                                            >
-                                </div>
-
-                                <div className="shadow-2-strong mb-2" style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}>
-                                    <div className="d-flex align-items-center justify-content-center" style={{ border: "solid 2px purple"}}>
-                                        <div className="d-flex justify-content-center mb-3 flex-row" style={{ border: "solid 2px grey"}}>
-                                        <div className="" style={{ border: "solid 2px red"}}>
+                                <div className="shadow-2-strong mb-2" 
+                                style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}
+                                >
+                                    <div className="d-flex align-items-center justify-content-center" 
+                                    // style={{ border: "solid 2px purple"}}
+                                    >
+                                        <div className="d-flex justify-content-center mb-3 flex-row" 
+                                        // style={{ border: "solid 2px grey"}}
+                                        >
+                                        <div className="" 
+                                        // style={{ border: "solid 2px red"}}
+                                        >
                                             <button
                                                 className="button-prev-next button-matcha-profile"
                                                 onClick={() => handleClickPrevious()}
@@ -193,7 +226,6 @@ const MatchaProfile: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                    <h3>6 matchs suivants et plus redirection to "mes matchs"</h3>
                     </div>
                 </div>
             </div>

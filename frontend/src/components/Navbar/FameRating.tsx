@@ -49,7 +49,8 @@ const FameRating = () => {
     };
 
     const handleNavigateNotification = () => {
-        setNotification(null);
+        // setNotification(null);
+        navigate(`/apiServeur/userprofile`);
     };
 
     useEffect(() => {

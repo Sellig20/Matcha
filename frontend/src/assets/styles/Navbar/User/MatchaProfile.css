@@ -127,3 +127,17 @@ h3 {
 .button-picture {
     text-indent: 100px;
 }
+
+.main-fields-mp {
+  font-size: 325x;
+  font-family: "memories";
+  color: #480ced;
+  padding: 10px;
+}
+
+.text-up-mp {
+  color: #FFD0E6;
+  font-size: 25px;
+  text-indent: 60px;
+  font-family: "gedean";
+}
