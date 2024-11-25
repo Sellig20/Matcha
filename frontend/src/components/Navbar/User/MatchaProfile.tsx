@@ -78,6 +78,12 @@ const MatchaProfile: React.FC = () => {
         }
     }, [])
     //il faut les sockets pour render des que jarrive sur la page.
+    const i = 0;
+    if (users[i] == null)
+        console.log("\ncaca caca caca\n")
+    else {
+        console.log("==> users ? = ", users);
+    }
 
     return (
         <section className="gradient-custom">
@@ -110,7 +116,7 @@ const MatchaProfile: React.FC = () => {
                                     </div>
                                     <div className="card-body my-side-profile">
                                         <p>
-                                            <p className="main-fields-mp"> {profile?.profile?.first_name}, {profile?.profile?.age} yo, Paris</p>
+                                            <p className="main-fields-mp"> {profile?.profile?.user_name}, {profile?.profile?.age} yo, Paris</p>
                                         </p>
                                         <p className="main-fields-mp"> I am :</p>
                                             <p className="text-up-mp">{profile?.profile?.gender}</p>
@@ -132,6 +138,9 @@ const MatchaProfile: React.FC = () => {
                                 style={{ borderRadius: '30px'}}
                                 >
                                     <div className="d-flex flex-row" style={{}}>
+
+                                      {users[i] != null ? (
+
                                         <div className="card-body" 
                                         // style={{ border:"solid 4px brown"}}
                                         >
@@ -166,9 +175,58 @@ const MatchaProfile: React.FC = () => {
                                                     <p className="text-up">
                                                         {users[currentIndex]?.sexual_interest}
                                                     </p>
+                                                    <br /><br />
                                                 <p className="firstname"> 🗨️ Bio : </p>
                                                 <p className="text-up" style={{ fontSize: "30px" }}>{users[currentIndex]?.biography}</p>
                                         </div>
+
+                                      ) : (
+
+
+                                        <div className="card-body" 
+                                        // style={{ border:"solid 4px brown"}}
+                                        >
+                                           <div className="card-body d-flex flex-column firstname"
+                                                key={users[currentIndex]?.id}
+                                                >
+                                                ...
+                                            </div>
+                                                <p className="text-up">
+                                                    ...
+                                                </p>
+                                                <p className="main-fields">Hobbies</p>
+                                                    <p className="text-up"
+                                                    style={{textIndent: "120px", margin:"10px"}}
+                                                    >
+                                                        ...
+                                                    </p>
+                                                    <p className="text-up"
+                                                    style={{textIndent: "60px", padding:"15px"}}
+                                                    >
+                                                        ...
+                                                    </p>
+                                                    <p className="text-up"
+                                                    style={{textIndent: "160px", padding:"15px"}}
+                                                    >
+                                                        ...
+                                                    </p>
+                                                <p className="main-fields">Gender</p>
+                                                    <p className="text-up">
+                                                        ...
+                                                    </p>
+                                                <p className="main-fields">Interested by </p>
+                                                    <p className="text-up">
+                                                        ...
+                                                    </p>
+                                                    <br /><br />
+                                                <p className="firstname"> 🗨️ Bio : </p>
+                                                <p className="text-up" style={{fontSize: "50px"}}>...</p>
+                                        </div>
+
+
+                                      )}
+
+
 
                                         <div className="card-body" style={{ flex: 1}}>
                                             <div className="card-body card-picture-2"
@@ -176,33 +234,31 @@ const MatchaProfile: React.FC = () => {
                                             >
                                                 <p> ///PHOTO du match suggested////</p>
                                             </div>
-                                            <div className="button-picture" 
-                                            // style={{ border:"solid 4px brown", width: "400px", height: "100px"}}
+                                            <div className="button-picture d-flex align-items-center justify-content-center" 
+                                            style={{ border: ""}}
                                             >
                                                 <button
                                                     className="button-prev-next button-matcha-profile"
                                                     // onClick={() => handleClickPrevious()}
-                                                    >previous picture
+                                                    >⇠ previous picture
                                                 </button>
                                                 <button
                                                     className="button-prev-next button-matcha-profile"
                                                     // onClick={() => handleClickNext()}
-                                                    >next picture
+                                                    >next picture ⇢
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
+
                                 <div className="shadow-2-strong mb-2" 
-                                style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px" }}
+                                style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px"}}
                                 >
                                     <div className="d-flex align-items-center justify-content-center" 
                                     // style={{ border: "solid 2px purple"}}
                                     >
-                                        <div className="d-flex justify-content-center mb-3 flex-row" 
-                                        // style={{ border: "solid 2px grey"}}
-                                        >
-                                        <div className="" 
-                                        // style={{ border: "solid 2px red"}}
+                                        <div className="d-flex button-like" 
+                                            style={{display: "flex", alignItems:"center", justifyContent:"center"}}
                                         >
                                             <button
                                                 className="button-prev-next button-matcha-profile"
@@ -216,10 +272,10 @@ const MatchaProfile: React.FC = () => {
                                             </button>
                                             <button
                                                 className="button-prev-next button-matcha-profile"
+                                                // style={{ border: "solid 2px red"}}
                                                 onClick={() => handleClickNext()}
                                                 > next match ⇢
                                             </button>
-                                            </div>
                                         </div>
                                     </div>
                                     </div>

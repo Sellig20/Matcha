@@ -26,3 +26,7 @@ en calculer le fame rating
 faire les matchs avec les fame rating
 compatibilite tags * coeff
 compa age * coeff
+
+------------- 25/11
+ * password renforcement
+ * chat
