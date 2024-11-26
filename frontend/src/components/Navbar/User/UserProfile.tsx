@@ -47,130 +47,131 @@ const UserProfile: React.FC = () => {
 
         <div className="bigBox-profile-display">
             <form onSubmit={handleSubmit}>
-            <div className="row">
-            <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-card form-outline-profile-display">
-                <div className="fields fields-profile-display">
-                <label>Username</label>
-                </div>
-                <div className="highlight-text-profile">
-                <input 
-                    type="text" 
-                    id="username"
-                    className="form-control form-control-lg" 
-                    value={formValues.username}
-                    onChange={handleChange}
-                    required
-                />
-                </div>
-            </div>
-            </div>
 
-            <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-card form-outline-profile-display">
-                <div className="fields fields-profile-display">
-                <label>Gender</label>
+            <div className="row">
+                <div className="col-md-6 mb-4 pb-2">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
+                    <label>Username</label>
+                    </div>
+                    <div className="highlight-text-profile">
+                    <input 
+                        type="text" 
+                        id="username"
+                        className="form-control form-control-lg" 
+                        value={formValues.username}
+                        onChange={handleChange}
+                        required
+                    />
+                    </div>
                 </div>
-                <div className="highlight-text-profile">
-                <select
-                    id="gender"
-                    name="gender"
-                    className="form-control form-control-lg" 
-                    value={formValues.gender}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="">Select Gender</option>
-                    {Object.values(genderEnum).map((gender) => (
-                        <option key={gender} value={gender}>
-                            {gender}
-                        </option>
-                    ))}
-                </select>
                 </div>
-            </div>
-            </div>
+
+                <div className="col-md-6 mb-4 pb-2">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
+                    <label>Age</label>
+                    </div>
+                    <div className="highlight-text-profile">
+                    <input
+                        type="text" 
+                        id="age"
+                        className="form-control form-control-lg" 
+                        value={formValues.age}
+                        onChange={handleChange}
+                        required
+                    />
+                    </div>
+                </div>
+                </div>
             </div>
 
             <div className="row">
-            <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-card form-outline-profile-display">
-                <div className="fields fields-profile-display">
-                <label>Age</label>
+                <div className="col-md-6 mb-4 pb-2">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
+                    <label>Gender</label>
+                    </div>
+                    <div className="highlight-text-profile">
+                    <select
+                        id="gender"
+                        name="gender"
+                        className="form-control form-control-lg" 
+                        value={formValues.gender}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Select Gender</option>
+                        {Object.values(genderEnum).map((gender) => (
+                            <option key={gender} value={gender}>
+                                {gender}
+                            </option>
+                        ))}
+                    </select>
+                    </div>
                 </div>
-                <div className="highlight-text-profile">
-                <input
-                    type="text" 
-                    id="age"
-                    className="form-control form-control-lg" 
-                    value={formValues.age}
-                    onChange={handleChange}
-                    required
-                />
                 </div>
-            </div>
-            </div>
 
-            <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-card form-outline-profile-display">
-                <div className="fields fields-profile-display">
-                <label>Minimum accepted age</label>
+                <div className="col-md-6 mb-4 pb-2">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
+                    <label>Sexual Interest</label>
+                    </div>
+                    <div className="highlight-text-profile">
+                    <select 
+                        id="sexual_interest"
+                        name="sexual_interest"
+                        className="form-control form-control-lg" 
+                        value={formValues.sexual_interest}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Select Sexual Interest</option>
+                        {Object.values(sexualInterestEnum).map((sexual_interest) => (
+                            <option key={sexual_interest} value={sexual_interest}>
+                                {sexual_interest}
+                            </option>
+                        ))}
+                    </select>
+                    </div>
                 </div>
-                <div className="highlight-text-profile">
-                <input
-                    type="text" 
-                    id="age_lower_bound"
-                    className="form-control form-control-lg" 
-                    value={formValues.age_lower_bound}
-                    onChange={handleChange}
-                    required
-                />
                 </div>
-            </div>
-            </div>
 
-            <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-card form-outline-profile-display">
-                <div className="fields fields-profile-display">
-                <label>Maximal accepted age</label>
+                <div className="col-md-6 mb-4 pb-2">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
+                    <label>Minimal accepted age</label>
+                    </div>
+                    <div className="highlight-text-profile">
+                    <input
+                        type="text" 
+                        id="age_lower_bound"
+                        className="form-control form-control-lg" 
+                        value={formValues.age_lower_bound}
+                        onChange={handleChange}
+                        required
+                    />
+                    </div>
                 </div>
-                <div className="highlight-text-profile">
-                <input
-                    type="text" 
-                    id="age_upper_bound"
-                    className="form-control form-control-lg" 
-                    value={formValues.age_upper_bound}
-                    onChange={handleChange}
-                    required
-                />
                 </div>
-            </div>
-            </div>
 
-            <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-card form-outline-profile-display">
-                <div className="fields fields-profile-display">
-                <label>Sexual Interest</label>
+                <div className="col-md-6 mb-4 pb-2">
+                <div data-mdb-input-init className="form-card form-outline-profile-display">
+                    <div className="fields fields-profile-display">
+                    <label>Maximal accepted age</label>
+                    </div>
+                    <div className="highlight-text-profile">
+                    <input
+                        type="text" 
+                        id="age_upper_bound"
+                        className="form-control form-control-lg" 
+                        value={formValues.age_upper_bound}
+                        onChange={handleChange}
+                        required
+                    />
+                    </div>
                 </div>
-                <div className="highlight-text-profile">
-                <select 
-                    id="sexual_interest"
-                    name="sexual_interest"
-                    className="form-control form-control-lg" 
-                    value={formValues.sexual_interest}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="">Select Sexual Interest</option>
-                    {Object.values(sexualInterestEnum).map((sexual_interest) => (
-                        <option key={sexual_interest} value={sexual_interest}>
-                            {sexual_interest}
-                        </option>
-                    ))}
-                </select>
                 </div>
-            </div>
-            </div>
             </div>
 
             <div className="row">

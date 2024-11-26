@@ -164,4 +164,13 @@ export class fameRatingController {
             res.status(500).json({ message: `fameRatingController.ts | Error during get who likes me : ${error}` });
         }
     }
+
+    static async getMatchs(req: Request, res: Response) {
+        try {
+            // le but cest de dire : si Andre ma like et que je lai like alors match = 1
+            //return le nombre de matche en tableau avec son nom pour afficher dans le fame rating
+        } catch (error) {
+            res.status(500).json({ message: `fameRatingController.ts | Error during get matchs : ${error}` });
+        }
+    }
 }

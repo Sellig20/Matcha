@@ -38,10 +38,10 @@ const UserProfileDisplay: React.FC = () => {
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
-                <label>Gender</label>
+                <label>Age</label>
                 </div>
                 <div className="high highlight-text-profile">
-                <p>{profile.profile?.gender}</p>
+                <p>{profile.profile?.age}</p>
                 </div>
             </div>
             </div>
@@ -51,10 +51,21 @@ const UserProfileDisplay: React.FC = () => {
             <div className="col-md-6 mb-4 pb-2">
             <div data-mdb-input-init className="form-card form-outline-profile-display">
                 <div className="fields fields-profile-display">
-                <label>Age</label>
+                <label>Gender</label>
                 </div>
                 <div className="high highlight-text-profile">
-                <p>{profile.profile?.age}</p>
+                <p>{profile.profile?.gender}</p>
+                </div>
+            </div>
+            </div>
+
+            <div className="col-md-6 mb-4 pb-2">
+            <div data-mdb-input-init className="form-card form-outline-profile-display">
+                <div className="fields fields-profile-display">
+                <label>Sexual Interest</label>
+                </div>
+                <div className="high highlight-text-profile">
+                <p>{profile.profile?.sexual_interest}</p>
                 </div>
             </div>
             </div>
@@ -77,17 +88,6 @@ const UserProfileDisplay: React.FC = () => {
                 </div>
                 <div className="high highlight-text-profile">
                 <p>{profile.profile?.age_upper_bound}</p>
-                </div>
-            </div>
-            </div>
-
-            <div className="col-md-6 mb-4 pb-2">
-            <div data-mdb-input-init className="form-card form-outline-profile-display">
-                <div className="fields fields-profile-display">
-                <label>Sexual Interest</label>
-                </div>
-                <div className="high highlight-text-profile">
-                <p>{profile.profile?.sexual_interest}</p>
                 </div>
             </div>
             </div>

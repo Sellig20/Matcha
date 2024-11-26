@@ -21,7 +21,6 @@ const FameRating = () => {
     const [notification, setNotification] = useState<string | null>(null);
 
     const getWhoViewedMe = async () => {
-        console.log("\n\n get who viewed me\n\n");
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/views/${idd}`);
             setMessage(response.data.message);
@@ -47,6 +46,8 @@ const FameRating = () => {
             console.log("\n\n message FM is : ", message);
         }
     };
+
+    //get matchas number
 
     const handleNavigateNotification = () => {
         // setNotification(null);
@@ -102,10 +103,6 @@ const FameRating = () => {
 
   return (
     <section className="gradient-custom">
-
-        <div>
-            {message && <p style={{ color: 'red' }}>{message}</p>}
-        </div>
 
         {notification && (
             <div className="modal-overlay">

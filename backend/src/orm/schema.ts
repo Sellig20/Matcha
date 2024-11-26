@@ -8,6 +8,7 @@ export type CreateType<T extends keyof Schema> =
   T extends "users_pictures_likes" ? UsersPicturesLikesCreate :
   T extends "users_profiles_views" ? UsersProfilesViewsCreate :
   T extends "users_likes" ? UsersLikesCreate :
+  T extends "users_matchs" ? UsersMatchsCreate :
   T extends "users_blocks" ? UsersBlocksCreate :
   T extends "users_reports" ? UsersReportsCreate :
   T extends "users_messages" ? UsersMessagesCreate :
@@ -71,6 +72,14 @@ export interface UsersLikesCreate {
     liked_user_id: number,
     liker_user_id: number,
     liked_on: string,
+}
+
+export interface UsersMatchsCreate {
+    user_id: number,
+	first_name: string,
+    matcher_user_id: number,
+    matched_user_id: number,
+    matched_on: string,
 }
 
 export interface UsersBlocksCreate {
@@ -184,10 +193,20 @@ export const schema: Schema = {
 
 	users_likes: {
 		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
+		first_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		liked_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		liker_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		liked_on: [ColumnType.TIMESTAMP, ColumnConstraint.NOT_NULL],
+	},
+
+	users_matchs: {
+		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
+		first_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
+		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
+		matcher_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
+		matched_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
+		matched_on: [ColumnType.TIMESTAMP, ColumnConstraint.NOT_NULL],
 	},
 
 	users_blocks: {
