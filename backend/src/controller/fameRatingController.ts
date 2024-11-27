@@ -179,7 +179,7 @@ export class fameRatingController {
                         }
                     }
                 }))
-                return ProfilesLikesTab
+                return ProfilesLikesTab;
             }
             else
                 return null;
@@ -219,10 +219,29 @@ export class fameRatingController {
             //return le nombre de matchs en tableau avec son nom pour afficher dans le fame rating
             console.log("\n\n\n je suis ", req.params.idd);
             const likeTab = await this.getWhoLikedMe2(req, res);
-            console.log("\n\n likeTab = ", likeTab, "\n\n");
+            // console.log("\n\n likeTab = ", likeTab, "\n\n");
             const ILikedTab = await this.getWhoILiked(req, res);
-            console.log("\n\n ILikedTab = ", ILikedTab, "\n\n");
-            
+            // console.log("\n\n ILikedTab = ", ILikedTab, "\n\n");
+            const tabMatchs = [];
+            if (likeTab && ILikedTab) {
+                for (let i = 0; i < likeTab.length; i++) {
+                    for (let j = 0; j < ILikedTab.length; j++) {
+                        if ((likeTab[i].liker_user_id == ILikedTab[j].liked_user_id) &&
+                        (likeTab[i].liked_user_id == ILikedTab[j].liker_user_id))
+                        // console.log("\n\n ----- ", likeTab[i].liker_user_id , " | ", ILikedTab[j].liked_user_id , "-----\n\n");
+                        // console.log("\n\n ----- ", likeTab[i].liked_user_id , " || ", ILikedTab[j].liker_user_id , "-----\n\n");
+                        tabMatchs.push(ILikedTab[j].liked_user_id);
+                    }
+                }
+            }
+            console.log("\n\n tabMAtchs => ", tabMatchs.length);
+            if (tabMatchs.length > 0) {
+                console.log("\n\n\nlength is good\n\n");
+                res.status(201).json( {message : `fameRatingController.ts | Match founded !`, tabMatchs} );
+            } else {
+                console.log("\n\n\nlength is NOT good\n\n");
+                res.status(204).json( {message : `fameRatingController.ts | No content for tabMatch`, tabMatchs} );
+            }           
         } catch (error) {
             res.status(500).json({ message: `fameRatingController.ts | Error during get matchs : ${error}` });
         }

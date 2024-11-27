@@ -129,7 +129,7 @@ export class MatchingController {
             const myAgeL = req.user?.age_lower_bound;
             const myAgeU = req.user?.age_upper_bound;
             if (tab && myAge && myAgeL && myAgeU) {
-                const myBoundaries = myAgeU - myAgeL;
+                // const myBoundaries = myAgeU - myAgeL;
                 const maxAgeRange = (myAgeU - myAgeL) / 2;
                 tab.forEach(ind => {
                     const diff = ((myAge - ind.age) * (-1));

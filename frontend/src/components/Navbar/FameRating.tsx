@@ -30,7 +30,7 @@ const FameRating = () => {
             setViews(response.data.ProfilesViewsTab || []);
             setCountViews(response.data.count);
         } catch (error) {
-            setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
+            // setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
             console.log("\n\n message FM is : ", message);
         }
     };
@@ -43,7 +43,7 @@ const FameRating = () => {
             setLikes(response.data.ProfilesLikesTab || []);
             setCountLikes(response.data.count);
         } catch (error) {
-            setMessage(`FameRating.tsx | Erreur try to get who liked me : ${error}`);
+            // setMessage(`FameRating.tsx | Erreur try to get who liked me : ${error}`);
             console.log("\n\n message FM is : ", message);
         }
     };
@@ -52,7 +52,10 @@ const FameRating = () => {
     const getMatchasNumber = async () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
-            console.log("\n RESPONSE => ", response);
+            console.log("\n\nouiouiuouiuiouoiuoi je passe ici");
+            console.log("\n reponse matchs number is => ", response);
+            //put response dans le tableau de match trouvé et afficher et faire la jauge de famerating
+            setMessage(`FameRating.tsx | ${response.data.message}`);
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get number of matchas : ${error}`);
         }
@@ -125,6 +128,10 @@ const FameRating = () => {
 
         <div>
         </div>
+        <div>
+            {message && <p style={{ color: 'red' }}>{message}</p>}
+        </div>
+
         <div className="container py-5 h-100">
             <div className="row justify-content-center align-items-center h-100">
                 {/* Grand carré */}

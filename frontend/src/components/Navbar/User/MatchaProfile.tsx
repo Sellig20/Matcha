@@ -105,11 +105,11 @@ const MatchaProfile: React.FC = () => {
     }, [])
     //il faut les sockets pour render des que jarrive sur la page.
     const i = 0;
-    if (users[i] == null)
-        console.log("\ncaca caca caca\n")
-    else {
-        console.log("==> users ? = ", users);
-    }
+    // if (users[i] == null)
+    //     console.log("\ncaca caca caca\n")
+    // else {
+    //     console.log("==> users ? = ", users);
+    // }
 
     return (
         <section className="gradient-custom">
