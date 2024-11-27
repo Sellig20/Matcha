@@ -5,6 +5,7 @@ import { useProfile } from './User/profileContext';
 import { useNavigate, useParams } from 'react-router';
 import { UsersLikesCreate, UsersProfilesViewsCreate } from '../../../../backend/src/orm/schema';
 import { useWebSocketContext } from '../../security/wsContext';
+import axios from 'axios';
 
 const FameRating = () => {
 
@@ -48,6 +49,14 @@ const FameRating = () => {
     };
 
     //get matchas number
+    const getMatchasNumber = async () => {
+        try {
+            const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
+            console.log("\n RESPONSE => ", response);
+        } catch (error) {
+            setMessage(`FameRating.tsx | Erreur try to get number of matchas : ${error}`);
+        }
+    }
 
     const handleNavigateNotification = () => {
         // setNotification(null);
@@ -64,6 +73,7 @@ const FameRating = () => {
                 else {
                     getWhoViewedMe();
                     getWhoLikedMe();
+                    getMatchasNumber();
                     if (socket) {
                         socket.on('insert_view', (newView) => {
                             console.log("\n\n ---**--**---- new view fame rating : ", newView);
@@ -183,8 +193,24 @@ const FameRating = () => {
                             {/* Troisième rectangle vertical */}
                             <div className="col-md-4 d-flex align-items-center justify-content-center">
                                 <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                                    <h2 className="text-center">My number of matchs</h2>
                                     <div className="card-body d-flex align-items-center justify-content-center">
-                                        <h2 className="text-center">My number of matchs</h2>
+                                        <table className="table-fm">
+                                            <thead>
+                                                <tr>
+                                                    <th className="th-fm">WHO ?</th>
+                                                    <th className="th-fm">WHEN ?</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {likes.map((likes, index) => (
+                                                    <tr key={index}>
+                                                        <td className="td-fm">{likes.first_name}</td>
+                                                        <td className="td-fm">{new Date(likes.liked_on).toLocaleString()}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

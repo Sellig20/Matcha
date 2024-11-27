@@ -73,6 +73,11 @@ export class userSignupModel {
         return response;
     }
 
+    static async readWhoILiked(key?: string, value?: string | number) {
+        const response = await orm?.read<"users_likes", any>("users_likes", key, value);
+        return response;
+    }
+
     static async readFirstName(key?: string, value?: string | number) {
         const response = await orm?.read<"users", any>("users", key, value);
         if (response) 

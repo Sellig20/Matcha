@@ -116,8 +116,6 @@ export class MatchingController {
             })
             CountTab?.sort((a, b) => b.value - a.value);
             let finalTab: any[] = CountTab.map(ind => ind.key);
-
-            console.log("\n\n -------- finalTab = ", CountTab, "---------\n\n");
             return finalTab;
         } catch (error) {
             console.log(`\n\n\nMatchingController.ts sort tags | Error : ${error}\n\n\n`);
@@ -173,7 +171,6 @@ export class MatchingController {
             const sorted_age_tab = await this.sortAge(req, res, sorted_SI_gender_tab);
             const algo_age = await this.sortFirst(req, res, sorted_age_tab);
             const algo_tags = await this.sortTags(req, res, algo_age);
-            console.log("\n\n algo tags = ", algo_tags, "\n\n")
             // const list = sorted_age_tab?.map(user => user.id);
             const listName = algo_tags?.map(user => 
                 ({ 

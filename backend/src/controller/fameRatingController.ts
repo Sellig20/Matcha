@@ -165,10 +165,64 @@ export class fameRatingController {
         }
     }
 
+    static async getWhoLikedMe2(req: Request, res: Response) {//DEBILE
+        try {
+            const value = req.params.idd;
+            const numberLikes = await userSignupModel.readLikes("liked_user_id", value);
+            if (numberLikes) {
+                const ProfilesLikesTab = await Promise.all(numberLikes.map(async (like) => {
+                    const profiles = await userSignupModel.readUserByEmail("id", like.user_id);
+                    if (profiles) {
+                        return {
+                            ...like,
+                            first_name: profiles[0].first_name,
+                        }
+                    }
+                }))
+                return ProfilesLikesTab
+            }
+            else
+                return null;
+        } catch (error) {
+            res.status(500).json({ message: `fameRatingController.ts | Error during get who likes me : ${error}` });
+        }
+    }
+
+    //getWhoILiked
+
+    static async getWhoILiked(req: Request, res: Response) {
+        try {
+            const value = req.params.idd;
+            const numberLikes = await userSignupModel.readLikes("liker_user_id", value);
+            if (numberLikes) {
+                const ProfilesILiked = await Promise.all(numberLikes.map(async (like) => {
+                    const profiles = await userSignupModel.readUserByEmail("id", like.user_id);
+                    if (profiles) {
+                        return {
+                            ...like,
+                            first_name: profiles[0].first_name,
+                        }
+                    }
+                }))
+                return ProfilesILiked;
+            }
+            else
+                res.status(204).json( {message : `fameRatingController.ts | No content for likes `} );
+        } catch (error) {
+            res.status(500).json({ message: `fameRatingController.ts | Error during get who I liked : ${error}` });
+        }
+    }
+
     static async getMatchs(req: Request, res: Response) {
         try {
             // le but cest de dire : si Andre ma like et que je lai like alors match = 1
-            //return le nombre de matche en tableau avec son nom pour afficher dans le fame rating
+            //return le nombre de matchs en tableau avec son nom pour afficher dans le fame rating
+            console.log("\n\n\n je suis ", req.params.idd);
+            const likeTab = await this.getWhoLikedMe2(req, res);
+            console.log("\n\n likeTab = ", likeTab, "\n\n");
+            const ILikedTab = await this.getWhoILiked(req, res);
+            console.log("\n\n ILikedTab = ", ILikedTab, "\n\n");
+            
         } catch (error) {
             res.status(500).json({ message: `fameRatingController.ts | Error during get matchs : ${error}` });
         }
