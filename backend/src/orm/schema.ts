@@ -34,6 +34,7 @@ export interface UserCreate {
 	age_lower_bound: number,
     age_upper_bound: number,
 	is_profile_completed: boolean,
+	i_liked: boolean,
   }
   
 export interface UsersSexualPreferencesCreate {
@@ -72,14 +73,15 @@ export interface UsersLikesCreate {
     liked_user_id: number,
     liker_user_id: number,
     liked_on: string,
+	is_liked_bool: boolean,
 }
 
 export interface UsersMatchsCreate {
     user_id: number,
 	first_name: string,
+	matchedName: string,
     matcher_user_id: number,
     matched_user_id: number,
-    matched_on: string,
 }
 
 export interface UsersBlocksCreate {
@@ -153,6 +155,7 @@ export const schema: Schema = {
 		age_lower_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // check >= 18
 		age_upper_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // enum <= 61
 		is_profile_completed: [ColumnType.BOOLEAN, ColumnConstraint.NOT_NULL],
+		i_liked: [ColumnType.BOOLEAN, ColumnConstraint.NOT_NULL],
 	},
 
 	users_sexual_preferences: {
@@ -203,10 +206,10 @@ export const schema: Schema = {
 	users_matchs: {
 		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
 		first_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
+		matchedName: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		matcher_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		matched_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
-		matched_on: [ColumnType.TIMESTAMP, ColumnConstraint.NOT_NULL],
 	},
 
 	users_blocks: {

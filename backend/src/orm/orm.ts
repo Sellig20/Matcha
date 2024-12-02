@@ -185,10 +185,12 @@ class ORM {
 			if (result.rowCount === 0) {
 				console.log(`\n\nNo record found in ${tableName} with id ${id}`);
 			} else {
-				// console.log(
-					// `\n\nSuccessfully deleted record from ${tableName} with id ${id}`
-				// );
+				console.log(
+					`\n\nSuccessfully deleted record from ${tableName} with id ${id}`
+				);
 			}
+			console.log("\n\n orm delete => ", result, "\n\n");
+			// return result;
 		} catch (error) {
 			errorHandler(
 				error,

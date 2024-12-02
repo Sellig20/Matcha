@@ -10,12 +10,12 @@ const UserProduct: React.FC = () => {
     const [message, setMessage] = useState('');
     const profile = useProfile();
     const { isProfileComplete } = useProfile();
-
     const { idd } = useParams<{idd:string}>();
     const [user, setUser] = useState<UserProfileInterface | null>(null);
     const [notification, setNotification] = useState<string | null>(null);
     const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(!!notification);
+    const [isClickedHeart, setIsClickedHeart] = useState<boolean>(false);
+
 
     const getProductProfile = async () => {
         try {
@@ -48,18 +48,37 @@ const UserProduct: React.FC = () => {
         navigate(`/apiServeur/userprofile`);
     };
 
-    const handleModifyClick = async () => {
+    // const handleModifyClick = async () => {
+    //     try {
+    //         const response = await axiosInstance.post(`http://localhost:8000/apiServeur/likes`, {
+    //             user_id: profile?.profile?.id,
+    //             liked_user_id: idd,
+    //             liker_user_id: profile?.profile?.id,
+    //         });
+    //         setMessage(response.data.message);
+    //     } catch (error) {
+    //         setMessage(`UserProduct.tsx | Erreur frontend post likes : ${error}`);
+    //     }
+    // }
+
+    const handleClickHeart = async() => {
         try {
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/likes`, {
                 user_id: profile?.profile?.id,
-                liked_user_id: idd,
+                liked_user_id: user?.id,
                 liker_user_id: profile?.profile?.id,
             });
             setMessage(response.data.message);
+            const heartKey = `isClickedHeart${profile?.profile?.id}${user?.id}`;
+            console.log("\n je suis passee par click heart et heartk =", heartKey, "\n\n");
+            const currentState = localStorage.getItem(heartKey) === 'true';
+            const newState = !currentState;
+            localStorage.setItem(heartKey, String(newState));
+            setIsClickedHeart(newState);
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur frontend post likes : ${error}`);
         }
-    }
+    };
 
     useEffect(() => {
         const executeData = async () => {
@@ -81,6 +100,20 @@ const UserProduct: React.FC = () => {
         }
         executeData();
     }, [idd, profile.profile, user]);
+
+    useEffect(() => {
+        if (!profile?.profile?.id || !user?.id) {
+            return;
+        }
+        const heartKey = `isClickedHeart${profile?.profile?.id}${user?.id}`; // Clé unique pour cet utilisateur
+        const saveHeart = localStorage.getItem(heartKey);
+        console.log("\n saveh userproduct = ", saveHeart);
+        if (saveHeart === 'true') {
+            setIsClickedHeart(true);
+        } else {
+            setIsClickedHeart(false);
+        }
+    }, [profile?.profile?.id, user?.id]);
 
     return (
         <section className="gradient-custom">
@@ -114,10 +147,24 @@ const UserProduct: React.FC = () => {
                                         <p className="text-center"> photos du user que je matte</p>
                                     </div>
                                     <div className="d-flex justify-content-center mb-3">
-                                    <button
+                                    {/* <button
                                         className="coeur"
                                         onClick={handleModifyClick}
-                                        > ♥️ </button>
+                                        > ♥️
+                                    </button> */}
+                                    {!isClickedHeart ? 
+                                    <button
+                                        className="heart"
+                                        onClick={handleClickHeart}
+                                        >
+                                    </button>
+                                        : 
+                                    <button
+                                        className="heart-clicked"
+                                        // onClick={handleClickHeart}
+                                        >
+                                    </button>
+                                    }
                                     </div>
                                 </div>
                             </div>

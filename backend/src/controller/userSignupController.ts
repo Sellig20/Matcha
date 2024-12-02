@@ -4,6 +4,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { UserCreate } from "../orm/schema";
+import { io } from '../../server';
+
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -45,11 +47,12 @@ export class userSignupController {
                 stated_location: "",
                 real_location: "",
                 is_profile_completed: false,
+                i_liked: false,
             };
             await userSignupModel.createUser(newUser);
             res.status(201).json({ message: 'UserSignupController.ts | Inscription success', token });
-        } catch (err) {
-            res.status(500).json({ message: 'UserSignupController.ts | Error during inscription' });
+        } catch (error) {
+            res.status(500).json({ message: `UserSignupController.ts | Error during inscription : ${error}` });
             return;
         }
     }
@@ -65,8 +68,8 @@ export class userSignupController {
             else {
                 return res.status(400).json({ message: 'UserSignupController.ts | Error getting profile for isprofilecompleted'});
             }
-        } catch (err) {
-            res.status(500).json({ message: 'UserSignupController.ts | Error during getting is profile complete' });
+        } catch (error) {
+            res.status(500).json({ message: `UserSignupController.ts | Error during getting is profile complete : ${error}` });
             return;
         }
     }

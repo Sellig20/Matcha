@@ -3,19 +3,18 @@ import axiosInstance from '../../security/axiosInstance';
 import "../../assets/styles/Navbar/FameRating.css"
 import { useProfile } from './User/profileContext';
 import { useNavigate, useParams } from 'react-router';
-import { UsersLikesCreate, UsersProfilesViewsCreate } from '../../../../backend/src/orm/schema';
+import { UsersLikesCreate, UsersMatchsCreate, UsersProfilesViewsCreate } from '../../../../backend/src/orm/schema';
 import { useWebSocketContext } from '../../security/wsContext';
-import axios from 'axios';
 
 const FameRating = () => {
 
     const [message, setMessage] = useState('');
-    const profile = useProfile();
     const { idd } = useParams<{idd:string}>();
     const [countViews, setCountViews] = useState<number>();
     const [countLikes, setCountLikes] = useState<number>();
     const [views, setViews] = useState<UsersProfilesViewsCreate[]>([]);
     const [likes, setLikes] = useState<UsersLikesCreate[]>([]);
+    const [matchs, setMatchs] = useState<UsersMatchsCreate[]>([]);
     const { socket } = useWebSocketContext();
     const navigate = useNavigate();
     const { isProfileComplete } = useProfile();
@@ -25,13 +24,10 @@ const FameRating = () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/views/${idd}`);
             setMessage(response.data.message);
-            console.log("\n\n message FM is : ", message, " and tab is : ", response.data.ProfilesViewsTab);
-
             setViews(response.data.ProfilesViewsTab || []);
             setCountViews(response.data.count);
         } catch (error) {
-            // setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
-            console.log("\n\n message FM is : ", message);
+            setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
         }
     };
 
@@ -39,12 +35,10 @@ const FameRating = () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/likes/${idd}`);
             setMessage(response.data.message);
-            console.log("\n\n message FM is : ", message);
             setLikes(response.data.ProfilesLikesTab || []);
             setCountLikes(response.data.count);
         } catch (error) {
-            // setMessage(`FameRating.tsx | Erreur try to get who liked me : ${error}`);
-            console.log("\n\n message FM is : ", message);
+            setMessage(`FameRating.tsx | Erreur try to get who liked me : ${error}`);
         }
     };
 
@@ -52,10 +46,15 @@ const FameRating = () => {
     const getMatchasNumber = async () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
-            console.log("\n\nouiouiuouiuiouoiuoi je passe ici");
-            console.log("\n reponse matchs number is => ", response);
+            console.log("\n reponse matchs number is => ", response.data.tabMatchs);
+            setMatchs(response.data.tabMatchs || []);
+            console.log("\n setMatchs => ", matchs);
             //put response dans le tableau de match trouvé et afficher et faire la jauge de famerating
-            setMessage(`FameRating.tsx | ${response.data.message}`);
+            if (response.data) {
+                setMessage(`FameRating.tsx | MATCHS CONGRATS`);
+            } else {
+                setMessage(`FameRating.tsx | No matchs ${response.data.message}`);
+            }
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get number of matchas : ${error}`);
         }
@@ -206,14 +205,12 @@ const FameRating = () => {
                                             <thead>
                                                 <tr>
                                                     <th className="th-fm">WHO ?</th>
-                                                    <th className="th-fm">WHEN ?</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {likes.map((likes, index) => (
+                                                {matchs.map((matchs, index) => (
                                                     <tr key={index}>
-                                                        <td className="td-fm">{likes.first_name}</td>
-                                                        <td className="td-fm">{new Date(likes.liked_on).toLocaleString()}</td>
+                                                        <td className="td-fm">{matchs.matchedName}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>

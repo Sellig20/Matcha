@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../../security/axiosInstance';
 import "../../../assets/styles/Navbar/User/MatchaProfile.css"
 import { useProfile } from './profileContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useFetcher, useNavigate, useParams } from 'react-router-dom';
 import { UserProfileInterface } from './UserInterface';
+import { clear } from 'console';
+import { useWebSocketContext } from '../../../security/wsContext';
+import { useForm } from './useForm';
 
 const MatchaProfile: React.FC = () => {
 
@@ -16,8 +19,9 @@ const MatchaProfile: React.FC = () => {
     const { isProfileComplete } = useProfile();
     const [notification, setNotification] = useState<string | null>(null);
     const navigate = useNavigate();
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isClickedHeart, setIsClickedHeart] = useState<boolean>(false);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const [isClickedHeart, setIsClickedHeart] = useState<string | null>(null);
+    const { socket } = useWebSocketContext();
 
     //get my informations
     const profile = useProfile();
@@ -27,13 +31,19 @@ const MatchaProfile: React.FC = () => {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchsusers`);
             setMessage(response.data.message);
             setMyId(response.data.myId);
-            setUsers(response.data.listName);
-            if (response.data.listName == null || response.data.listName.length == 0) {
+            if (response.data.success === "false" 
+                || response.data === undefined 
+                || response.data === null
+            ) {
                 setMessageNewMatch("Sorry... no new matchas today !");
             } else {
                 setMessageNewMatch("New match !");
+                setIsClickedHeart(response.data.alreadyLike);
+                const addUser = (newUser: UserProfileInterface) => {
+                    setUsers(prevUsers => [...prevUsers, newUser]);
+                };
             }
-            console.log("\n\n users =>> Match users >>>> ", response.data.listName, "\n\n");
+            console.log("\n\n users =>> Match users >>>> ", response.data, "\n\n");
         } catch (error) {
             setMessage(`MatchaProfile.tsx | Erreur frontend get  : ${error}`);
         }
@@ -44,19 +54,23 @@ const MatchaProfile: React.FC = () => {
     };
 
     const handleClickHeart = async() => {
-        console.log("\n\nI clicked the heart\n\n");
         try {
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/likes`, {
                 user_id: profile?.profile?.id,
                 liked_user_id: users[currentIndex]?.id,//pas bon
                 liker_user_id: profile?.profile?.id,
             });
-            setMessage(response.data.message);
-            setIsClickedHeart(true);
+            if (response.data.success) {
+                console.log("\nLike enregistré avec succès\n");
+                setIsClickedHeart("true");
+                setMessage(response.data.message);
+            } else {
+                setIsClickedHeart("false");
+                setMessage("\nErreur : Impossible d'enregistrer le like.");
+            }
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur frontend post likes : ${error}`);
         }
-
     };
 
     const handleClickPrevious = () => {
@@ -84,32 +98,52 @@ const MatchaProfile: React.FC = () => {
     function truncateBio(biography: string) {
         if (!biography)
             return null;
-        const words = biography.split(" ");
-        return words.slice(0, 2).join(" ") + (words.length > 2 ? "..." : " ");
+        if (biography[i] == " ") {
+            const words = biography.split(" ");
+            return words.slice(0, 2).join(" ") + (words.length > 2 ? "..." : " ");
+        }
+        else {
+            return biography.slice(0, 25) + '...'
+        }
     }
 
     useEffect(() => {
-        try {
-            console.log("\n is heart cliecked ? ", isClickedHeart);
-
-            if (isProfileComplete === false) {
-                setNotification("Warning : You must fill your profile before going on");
+        const executeData = async () => {
+                try {
+                    console.log("\n bonjour. Is clicked heart ? ", isClickedHeart);
+                    if (isProfileComplete === false) {
+                        setNotification("Warning : You must fill your profile before going on");
+                    }
+                    else {
+                        const executeData = async () => {
+                            try {
+                            } catch (error) {
+                                setMessage(`MatchaProfile.tsx | Erreur use effect : ${error}`);
+                            }
+                        }
+                        executeData();
+                        fetchProfile();
+                        getSuggestedMatch();
+                        if (socket) {
+                                socket.on('newMatchUserMP', (newUser) => {
+                                setUsers((prevUsers) => [...prevUsers, newUser]);
+                            })
+                        }
+                    }
+            } catch (error) {
+                setNotification(`Erreur frontend userprofile : ${error}`);
             }
-            else { 
-                fetchProfile();
-                getSuggestedMatch();
-            }
-        } catch (error) {
-            setNotification(`Erreur frontend userprofile : ${error}`);
         }
-    }, [])
+        executeData();
+
+        return () => {
+            socket?.off('newMatchUser');
+        }
+    }, [socket, isClickedHeart])
+
     //il faut les sockets pour render des que jarrive sur la page.
     const i = 0;
-    // if (users[i] == null)
-    //     console.log("\ncaca caca caca\n")
-    // else {
-    //     console.log("==> users ? = ", users);
-    // }
+    const currentUser = users[currentIndex];
 
     return (
         <section className="gradient-custom">
@@ -141,17 +175,17 @@ const MatchaProfile: React.FC = () => {
                                         <p> ///PHOTO de moi////</p>
                                     </div>
                                     <div className="card-body my-side-profile">
-                                        <p>
-                                            <p className="main-fields-mp-1 button-change"
+                                        <div>
+                                            <div className="main-fields-mp-1 button-change"
                                             style={{fontSize: "30px"}}
-                                            > {profile?.profile?.user_name}, {profile?.profile?.age} yo</p>
-                                        </p>
-                                        <p className="main-fields-mp-1"> I am :</p>
-                                            <p className="text-up-mp">{profile?.profile?.gender}</p>
-                                        <p className="main-fields-mp-1"> I live in :</p>
-                                            <p className="text-up-mp">Pariiiis</p>
-                                        <p className="main-fields-mp-1">I'm looking for :</p>
-                                            <p className="text-up-mp">{profile?.profile?.sexual_interest}</p>
+                                            > {profile?.profile?.user_name}, {profile?.profile?.age} yo</div>
+                                        </div>
+                                        <div className="main-fields-mp-1"> I am :</div>
+                                            <div className="text-up-mp">{profile?.profile?.gender}</div>
+                                        <div className="main-fields-mp-1"> I live in :</div>
+                                            <div className="text-up-mp">Pariiiis</div>
+                                        <div className="main-fields-mp-1">I'm looking for :</div>
+                                            <div className="text-up-mp">{profile?.profile?.sexual_interest}</div>
                                             <br />
                                             <br />
                                             <div className="button-change">
@@ -175,43 +209,43 @@ const MatchaProfile: React.FC = () => {
                                 >
                                     <div className="d-flex flex-row" style={{}}>
 
-                                      {users[i] != null ? (
+                                      {currentUser ? (
 
                                         <div className="card-body">
                                            <div className="card-body d-flex flex-column firstname"
                                                 key={users[currentIndex]?.id}>
                                                 {users[currentIndex]?.user_name}, {users[currentIndex]?.age} yo
                                             </div>
-                                                <p className="text-up">
+                                                <div className="text-up">
                                                     📍Paris
-                                                </p>
-                                                <p className="main-fields">Hobbies</p>
-                                                    <p className="text-up"
+                                                </div>
+                                                <div className="main-fields">Hobbies</div>
+                                                    <div className="text-up"
                                                     style={{ textIndent: "120px", margin:"10px"}}
                                                     >
                                                         {users[currentIndex]?.tags_1}
-                                                    </p>
-                                                    <p className="text-up"
+                                                    </div>
+                                                    <div className="text-up"
                                                     style={{ textIndent: "60px", padding:"15px"}}
                                                     >
                                                         {users[currentIndex]?.tags_2}
-                                                    </p>
-                                                    <p className="text-up"
+                                                    </div>
+                                                    <div className="text-up"
                                                     style={{ textIndent: "160px", padding:"15px"  }}
                                                     >
                                                         {users[currentIndex]?.tags_3}
-                                                    </p>
-                                                <p className="main-fields">Gender</p>
-                                                    <p className="text-up">
+                                                    </div>
+                                                <div className="main-fields">Gender</div>
+                                                    <div className="text-up">
                                                         {users[currentIndex]?.gender}
-                                                    </p>
-                                                <p className="main-fields">Interested by </p>
-                                                    <p className="text-up">
+                                                    </div>
+                                                <div className="main-fields">Interested by </div>
+                                                    <div className="text-up">
                                                         {users[currentIndex]?.sexual_interest}
-                                                    </p>
+                                                    </div>
                                                     <br /><br />
-                                                <p className="firstname-bio"> 🗨️ Bio : </p>
-                                                <p className="text-up-bio">{truncateBio(users[currentIndex]?.biography)}</p>
+                                                <div className="firstname-bio"> 🗨️ Bio : </div>
+                                                <div className="text-up-bio">{truncateBio(users[currentIndex]?.biography)}</div>
                                         </div>
 
                                       ) : (
@@ -222,36 +256,36 @@ const MatchaProfile: React.FC = () => {
                                                 >
                                                 ...
                                             </div>
-                                                <p className="text-up">
+                                                <div className="text-up">
                                                     ...
-                                                </p>
-                                                <p className="main-fields">Hobbies</p>
-                                                    <p className="text-up"
+                                                </div>
+                                                <div className="main-fields">Hobbies</div>
+                                                    <div className="text-up"
                                                     style={{textIndent: "120px", margin:"10px"}}
                                                     >
                                                         ...
-                                                    </p>
-                                                    <p className="text-up"
+                                                    </div>
+                                                    <div className="text-up"
                                                     style={{textIndent: "60px", padding:"15px"}}
                                                     >
                                                         ...
-                                                    </p>
-                                                    <p className="text-up"
+                                                    </div>
+                                                    <div className="text-up"
                                                     style={{textIndent: "160px", padding:"15px"}}
                                                     >
                                                         ...
-                                                    </p>
-                                                <p className="main-fields">Gender</p>
-                                                    <p className="text-up">
+                                                    </div>
+                                                <div className="main-fields">Gender</div>
+                                                    <div className="text-up">
                                                         ...
-                                                    </p>
-                                                <p className="main-fields">Interested by </p>
-                                                    <p className="text-up">
+                                                    </div>
+                                                <div className="main-fields">Interested by </div>
+                                                    <div className="text-up">
                                                         ...
-                                                    </p>
+                                                    </div>
                                                     <br /><br />
-                                                <p className="firstname-bio"> 🗨️ Bio : </p>
-                                                <p className="text-up-bio" style={{fontSize: "50px"}}>...</p>
+                                                <div className="firstname-bio"> 🗨️ Bio : </div>
+                                                <div className="text-up-bio" style={{fontSize: "50px"}}>...</div>
                                         </div>
 
 
@@ -259,7 +293,7 @@ const MatchaProfile: React.FC = () => {
 
                                         <div className="card-body sug-match-picture" style={{flex: 1}}>
                                             <div className="card-body card-picture-2">
-                                                <p> ///PHOTO du match suggested////</p>
+                                                <div> ///PHOTO du match suggested////</div>
                                             </div>
                                             <div className="button-picture d-flex justify-content-center">
                                                 <button
@@ -297,7 +331,7 @@ const MatchaProfile: React.FC = () => {
                                                 onClick={() => handleClickPrevious()}
                                                 >⇠ previous match
                                             </button>
-                                            {!isClickedHeart ? 
+                                            {isClickedHeart === "false" ? 
                                             <button
                                                 className="heart"
                                                 onClick={handleClickHeart}
@@ -306,7 +340,7 @@ const MatchaProfile: React.FC = () => {
                                              : 
                                             <button
                                                 className="heart-clicked"
-                                                // onClick={handleClickHeart}
+                                                // onClick={handleDisclickHeart}
                                                 >
                                             </button>
                                             }

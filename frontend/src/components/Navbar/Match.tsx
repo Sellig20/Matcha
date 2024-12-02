@@ -21,7 +21,7 @@ const Match: React.FC = () => {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchsusers`);
             setMessage(response.data.message);
             setMyId(response.data.myId);
-            setUsers(response.data.listName);
+            // setUsers(response.data.listName);
             console.log("\n\n users =>> MATCH?S USERS >>>> ", response.data.listName, "\n\n");
             // console.log("\n\n i am ", profile);
         } catch (error) {

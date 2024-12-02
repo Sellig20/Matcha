@@ -53,6 +53,11 @@ export class userSignupModel {
         return response;
     }
 
+    static async deleteLike(id: number) {
+        const response = await orm?.delete<"users_likes">("users_likes", id);
+        return response;
+    }
+
     static async readAllUsers() {
         const response = await orm?.read<"users", any>("users", "first_name");
         return response;

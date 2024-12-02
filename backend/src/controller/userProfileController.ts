@@ -34,12 +34,23 @@ export class userProfileController {
                 stated_location: "",
                 real_location: "",
                 is_profile_completed: true,
+                i_liked: false,
             }
             io.emit('is_profile_complete', 'true');
             const response = await userSignupModel.updateUserToken(userIdNumber, achieveUser);
             res.status(201).json({ message: `userProfileController.ts | Fill profile success`, response});
         } catch (error) {
             return res.status(500).json({ message: 'Server error', error });
+        }
+    }
+
+    static async updateLike(req: Request, res: Response) {
+        try {
+            const id = req.body.id;
+            const response = await userSignupModel.updateUserToken(id, { i_liked: true });
+            res.status(201).json({ message: `userProfileController.ts | Update user settings success`});
+        } catch (err) {
+            return res.status(500).json({ message: 'Server error', err });
         }
     }
 
@@ -72,6 +83,7 @@ export class userProfileController {
                 stated_location: "",
                 real_location: "",
                 is_profile_completed: midUser.is_profile_completed,
+                i_liked: false,
             }
             const response = await userSignupModel.updateUserToken(userIdNumber, updateData);
             res.status(201).json({ message: `userProfileController.ts | Update user settings success`, response});
@@ -126,6 +138,7 @@ export class userProfileController {
                 stated_location: "",
                 real_location: "",
                 is_profile_completed: false,
+                i_liked: false,
               }
             await userProfileModel.createNewProfile(newUser);
             res.status(201).json({ message: 'UserProfileController.ts | new profile ok'});

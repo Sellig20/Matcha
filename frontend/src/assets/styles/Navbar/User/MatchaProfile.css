@@ -183,10 +183,6 @@ h3 {
   padding: 35px;
 }
 
-.main-fields-mp-1 {
-  /* margin-bottom: 8px; */
-}
-
 .main-fields-mp, .main-fields-mp-1 {
   font-size: 325x;
   font-family: "memories";
@@ -208,6 +204,11 @@ h3 {
   height: 50px;
   width: 100%;
   margin-top: 10px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .text-up-mp {

@@ -35,8 +35,6 @@ const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const ContentComplete: React.FC = () => {
   const { isProfileComplete } = useProfile();
-
-  console.log("\n\n Welcome to the app. Is profile completed ? ", isProfileComplete);
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} /> 

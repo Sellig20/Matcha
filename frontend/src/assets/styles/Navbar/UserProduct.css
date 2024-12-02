@@ -1,21 +1,21 @@
 @keyframes battement {
-    to {
-      box-shadow: 0 0 0 30px rgba(24, 151, 51, 0);
-    }
+  to {
+    box-shadow: 0 0 0 30px rgba(24, 151, 51, 0);
+  }
 }
 
 .coeur {
-    text-align: center;
-    padding: 12px 24px;
-    width: 80px;
-    height: 70px;
-    color: #fff;
-    border-radius: 15px;
-    font-size: 30px;
-    border: none;
-    background: #ed8080;
-    box-shadow: 0 0 0 0 rgba(255, 71, 84, .7);
-    animation: battement 2s infinite cubic-bezier(.66, 0, 0, 1);
+  text-align: center;
+  padding: 12px 24px;
+  width: 80px;
+  height: 70px;
+  color: #fff;
+  border-radius: 15px;
+  font-size: 30px;
+  border: none;
+  background: #ed8080;
+  box-shadow: 0 0 0 0 rgba(255, 71, 84, .7);
+  animation: battement 2s infinite cubic-bezier(.66, 0, 0, 1);
 }
 
 .firstname {
@@ -38,5 +38,9 @@
   font-size: 25px;
   text-indent: 130px;
   font-family: "gedean";
-  /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  white-space: normal;
 }

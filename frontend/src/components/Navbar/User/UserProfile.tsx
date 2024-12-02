@@ -38,11 +38,12 @@ const UserProfile: React.FC = () => {
         <div>
         <h1>Let us know more about you !</h1>
         </div>
-        <div className="container py-5 h-100 ">
+        <div className="container py-5 h-80 ">
         <div className="row justify-content-center align-items-center h-100" >
         <div className="col-12 col-lg-9 col-xl-7">
         <div className="card shadow-2-strong card-registration" style={{ borderRadius: '150px'}}>
-        <div className="card-body p-4 p-md-5 ">
+        <div className="card-body p-4 p-md-5">
+        
         {/* <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 d-flex align-items-center justify-content-center">My Profile</h3> */}
 
         <div className="bigBox-profile-display">

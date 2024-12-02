@@ -15,7 +15,6 @@ Users will be able to register, log in, complete their profile, search and view 
 
 DOCKER COMPOSE UP
 
-
 // afficher le nombre count de views et de likes
 views * ciefficient
 likes * coefficient
@@ -27,6 +26,14 @@ faire les matchs avec les fame rating
 compatibilite tags * coeff
 compa age * coeff
 
-------------- 25/11
+
+-------------------
  * password renforcement
  * chat
+ * tag4 et biography erreur frontend et biography a l'horizontal
+ * retirer la page di match liké pour passer a un autre
+ * aller au chat une fois le coeur cliqué
+ * pouvoir dislike
+ * biogrpahy longue dans userprofiledisplay bug
+ * socket pour new match
+ * mail de verification

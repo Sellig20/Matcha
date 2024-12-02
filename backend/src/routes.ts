@@ -70,6 +70,10 @@ router.post('/likes', authenticateWithToken, (req, res) => {
     fameRatingController.recordProfileLikes(req, res);
 });
 
+router.put('/dislikes', authenticateWithToken, (req, res) => {
+    fameRatingController.updateProfileLikes(req, res);
+});
+
 router.get('/views/:idd', authenticateWithToken, (req, res) => {
     fameRatingController.getWhoViewedMe(req, res);
 });
