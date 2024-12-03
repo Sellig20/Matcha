@@ -37,3 +37,4 @@ compa age * coeff
  * biogrpahy longue dans userprofiledisplay bug
  * socket pour new match
  * mail de verification
+ * notif manque de peps couleur

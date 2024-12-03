@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
 import { userSigninController } from "./userSigninController";
 import { io } from '../../server';
+import { UserProfileInterface } from "../databaseInterfaces";
 
 export class MatchingController {
 
@@ -184,48 +185,61 @@ export class MatchingController {
                     tags_2: user.tags_2,
                     tags_3: user.tags_3,
                     biography: user.biography,
-                    i_liked: user.i_liked
+                    i_liked: user.i_liked,
+                    alreadyLike: false
                 })
             );
             // io.to(req.userId).emit('newMatchUser', listName);//From bdd to socket to AllUser.tsx
-            console.log("\n\n+++++ ", listName);
             const v = req.userId;
             const existingLike = await userSignupModel.readLikes("liker_user_id", v);
             if (existingLike && listName) {
-                console.log("\n ----------------\n");
-                console.log("\nMATCHING C existing like[0].liked_user_id = ", existingLike[0].liked_user_id);
-                console.log("\nMATCHING C existing existingLike[0].liker_user_id = ", existingLike[0].liker_user_id);
-                console.log("\nlistName[0].id = ", listName[0].id);
-                console.log("\nv = ", v);
-                console.log("\n existing like => ", existingLike);
-                console.log("\n ----------------\n");
+                // console.log("\n ----------------\n");
+                // console.log("\nMATCHING C existing like[0].liked_user_id = ", existingLike[0].liked_user_id);
+                // console.log("\nMATCHING C existing existingLike[0].liker_user_id = ", existingLike[0].liker_user_id);
+                // console.log("\nlistName[0].id is his value = ", listName[0].id);
+                // console.log("\nv is my user value = ", v);
+                // console.log("\n existing like => ", existingLike);
+                // console.log("\n ----------------\n");
             }
-            // res.status(201).json({ message: `List of all users`, alreadyLike: "false", listName });
-            if (listName && listName.length > 0) {
-                let alreadyLike = "false";
+            // return res.status(200).send({ message: "Like déjà existant", alreadyLike: "true", listName });
+
+            console.log("\n\n+++++LISTNMAE+++ ", listName);
+            console.log("\n\n+++++LISTNMAE+++ ", existingLike);
+
+            //si listnam id === existinglike liked id
+            // si v === liker
+
+
+            // console.log("\n\n+++++LISTNMAE LENGTH +++ ", listName?.length);
+
+            //to check if the like exist ad so update alreadyLike
+            if (existingLike && listName && listName.length > 0) {
                 for (let i = 0; i < listName.length; i++) {
-                    if (listName 
-                        && existingLike 
-                        && existingLike[0].liked_user_id === listName[0].id
-                        && existingLike[0].liker_user_id === v) {
-                            console.log("\n\n CE LIKE EXISTE DEJAAAAAAAAAAAAAA \n\n");
-                            // return res.status(200).send({ message: "Like déjà existant", alreadyLike: "true", listName });
-                            alreadyLike = "true";
+                    for (let j = 0; j < existingLike.length; j++) {
+                        if (existingLike[j].liked_user_id == listName[i].id
+                            && existingLike[j].liker_user_id == v
+                        ) {
+                            console.log("\n le like existe deja !");
+                            listName[i].alreadyLike = true;
                         }
-                        const user = listName[i];
-                        const userWithLike = {
-                            ...user,
-                            alreadyLike,
-                        };
-                        
-                    io.emit('newMatchUserMP', userWithLike);
-                    res.write(JSON.stringify(userWithLike));
+                    }
+                    // if (listName 
+                    // && existingLike 
+                    // && existingLike[0].liked_user_id === listName[0].id
+                    // && existingLike[0].liker_user_id === v)
+                    //     {
+                    //         alreadyLike = "true";
+                    //     }
+
+
                 }
-                res.end();
+                
+                // res.write(JSON.stringify(listName));
+                // res.end();
             }
-            else {
-                return res.status(200).send({ message: "match empty", success: "false"});
-            }
+            // console.log("websocket envoi ===> ", listName)
+            io.emit('newMatchUserMP', listName);
+            res.status(201).json({ message: `List of all users`, tab: listName });
         } catch (error) {
             res.status(500).json({ message: `fameRatingController.ts | Error during get list users : ${error}` });
             return;

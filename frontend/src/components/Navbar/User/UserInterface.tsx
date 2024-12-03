@@ -34,6 +34,7 @@ export interface UserProfileInterface {
     email: string;
     pass_word: string;
     i_liked: boolean;
+    alreadyLike: boolean;
 }
 
 export interface UserProfileProduct {

@@ -20,12 +20,15 @@ const MatchaProfile: React.FC = () => {
     const [notification, setNotification] = useState<string | null>(null);
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const [isClickedHeart, setIsClickedHeart] = useState<string | null>(null);
+    const [isClickedHeart, setIsClickedHeart] = useState(false);
     const { socket } = useWebSocketContext();
 
     //get my informations
     const profile = useProfile();
+
     //get Matchs informations
+   
+
     const getSuggestedMatch = async () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchsusers`);
@@ -38,12 +41,14 @@ const MatchaProfile: React.FC = () => {
                 setMessageNewMatch("Sorry... no new matchas today !");
             } else {
                 setMessageNewMatch("New match !");
-                setIsClickedHeart(response.data.alreadyLike);
-                const addUser = (newUser: UserProfileInterface) => {
-                    setUsers(prevUsers => [...prevUsers, newUser]);
-                };
+                //  const addUser = (newUser: UserProfileInterface) => {
+                    //     setUsers(prevUsers => [...prevUsers, newUser]);
+                    // };
+                    setUsers(response.data.tab);
+                    
+                setIsClickedHeart(response.data.tab.alreadyLike)
             }
-            console.log("\n\n users =>> Match users >>>> ", response.data, "\n\n");
+            console.log("\n\n Match users -> ", response.data.tab[0], "\n\n");
         } catch (error) {
             setMessage(`MatchaProfile.tsx | Erreur frontend get  : ${error}`);
         }
@@ -55,6 +60,7 @@ const MatchaProfile: React.FC = () => {
 
     const handleClickHeart = async() => {
         try {
+            setIsClickedHeart(true);
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/likes`, {
                 user_id: profile?.profile?.id,
                 liked_user_id: users[currentIndex]?.id,//pas bon
@@ -62,12 +68,21 @@ const MatchaProfile: React.FC = () => {
             });
             if (response.data.success) {
                 console.log("\nLike enregistré avec succès\n");
-                setIsClickedHeart("true");
+                // setIsClickedHeart("true");
                 setMessage(response.data.message);
             } else {
-                setIsClickedHeart("false");
+                // setIsClickedHeart("false");
                 setMessage("\nErreur : Impossible d'enregistrer le like.");
             }
+        } catch (error) {
+            setMessage(`UserProduct.tsx | Erreur frontend post likes : ${error}`);
+        }
+    };
+
+    const handleDisclickHeart = async() => {
+        try {
+            setIsClickedHeart(false);
+            console.log("handle disclick heart\n")
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur frontend post likes : ${error}`);
         }
@@ -83,6 +98,8 @@ const MatchaProfile: React.FC = () => {
     }
 
     const handleClickNext = () => {
+        console.log("users = ", users);
+        console.log("users.length = ", users.length);
         if (currentIndex < users.length - 1) {
             setCurrentIndex(currentIndex + 1);
             setMessageNewMatch("New match !");
@@ -110,7 +127,6 @@ const MatchaProfile: React.FC = () => {
     useEffect(() => {
         const executeData = async () => {
                 try {
-                    console.log("\n bonjour. Is clicked heart ? ", isClickedHeart);
                     if (isProfileComplete === false) {
                         setNotification("Warning : You must fill your profile before going on");
                     }
@@ -124,11 +140,28 @@ const MatchaProfile: React.FC = () => {
                         executeData();
                         fetchProfile();
                         getSuggestedMatch();
-                        if (socket) {
-                                socket.on('newMatchUserMP', (newUser) => {
-                                setUsers((prevUsers) => [...prevUsers, newUser]);
-                            })
-                        }
+                        // if (socket) {
+                        //         socket.on('newMatchUserMP', (newUser) => {
+                        //         console.log("new user is => ", newUser);
+                        //         setUsers(newUser);
+                        //         if (Array.isArray(newUser)) {
+                        //             setUsers((prevUsers) => {
+                        //                 // Fusionner les utilisateurs existants avec les nouveaux tout en évitant les doublons
+                        //                 const updatedUsers = [...prevUsers, ...newUser].filter(
+                        //                     (user, index, self) =>
+                        //                         index === self.findIndex((u) => u.id === user.id)
+                        //                 );
+                        //                 return updatedUsers;
+                        //             });
+                        //         } else {
+                        //             console.error("Invalid data received: ", newUser);
+                        //         }
+                        //         console.log("\n\n the new user socket : ", newUser);
+                        //         console.log("\n\n users from socket : ", users);
+                        //         console.log("\n\n is liked from socket : ", newUser.alreadyLike);
+                        //         setIsClickedHeart(newUser.alreadyLike);
+                        //     })
+                        // }
                     }
             } catch (error) {
                 setNotification(`Erreur frontend userprofile : ${error}`);
@@ -137,13 +170,14 @@ const MatchaProfile: React.FC = () => {
         executeData();
 
         return () => {
-            socket?.off('newMatchUser');
+            socket?.off('newMatchUserMP');
         }
-    }, [socket, isClickedHeart])
+    }, [socket])
 
     //il faut les sockets pour render des que jarrive sur la page.
     const i = 0;
     const currentUser = users[currentIndex];
+
 
     return (
         <section className="gradient-custom">
@@ -224,6 +258,7 @@ const MatchaProfile: React.FC = () => {
                                                     style={{ textIndent: "120px", margin:"10px"}}
                                                     >
                                                         {users[currentIndex]?.tags_1}
+                                                        {users[currentIndex]?.alreadyLike}
                                                     </div>
                                                     <div className="text-up"
                                                     style={{ textIndent: "60px", padding:"15px"}}
@@ -331,7 +366,7 @@ const MatchaProfile: React.FC = () => {
                                                 onClick={() => handleClickPrevious()}
                                                 >⇠ previous match
                                             </button>
-                                            {isClickedHeart === "false" ? 
+                                            {/* {isClickedHeart === "false" ? 
                                             <button
                                                 className="heart"
                                                 onClick={handleClickHeart}
@@ -343,7 +378,21 @@ const MatchaProfile: React.FC = () => {
                                                 // onClick={handleDisclickHeart}
                                                 >
                                             </button>
-                                            }
+                                            } */}
+                                            <div>
+                                            -----{users[currentIndex]?.alreadyLike}ppp
+                                            </div>
+                                            <div>
+                                                <button
+                                                className={`hearty ${(
+                                                    users[currentIndex]?.alreadyLike === true
+                                                    || isClickedHeart === true
+                                                ) ? 'heart-clicked' : 'heart'}`}
+                                                onClick={users[currentIndex]?.alreadyLike ? handleDisclickHeart : handleClickHeart}
+                                                >
+                                                ♥
+                                                </button>
+                                            </div>
                                             <button
                                                 className="button-prev-next button-matcha-profile"
                                                 // style={{ border: "solid 2px red"}}

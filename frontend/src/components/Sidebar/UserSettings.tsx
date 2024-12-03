@@ -6,10 +6,15 @@ import { useNavigate } from 'react-router-dom';
 const UserSettings: React.FC = () => {
     const [data, setData] = useState<any>(null); //remplacer les any par une interface ? UserCreate ? a voir
     const navigate = useNavigate();
+    const [notification, setNotification] = useState<string | null>(null);
 
     const handleModifyClick = () => {
         navigate('/apiServeur/usersettings/update');
     }
+
+    const handleNotification = () => {
+        setNotification(null);
+    };
 
     useEffect(() => {
 
@@ -17,6 +22,7 @@ const UserSettings: React.FC = () => {
             try {
                 const response = await axiosInstance.get(`http://localhost:8000/apiServeur/usersettings`);
                 setData(response.data);
+                setNotification("Check if the informations are corrects, and go fill your userprofile !");
             } catch (error) {
                 console.error('userSettings.tsx | Error fetching home data', error);
             }
@@ -26,6 +32,16 @@ const UserSettings: React.FC = () => {
 
     return (
         <section className="gradient-custom" >
+
+        {notification && (
+            <div className="modal-overlay">
+                <div className="modal-content">
+                    <p>{notification}</p>
+                    <button className="btn-userproduct" onClick={handleNotification}>OK</button>
+                </div>
+            </div>
+        )}
+
         <div>
         <h1>User account settings</h1>
         </div>
