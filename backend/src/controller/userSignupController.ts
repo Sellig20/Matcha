@@ -47,7 +47,6 @@ export class userSignupController {
                 stated_location: "",
                 real_location: "",
                 is_profile_completed: false,
-                i_liked: false,
             };
             await userSignupModel.createUser(newUser);
             res.status(201).json({ message: 'UserSignupController.ts | Inscription success', token });

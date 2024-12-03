@@ -46,9 +46,9 @@ const FameRating = () => {
     const getMatchasNumber = async () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
-            console.log("\n reponse matchs number is => ", response.data.tabMatchs);
+            // console.log("\n reponse matchs number is => ", response.data.tabMatchs);
             setMatchs(response.data.tabMatchs || []);
-            console.log("\n setMatchs => ", matchs);
+            // console.log("\n setMatchs => ", matchs);
             //put response dans le tableau de match trouvé et afficher et faire la jauge de famerating
             if (response.data) {
                 setMessage(`FameRating.tsx | MATCHS CONGRATS`);

@@ -28,13 +28,13 @@ compa age * coeff
 
 
 -------------------
- * password renforcement
+ * password renforcement 
  * chat
  * tag4 et biography erreur frontend et biography a l'horizontal
  * retirer la page di match liké pour passer a un autre
  * aller au chat une fois le coeur cliqué
  * pouvoir dislike
- * biogrpahy longue dans userprofiledisplay bug
  * socket pour new match
  * mail de verification
  * notif manque de peps couleur
+ * ne pas pouvoir choisir deux tags pareil doublons

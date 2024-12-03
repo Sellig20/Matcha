@@ -33,7 +33,6 @@ export interface UserProfileInterface {
     last_name: string;
     email: string;
     pass_word: string;
-    i_liked: boolean;
     alreadyLike: boolean;
 }
 

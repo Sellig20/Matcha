@@ -34,7 +34,6 @@ export interface UserCreate {
 	age_lower_bound: number,
     age_upper_bound: number,
 	is_profile_completed: boolean,
-	i_liked: boolean,
   }
   
 export interface UsersSexualPreferencesCreate {
@@ -155,7 +154,6 @@ export const schema: Schema = {
 		age_lower_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // check >= 18
 		age_upper_bound: [ColumnType.INT, ColumnConstraint.NOT_NULL], // enum <= 61
 		is_profile_completed: [ColumnType.BOOLEAN, ColumnConstraint.NOT_NULL],
-		i_liked: [ColumnType.BOOLEAN, ColumnConstraint.NOT_NULL],
 	},
 
 	users_sexual_preferences: {

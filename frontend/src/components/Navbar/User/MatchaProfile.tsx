@@ -12,12 +12,12 @@ const MatchaProfile: React.FC = () => {
 
     const { fetchProfile } = useProfile();
     const [message, setMessage] = useState('');
-    const { idd } = useParams<{idd:string}>();
     const [messageNewMatch, setMessageNewMatch] = useState('');
     const [myId, setMyId] = useState<number | undefined>(undefined);
     const [users, setUsers] = useState<UserProfileInterface[]>([]);
     const { isProfileComplete } = useProfile();
     const [notification, setNotification] = useState<string | null>(null);
+    const [notificationMatcha, setNotificationMatcha] = useState<string | null>(null);
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [isClickedHeart, setIsClickedHeart] = useState(false);
@@ -41,11 +41,7 @@ const MatchaProfile: React.FC = () => {
                 setMessageNewMatch("Sorry... no new matchas today !");
             } else {
                 setMessageNewMatch("New match !");
-                //  const addUser = (newUser: UserProfileInterface) => {
-                    //     setUsers(prevUsers => [...prevUsers, newUser]);
-                    // };
-                    setUsers(response.data.tab);
-                    
+                setUsers(response.data.tab);
                 setIsClickedHeart(response.data.tab.alreadyLike)
             }
             console.log("\n\n Match users -> ", response.data.tab[0], "\n\n");
@@ -54,8 +50,24 @@ const MatchaProfile: React.FC = () => {
         }
     }
 
+    const getMatcha = async () => {
+        try {
+            const idd = users[currentIndex].id;
+            const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
+            setMessage(response.data.message);
+            setNotificationMatcha("You have a new MATCHA ! Check your famerating")
+            console.log(" response isssssss : ", response);
+        } catch (error) {
+            setMessage(`MatchaProfile.tsx | Erreur frontend get MATCHAS  : ${error}`);
+        }
+    }
+
     const handleNavigateNotification = () => {
         navigate(`/apiServeur/userprofile`);
+    };
+
+    const handleNotificationMatcha = () => {
+        setNotificationMatcha(null);
     };
 
     const handleClickHeart = async() => {
@@ -131,37 +143,15 @@ const MatchaProfile: React.FC = () => {
                         setNotification("Warning : You must fill your profile before going on");
                     }
                     else {
-                        const executeData = async () => {
-                            try {
-                            } catch (error) {
-                                setMessage(`MatchaProfile.tsx | Erreur use effect : ${error}`);
-                            }
-                        }
-                        executeData();
                         fetchProfile();
                         getSuggestedMatch();
-                        // if (socket) {
-                        //         socket.on('newMatchUserMP', (newUser) => {
-                        //         console.log("new user is => ", newUser);
-                        //         setUsers(newUser);
-                        //         if (Array.isArray(newUser)) {
-                        //             setUsers((prevUsers) => {
-                        //                 // Fusionner les utilisateurs existants avec les nouveaux tout en évitant les doublons
-                        //                 const updatedUsers = [...prevUsers, ...newUser].filter(
-                        //                     (user, index, self) =>
-                        //                         index === self.findIndex((u) => u.id === user.id)
-                        //                 );
-                        //                 return updatedUsers;
-                        //             });
-                        //         } else {
-                        //             console.error("Invalid data received: ", newUser);
-                        //         }
-                        //         console.log("\n\n the new user socket : ", newUser);
-                        //         console.log("\n\n users from socket : ", users);
-                        //         console.log("\n\n is liked from socket : ", newUser.alreadyLike);
-                        //         setIsClickedHeart(newUser.alreadyLike);
-                        //     })
-                        // }
+                        getMatcha();
+                        if (socket) {
+                                socket.on('reciproqueMatcha', (newMatcha) => {
+                                setNotificationMatcha("You have a new MATCHA ! Check your famerating")
+
+                            })
+                        }
                     }
             } catch (error) {
                 setNotification(`Erreur frontend userprofile : ${error}`);
@@ -189,6 +179,15 @@ const MatchaProfile: React.FC = () => {
                 <div className="modal-content">
                     <p>{notification}</p>
                     <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
+                </div>
+            </div>
+        )}
+
+        {notificationMatcha && (
+            <div className="modal-overlay">
+                <div className="modal-content">
+                    <p>{notificationMatcha}</p>
+                    <button className="btn-userproduct" onClick={handleNotificationMatcha}>OK</button>
                 </div>
             </div>
         )}
@@ -356,7 +355,6 @@ const MatchaProfile: React.FC = () => {
                                 style={{ borderRadius: "30px", width: "100%", height: '100%', paddingLeft: "10px"}}
                                 >
                                     <div className="d-flex align-items-center justify-content-center" 
-                                    // style={{ border: "solid 2px purple"}}
                                     >
                                         <div className="d-flex button-like" 
                                             style={{display: "flex", alignItems:"center", justifyContent:"center"}}
@@ -366,22 +364,6 @@ const MatchaProfile: React.FC = () => {
                                                 onClick={() => handleClickPrevious()}
                                                 >⇠ previous match
                                             </button>
-                                            {/* {isClickedHeart === "false" ? 
-                                            <button
-                                                className="heart"
-                                                onClick={handleClickHeart}
-                                                >
-                                            </button>
-                                             : 
-                                            <button
-                                                className="heart-clicked"
-                                                // onClick={handleDisclickHeart}
-                                                >
-                                            </button>
-                                            } */}
-                                            <div>
-                                            -----{users[currentIndex]?.alreadyLike}ppp
-                                            </div>
                                             <div>
                                                 <button
                                                 className={`hearty ${(
@@ -395,7 +377,6 @@ const MatchaProfile: React.FC = () => {
                                             </div>
                                             <button
                                                 className="button-prev-next button-matcha-profile"
-                                                // style={{ border: "solid 2px red"}}
                                                 onClick={() => handleClickNext()}
                                                 > next match ⇢
                                             </button>

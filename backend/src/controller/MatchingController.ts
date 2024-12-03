@@ -130,7 +130,6 @@ export class MatchingController {
             const myAgeL = req.user?.age_lower_bound;
             const myAgeU = req.user?.age_upper_bound;
             if (tab && myAge && myAgeL && myAgeU) {
-                // const myBoundaries = myAgeU - myAgeL;
                 const maxAgeRange = (myAgeU - myAgeL) / 2;
                 tab.forEach(ind => {
                     const diff = ((myAge - ind.age) * (-1));
@@ -166,7 +165,6 @@ export class MatchingController {
                     tags_3: user.tags_3,
                     fame_rating: user.fame_rating,
                     biography: user.biography,
-                    i_liked: user.i_liked
                 })
             );
             const sorted_SI_gender_tab = await this.sort_SI_GenderController(req, res, listForAlgo);
@@ -185,33 +183,11 @@ export class MatchingController {
                     tags_2: user.tags_2,
                     tags_3: user.tags_3,
                     biography: user.biography,
-                    i_liked: user.i_liked,
                     alreadyLike: false
                 })
             );
-            // io.to(req.userId).emit('newMatchUser', listName);//From bdd to socket to AllUser.tsx
             const v = req.userId;
             const existingLike = await userSignupModel.readLikes("liker_user_id", v);
-            if (existingLike && listName) {
-                // console.log("\n ----------------\n");
-                // console.log("\nMATCHING C existing like[0].liked_user_id = ", existingLike[0].liked_user_id);
-                // console.log("\nMATCHING C existing existingLike[0].liker_user_id = ", existingLike[0].liker_user_id);
-                // console.log("\nlistName[0].id is his value = ", listName[0].id);
-                // console.log("\nv is my user value = ", v);
-                // console.log("\n existing like => ", existingLike);
-                // console.log("\n ----------------\n");
-            }
-            // return res.status(200).send({ message: "Like déjà existant", alreadyLike: "true", listName });
-
-            console.log("\n\n+++++LISTNMAE+++ ", listName);
-            console.log("\n\n+++++LISTNMAE+++ ", existingLike);
-
-            //si listnam id === existinglike liked id
-            // si v === liker
-
-
-            // console.log("\n\n+++++LISTNMAE LENGTH +++ ", listName?.length);
-
             //to check if the like exist ad so update alreadyLike
             if (existingLike && listName && listName.length > 0) {
                 for (let i = 0; i < listName.length; i++) {
@@ -223,21 +199,8 @@ export class MatchingController {
                             listName[i].alreadyLike = true;
                         }
                     }
-                    // if (listName 
-                    // && existingLike 
-                    // && existingLike[0].liked_user_id === listName[0].id
-                    // && existingLike[0].liker_user_id === v)
-                    //     {
-                    //         alreadyLike = "true";
-                    //     }
-
-
                 }
-                
-                // res.write(JSON.stringify(listName));
-                // res.end();
             }
-            // console.log("websocket envoi ===> ", listName)
             io.emit('newMatchUserMP', listName);
             res.status(201).json({ message: `List of all users`, tab: listName });
         } catch (error) {

@@ -259,14 +259,10 @@ export class fameRatingController {
 
     static async getMatchs(req: Request, res: Response) {
         try {
-            const value = req.params.firstname;
             // le but cest de dire : si Andre ma like et que je lai like alors match = 1
             //return le nombre de matchs en tableau avec son nom pour afficher dans le fame rating
-            console.log("\n\n\n je suis ", req.params.idd);
             const likeTab = await this.getWhoLikedMe2(req, res);
-            // console.log("\n\n likeTab = ", likeTab, "\n\n");
             const ILikedTab = await this.getWhoILiked(req, res);
-            // console.log("\n\n ILikedTab = ", ILikedTab, "\n\n");
             const tabMatchs = [];
             if (likeTab && ILikedTab) {
                 for (let i = 0; i < likeTab.length; i++) {
@@ -275,7 +271,6 @@ export class fameRatingController {
                         (likeTab[i].liked_user_id == ILikedTab[j].liker_user_id)) {
                             console.log("\n\n ----- ", likeTab[i].first_name, " | ", ILikedTab[j].first_name, "-----\n\n");
                             console.log("\n\n ----- ", likeTab[i].liked_user_id , " || ", ILikedTab[j].liker_user_id , "-----\n\n");
-                            // console.log("\n\n I push [", ILikedTab[j].liked_user_id, "]\n\n");
                             tabMatchs.push({
                                 matchedName: likeTab[i].first_name,
                                 myName: ILikedTab[j].first_name,
@@ -286,11 +281,8 @@ export class fameRatingController {
                     }
                 }
             }
-            console.log("\n\n tabMAtchs.length => ", tabMatchs.length);
             if (tabMatchs.length > 0) {
-                console.log("\n\nlength is good");
-                // const matchedProfile = await userSignupModel.readFirstName("id", tabMatchs[0].liked_user_id);
-                console.log("\n\n === name of the match is < ", tabMatchs, "\n\n");
+                io.emit('reciproqueMatcha', tabMatchs);
                 res.status(201).json( {message : `fameRatingController.ts | Match founded !`, tabMatchs} );
             } else {
                 console.log("\n\n\nlength is NOT good\n\n");
