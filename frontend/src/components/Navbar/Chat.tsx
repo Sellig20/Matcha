@@ -17,6 +17,18 @@ const Chat = () => {
 
         fetchData();
     }, []);
+
+    //liste des utilisateurs en ligne
+    // 1 room = 2 personnes qui ont matche
+    // post les messages en bdd
+    // <- socket et res ->
+    // get les anciens messages
+    //les afficher en bulles frontend
+
+
+
+
+
     return (
         <div>
             <h1>

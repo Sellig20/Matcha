@@ -38,3 +38,4 @@ compa age * coeff
  * mail de verification
  * notif manque de peps couleur
  * ne pas pouvoir choisir deux tags pareil doublons
+ * notification lorsqu'il y a un matcha

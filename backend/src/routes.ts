@@ -70,7 +70,7 @@ router.post('/likes', authenticateWithToken, (req, res) => {
     fameRatingController.recordProfileLikes(req, res);
 });
 
-router.put('/dislikes', authenticateWithToken, (req, res) => {
+router.post('/dislikes', authenticateWithToken, (req, res) => {
     fameRatingController.updateProfileLikes(req, res);
 });
 

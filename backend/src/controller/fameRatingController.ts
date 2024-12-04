@@ -34,24 +34,22 @@ export class fameRatingController {
     
     static async recordProfileLikes(req: Request, res: Response) {
         try {
-            console.log("\n ---------- record profiles likes fame rating contr --------\n");
             const firstNameBdd = await userSignupModel.readFirstName("id", req.body.liker_user_id);
-            const v = req.params.idd;
-            const existingLike = await userSignupModel.readLikes("liker_user_id", v);
-            console.log("\n\n\nexisting like = ", existingLike);
+            const existingLike = await userSignupModel.readLikes("liker_user_id", req.body.liker_user_id);
 
+                //LE LIKE EXISTE IL DEJA AVANT QUE JE LE CREE ?
             if (existingLike && existingLike[0].liked_user_id === req.body.liked_user_id
                 && existingLike[0].liker_user_id === req.body.liker_user_id) {
-                    console.log("\n\n CE LIKE EXISTE DEJA \n\n");
                     return res.status(200).send({ success: false, message: "Like déjà existant." });
                 }
+
+                // CREER LE LIKE
             const tableLikes: UsersLikesCreate = {
                 user_id: req.body.user_id,
                 first_name: firstNameBdd,
                 liked_user_id: req.body.liked_user_id,
                 liker_user_id: req.body.liker_user_id,
                 liked_on: new Date().toISOString(),
-                is_liked_bool: true,
             };//les infos de celui qui a liké sont envoyées au frontend de celui qui est liké
             await userSignupModel.createLikes(tableLikes);
             console.log("\n\n likes => ", tableLikes);
@@ -153,34 +151,45 @@ export class fameRatingController {
     
     static async updateProfileLikes(req: Request, res: Response) {
         try {
-            const deleteLikeTab = await userSignupModel.deleteLike(req.body.liker_user_id);
-            // const tableLikes: UsersLikesCreate = {
-            //     user_id: req.body.user_id,
-            //     first_name: firstNameBdd,
-            //     liked_user_id: req.body.liked_user_id,
-            //     liker_user_id: req.body.liker_user_id,
-            //     liked_on: new Date().toISOString(),
-            // };//les infos de celui qui a liké sont envoyées au frontend de celui qui est liké
-            // await userSignupModel.createLikes(tableLikes);
-            // const value = req.body.liker_user_id;
-            // io.emit('insert_likes', tableLikes, "\n\n");
-            // const count = await this.countLikes(value);
-            // io.emit('update_countLikes', count);
-            const oldTab = await this.getWhoLikedMe2(req, res);
-            // console.log("\n\n oldTab => ", oldTab);
-            const value = req.body.liked_user_id;
-            console.log("\n\nvalue = ", value);
-            const newTab = await userSignupModel.readLikes("liked_user_id", value);
-            //pourquoi il prend les likes de tout le monde ?
-            //il faudrait chopper le id en question du like enregistre en bdd et le supprimer lui
-            //quitte a avoir des securites si liker = liker si liked = liked
-            //retourner le tableau de likes et l'afficher sans le dislike
-            if (newTab) {
-                console.log("\n\n newTab => ", newTab);
+            
+            console.log("\n liked ", req.body.liked_user_id);
+            console.log("\n liker ", req.body.liker_user_id);
+            console.log("\n id ", req.body.liked_user_id);
+
+            const existingLike = await userSignupModel.readLikes("liker_user_id", req.body.liker_user_id);
+            let valueToUpdate: boolean = false;
+            let likeId: number = 0;
+            if (existingLike) {
+                for (let j = 0; j < existingLike.length; j++) {
+                    if (existingLike[j].liked_user_id == req.body.liked_user_id
+                        && existingLike[j].liker_user_id == req.body.liker_user_id
+                    ) {
+                        console.log("\n *************************** !!!!!@@@@@ le like existe bien !");
+                        console.log("like existant => ", existingLike[j]);
+                        //detruire le like et passer alreadylike a false et renvoyer au frontend
+                        // listName[i].alreadyLike = true;
+                        likeId = existingLike[j].id;
+                    }
+                }
+                const suppression = await userSignupModel.deleteLike(likeId);
+                console.log("suppression = ", suppression);
             }
-            res.status(201).json({ message: `likes ok` });
+            io.to(req.body.liker_user_id).emit('updateAlreadyLike', valueToUpdate);
+            io.to(req.body.liked_user_id).emit('updateAlreadyLike', valueToUpdate);
+            //--------------- a supprimer
+            const existingLike2 = await userSignupModel.readLikes("liker_user_id", req.body.liker_user_id);
+            if (existingLike2) {
+                for (let j = 0; j < existingLike2.length; j++) {
+                    if (existingLike2[j].liked_user_id == req.body.liked_user_id
+                        && existingLike2[j].liker_user_id == req.body.liker_user_id
+                    ) {
+                        console.log("\n *************************** !!!!!@@@@@ le like existe ENCORE 2 !");
+                    }
+                }
+            }
+            //--------------
         } catch (error) {
-            res.status(500).json({ message: `\n\nfameRatingController.ts | Error during recording likes : ${error}\n\n` });
+            res.status(500).json({ message: `\n\nfameRatingController.ts | Error during recording DISlikes : ${error}\n\n` });
             return;
         }
     }

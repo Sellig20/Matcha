@@ -17,7 +17,6 @@ const MatchaProfile: React.FC = () => {
     const [users, setUsers] = useState<UserProfileInterface[]>([]);
     const { isProfileComplete } = useProfile();
     const [notification, setNotification] = useState<string | null>(null);
-    const [notificationMatcha, setNotificationMatcha] = useState<string | null>(null);
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [isClickedHeart, setIsClickedHeart] = useState(false);
@@ -55,7 +54,6 @@ const MatchaProfile: React.FC = () => {
             const idd = users[currentIndex].id;
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
             setMessage(response.data.message);
-            setNotificationMatcha("You have a new MATCHA ! Check your famerating")
             console.log(" response isssssss : ", response);
         } catch (error) {
             setMessage(`MatchaProfile.tsx | Erreur frontend get MATCHAS  : ${error}`);
@@ -64,10 +62,6 @@ const MatchaProfile: React.FC = () => {
 
     const handleNavigateNotification = () => {
         navigate(`/apiServeur/userprofile`);
-    };
-
-    const handleNotificationMatcha = () => {
-        setNotificationMatcha(null);
     };
 
     const handleClickHeart = async() => {
@@ -91,15 +85,22 @@ const MatchaProfile: React.FC = () => {
         }
     };
 
+    // REPASSER LE COEUR EN ROUGE
     const handleDisclickHeart = async() => {
         try {
             setIsClickedHeart(false);
-            console.log("handle disclick heart\n")
+            console.log("handle disclick heart\n");
+            const response = await axiosInstance.post(`http://localhost:8000/apiServeur/dislikes`, {
+                user_id: profile?.profile?.id,
+                liked_user_id: users[currentIndex]?.id,//pas bon
+                liker_user_id: profile?.profile?.id,
+
+            })
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur frontend post likes : ${error}`);
         }
     };
-
+    
     const handleClickPrevious = () => {
         if (currentIndex > 0 && currentIndex <= users.length - 1) {
             setCurrentIndex(currentIndex - 1);
@@ -108,7 +109,7 @@ const MatchaProfile: React.FC = () => {
             setMessageNewMatch("Sorry, no more matchas for today !");
         }
     }
-
+    
     const handleClickNext = () => {
         console.log("users = ", users);
         console.log("users.length = ", users.length);
@@ -148,8 +149,10 @@ const MatchaProfile: React.FC = () => {
                         getMatcha();
                         if (socket) {
                                 socket.on('reciproqueMatcha', (newMatcha) => {
-                                setNotificationMatcha("You have a new MATCHA ! Check your famerating")
+                            })
 
+                            socket.on('updateAlreadyLike', (valueToUpdate) => {
+                                setIsClickedHeart(valueToUpdate);
                             })
                         }
                     }
@@ -168,7 +171,6 @@ const MatchaProfile: React.FC = () => {
     const i = 0;
     const currentUser = users[currentIndex];
 
-
     return (
         <section className="gradient-custom">
         <div>
@@ -179,15 +181,6 @@ const MatchaProfile: React.FC = () => {
                 <div className="modal-content">
                     <p>{notification}</p>
                     <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
-                </div>
-            </div>
-        )}
-
-        {notificationMatcha && (
-            <div className="modal-overlay">
-                <div className="modal-content">
-                    <p>{notificationMatcha}</p>
-                    <button className="btn-userproduct" onClick={handleNotificationMatcha}>OK</button>
                 </div>
             </div>
         )}

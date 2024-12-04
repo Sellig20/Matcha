@@ -72,7 +72,6 @@ export interface UsersLikesCreate {
     liked_user_id: number,
     liker_user_id: number,
     liked_on: string,
-	is_liked_bool: boolean,
 }
 
 export interface UsersMatchsCreate {
