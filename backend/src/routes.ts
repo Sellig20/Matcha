@@ -86,6 +86,10 @@ router.get('/matchasnumber/:idd', authenticateWithToken, (req, res) => {
     fameRatingController.getMatchs(req, res);
 });
 
+router.get('/matchasbdd', authenticateWithToken, (req, res) => {
+    fameRatingController.getMatchasbdd(req, res);
+});
+
 router.get('/match', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /MATCH', user: req.user });
 });

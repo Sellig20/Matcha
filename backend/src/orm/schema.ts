@@ -76,8 +76,8 @@ export interface UsersLikesCreate {
 
 export interface UsersMatchsCreate {
     user_id: number,
-	first_name: string,
-	matchedName: string,
+	matched_name: string,
+	my_name: string,
     matcher_user_id: number,
     matched_user_id: number,
 }
@@ -202,8 +202,8 @@ export const schema: Schema = {
 
 	users_matchs: {
 		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
-		first_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
-		matchedName: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
+		matched_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
+		my_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		matcher_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 		matched_user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],

@@ -34,7 +34,7 @@ compa age * coeff
  * retirer la page di match liké pour passer a un autre
  * aller au chat une fois le coeur cliqué
  * pouvoir dislike
- * socket pour new match
+ * socket pour new match detected dans mathaprofile
  * mail de verification
  * notif manque de peps couleur
  * ne pas pouvoir choisir deux tags pareil doublons

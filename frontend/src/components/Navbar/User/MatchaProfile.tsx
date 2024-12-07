@@ -30,7 +30,7 @@ const MatchaProfile: React.FC = () => {
 
     const getSuggestedMatch = async () => {
         try {
-            const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchsusers`);
+            const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchsusers`); // proposer des profils interessants
             setMessage(response.data.message);
             setMyId(response.data.myId);
             if (response.data.success === "false" 
@@ -49,14 +49,31 @@ const MatchaProfile: React.FC = () => {
         }
     }
 
+    // const getMatcha = async () => {
+    //     try {
+    //         console.log("\n\nje passe bien en getMAtcha frontend !!!!");
+    //         console.log("users[currentIndex].id ", users[currentIndex].id);
+    //         const idd = users[currentIndex].id;
+    //         console.log("idd --------------------------------> ", idd);
+    //         const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
+    //         setMessage(response.data.message);
+    //         console.log(" response isssssss : ", response);
+    //     } catch (error) {
+    //         setMessage(`MatchaProfile.tsx | Erreur frontend get MATCHAS  : ${error}`);
+    //     }
+    // }
+
     const getMatcha = async () => {
         try {
-            const idd = users[currentIndex].id;
-            const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
-            setMessage(response.data.message);
-            console.log(" response isssssss : ", response);
+            const myId = profile?.profile?.id;
+            console.log("\n profile?.profile?.id ", profile?.profile?.id);
+            console.log("\n myId ", myId);
+            const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasbdd`, {
+                params: { matcher_id: myId },
+            });
+            console.log("\n\n all matchs -> ", response);
         } catch (error) {
-            setMessage(`MatchaProfile.tsx | Erreur frontend get MATCHAS  : ${error}`);
+            setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
         }
     }
 
@@ -71,6 +88,7 @@ const MatchaProfile: React.FC = () => {
                 user_id: profile?.profile?.id,
                 liked_user_id: users[currentIndex]?.id,//pas bon
                 liker_user_id: profile?.profile?.id,
+                params: { the_id: profile?.profile?.id },
             });
             if (response.data.success) {
                 console.log("\nLike enregistré avec succès\n");
@@ -145,10 +163,13 @@ const MatchaProfile: React.FC = () => {
                     }
                     else {
                         fetchProfile();
-                        getSuggestedMatch();
-                        getMatcha();
+                        await getSuggestedMatch();
+                        if (users.length > 0) {
+                            getMatcha();
+                        };/////////??? Pourquoi ne faire uqe la premiere ligne
                         if (socket) {
                                 socket.on('reciproqueMatcha', (newMatcha) => {
+
                             })
 
                             socket.on('updateAlreadyLike', (valueToUpdate) => {

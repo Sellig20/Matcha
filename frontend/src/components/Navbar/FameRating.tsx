@@ -114,118 +114,118 @@ const FameRating = () => {
     }, []);
 
   return (
-    <section className="gradient-custom">
+        <section className="gradient-custom">
 
-        {notification && (
-            <div className="modal-overlay">
-                <div className="modal-content">
-                    <p>{notification}</p>
-                    <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
+            {notification && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <p>{notification}</p>
+                        <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
+                    </div>
                 </div>
+            )}
+
+            <div>
             </div>
-        )}
+            <div>
+                {message && <p style={{ color: 'red' }}>{message}</p>}
+            </div>
 
-        <div>
-        </div>
-        <div>
-            {message && <p style={{ color: 'red' }}>{message}</p>}
-        </div>
-
-        <div className="container py-5 h-100">
-            <div className="row justify-content-center align-items-center h-100">
-                {/* Grand carré */}
-                <div className="col-12 col-xl-80 d-flex justify-content-center">
-                    <div className="card shadow-2-strong" style={{ borderRadius: '20px', padding: '20px', height: '100%', width: '100%' }}>
-                        
-                        {/* Jauge horizontale */}
-                        <div className="progress mb-4" style={{ height: '30px' }}>
-                           jauge de famreting
-                        </div>
-
-                        {/* Trois rectangles alignés horizontalement */}
-                        <div className="fm-row row">
-                            {/* Premier rectangle vertical */}
-                            <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
-                                    <h2 className="text-center">My number of views : {countViews}</h2>
-                                    <div className="card-body d-flex align-items-center justify-content-center">
-                                        <table className="table-fm">
-                                            <thead>
-                                                <tr>
-                                                    {/* <th className="th-fm">INDEX</th> */}
-                                                    <th className="th-fm">WHO ?</th>
-                                                    <th className="th-fm">WHEN ?</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {views.map((views, index) => (
-                                                    <tr key={index}>
-                                                        {/* <td className="td-fm">{index + 1}</td> */}
-                                                        <td className="td-fm">{views.first_name}</td>
-                                                        <td className="td-fm">{new Date(views.view_started_on).toLocaleString()}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+            <div className="container py-5 h-100">
+                <div className="row justify-content-center align-items-center h-100">
+                    {/* Grand carré */}
+                    <div className="col-12 col-xl-80 d-flex justify-content-center">
+                        <div className="card shadow-2-strong" style={{ borderRadius: '20px', padding: '20px', height: '100%', width: '100%' }}>
+                            
+                            {/* Jauge horizontale */}
+                            <div className="progress mb-4" style={{ height: '30px' }}>
+                            jauge de famreting
                             </div>
 
-                            {/* Deuxième rectangle vertical */}
-                            <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
-                                    <h2 className="text-center">My number of likes : {countLikes}</h2>
+                            {/* Trois rectangles alignés horizontalement */}
+                            <div className="fm-row row">
+                                {/* Premier rectangle vertical */}
+                                <div className="col-md-4 d-flex align-items-center justify-content-center">
+                                    <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                                        <h2 className="text-center">My number of views : {countViews}</h2>
                                         <div className="card-body d-flex align-items-center justify-content-center">
-                                        <table className="table-fm">
-                                            <thead>
-                                                <tr>
-                                                    <th className="th-fm">WHO ?</th>
-                                                    <th className="th-fm">WHEN ?</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {likes.map((likes, index) => (
-                                                    <tr key={index}>
-                                                        <td className="td-fm">{likes.first_name}</td>
-                                                        <td className="td-fm">{new Date(likes.liked_on).toLocaleString()}</td>
+                                            <table className="table-fm">
+                                                <thead>
+                                                    <tr>
+                                                        {/* <th className="th-fm">INDEX</th> */}
+                                                        <th className="th-fm">WHO ?</th>
+                                                        <th className="th-fm">WHEN ?</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    {views.map((views, index) => (
+                                                        <tr key={index}>
+                                                            {/* <td className="td-fm">{index + 1}</td> */}
+                                                            <td className="td-fm">{views.first_name}</td>
+                                                            <td className="td-fm">{new Date(views.view_started_on).toLocaleString()}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Deuxième rectangle vertical */}
+                                <div className="col-md-4 d-flex align-items-center justify-content-center">
+                                    <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                                        <h2 className="text-center">My number of likes : {countLikes}</h2>
+                                            <div className="card-body d-flex align-items-center justify-content-center">
+                                            <table className="table-fm">
+                                                <thead>
+                                                    <tr>
+                                                        <th className="th-fm">WHO ?</th>
+                                                        <th className="th-fm">WHEN ?</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {likes.map((likes, index) => (
+                                                        <tr key={index}>
+                                                            <td className="td-fm">{likes.first_name}</td>
+                                                            <td className="td-fm">{new Date(likes.liked_on).toLocaleString()}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Troisième rectangle vertical */}
+                                <div className="col-md-4 d-flex align-items-center justify-content-center">
+                                    <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
+                                        <h2 className="text-center">My number of matchs</h2>
+                                        <div className="card-body d-flex align-items-center justify-content-center">
+                                            <table className="table-fm">
+                                                <thead>
+                                                    <tr>
+                                                        <th className="th-fm">WHO ?</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {matchs.map((matchs, index) => (
+                                                        <tr key={index}>
+                                                            <td className="td-fm">{matchs.matched_name}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Troisième rectangle vertical */}
-                            <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                <div className="card-fm card shadow-2-strong" style={{ borderRadius: '20px', width: '100%', height: '100%' }}>
-                                    <h2 className="text-center">My number of matchs</h2>
-                                    <div className="card-body d-flex align-items-center justify-content-center">
-                                        <table className="table-fm">
-                                            <thead>
-                                                <tr>
-                                                    <th className="th-fm">WHO ?</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {matchs.map((matchs, index) => (
-                                                    <tr key={index}>
-                                                        <td className="td-fm">{matchs.matchedName}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-);
+        </section>
+    );
 
 };
   

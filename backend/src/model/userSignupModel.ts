@@ -1,7 +1,7 @@
 import { query } from '../db';
 import { UserSettingsInterface } from '../databaseInterfaces';
 import orm from '../../server'
-import { UserCreate, UsersLikesCreate, UsersProfilesViewsCreate } from '../orm/schema';
+import { UserCreate, UsersLikesCreate, UsersMatchsCreate, UsersProfilesViewsCreate } from '../orm/schema';
 
 // export class userSignupModel {
     // static async findByEmail(email: string) {
@@ -83,6 +83,11 @@ export class userSignupModel {
         return response;
     }
 
+    static async readMatchas(key?: string, value?: string | number) {
+        const response = await orm?.read<"users_matchs", any>("users_matchs", key, value);
+        return response;
+    }
+
     static async readFirstName(key?: string, value?: string | number) {
         const response = await orm?.read<"users", any>("users", key, value);
         if (response) 
@@ -91,4 +96,8 @@ export class userSignupModel {
             return null;
     }
 
+    static async createMatch(newMatch: UsersMatchsCreate) {
+        const response = await orm?.create<"users_matchs">("users_matchs", newMatch);
+        return response;
+    }
 }
