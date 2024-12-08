@@ -18,7 +18,8 @@ const Chat = () => {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasbdd`, {
                 params: { matcher_id: myId },
             });
-            console.log("\n\n matchas from bdd -> ", response);
+            console.log("\n\n I matched them -> ", response.data.IMatchedThem);
+            console.log("They matched me -> ", response.data.TheyMatchedMe, "\n\n");
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
         }

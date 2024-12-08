@@ -75,17 +75,19 @@ export class fameRatingController {
         try {
             const likeTab = await this.getWhoLikedMe2(req, res);
             const ILikedTab = await this.getWhoILiked(req, res);
-            console.log("\n***\nreq ------------------------------ reqqqqq ", req.body.idd, "\n***\n");
+            console.log("\n***\nreq ------------------------------ reqqqqq ", req.body.user_id, "\n***\n");
             //probleme de idd je suis censee avec un nouveau user avoir qui jai like de Ilikedtab aec un seul like du coup
             console.log("\n\n I like tab => ", ILikedTab);
             console.log("\n\n like tab => ", likeTab);
             
-            
+            //JE REGARDE DANS LES LIKES SI MOI <3 REQ.BODY.LIKED_USER_ID 
+            //ET SI
+            //REQ.BODY.LIKED_USER_ID <3 MOI
             if (likeTab && ILikedTab) {
                 for (let i = 0; i < likeTab.length; i++) {
                     for (let j = 0; j < ILikedTab.length; j++) {
                         const tabMatchs = [];
-                        if ((likeTab[i].liker_user_id == ILikedTab[j].liked_user_id) &&
+                        if ((ILikedTab[j].liked_user_id === req.body.liked_user_id) && (likeTab[i].liker_user_id == ILikedTab[j].liked_user_id) &&
                         (likeTab[i].liked_user_id == ILikedTab[j].liker_user_id)) {
                             console.log("\n\n -- liked tabs --- ", likeTab[i].first_name, " | ", ILikedTab[j].first_name, "-----\n\n");
                             console.log("\n\n -- liked tabs --- ", likeTab[i].liked_user_id , " || ", ILikedTab[j].liked_user_id , "-----\n\n");
@@ -93,31 +95,40 @@ export class fameRatingController {
                             console.log("myName: ILikedTab[j].first_name = ", ILikedTab[j].first_name);
                             console.log("matchedId: ILikedTab[j].liked_user_id = ", ILikedTab[j].liked_user_id);
                             console.log("myId: likeTab[i].liked_user_id = ", likeTab[i].liked_user_id, "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n\n\n");
-                            tabMatchs.push({//si ya les deux likes il y a donc match
+                            tabMatchs.push({
+                                //SI ON S'EST TOUS LES DEUX <3 ALORS JE PUSH NOS INFOS
                                 matchedName: likeTab[i].first_name,
                                 myName: ILikedTab[j].first_name,
-                                matchedId: ILikedTab[j].liked_user_id,
+                                matchedId: req.body.liked_user_id,
                                 myId: likeTab[i].liked_user_id,
                             });
                         }
+                        //JE VAIS CREER LE MATCH
                         if (tabMatchs.length > 0) {
                             console.log("\n\n FM = THERE IS A MATCH TO CREATE\n\n");
+                            console.log("I AM : \n\n", req.body.user_id, " ", req.body.first_name);
                             let existingMatch = await userSignupModel.readMatchas("matcher_user_id", req.body.user_id);
-                            console.log("\n\n\n\n -------------- all my actual matchs -------------------> ", existingMatch);
-                            if (!existingMatch)
+                            if (!existingMatch) {
                                 existingMatch = await userSignupModel.readMatchas("matched_user_id", req.body.user_id);
+                                console.log("OR AM I : \n\n", req.body.matched_user_id, " ", req.body.first_name);
+                            }
+                            console.log("\n\n\n\n -------------- all my actual matchs -------------------> ", existingMatch);
                             if (existingMatch && tabMatchs) {
                                 for(let i = 0; i < existingMatch.length; i++) {
                                     for(let j = 0; j < tabMatchs.length; j++) {
-                                    //if le match existe deja alors ne rien faire
-                                        console.log(" \n\n\n\n <><><><><><><><><><>< tabmatchs[0] : ", tabMatchs[j], "><><><><><><><><><><><><><><><>");
-                                        console.log("\n\n -- existing match --- ", existingMatch[i].matcher_user_id, " | ", tabMatchs[j].myId, "-----\n\n");
-                                        console.log("\n\n ---existing match -- ", existingMatch[i].matched_user_id, " || ", tabMatchs[j].matchedId, "-----\n\n");
+                                        console.log(` \n\n\n\n <><><><><><><><><><>< tabmatchs[${j}] : `, tabMatchs[j], `><><><><><><><><><><><><><><><>`);
+                                        // console.log("\n\n -- existing match --- ", existingMatch[i].matcher_user_id, " | ", tabMatchs[j].myId, "-----\n\n");
+                                        // console.log("\n\n ---existing match -- ", existingMatch[i].matched_user_id, " || ", tabMatchs[j].matchedId, "-----\n\n");
+                                        console.log(`\n\n\nif ${existingMatch[i].matcher_user_id} === ${tabMatchs[j].myId} && ${existingMatch[i].matched_user_id} === ${tabMatchs[j].matchedId}\n||\n${existingMatch[i].matched_user_id} === ${tabMatchs[j].myId} && ${existingMatch[i].matcher_user_id} === ${tabMatchs[j].matchedId}`);
+                                        console.log(` ===&&&==>> ${existingMatch[i].matched_user_id} === ${req.body.liked_user_id}\n\n\n`);
+                                        //MAIS LE MATCH EXISTE-T-IL DEJA ?
                                         if ((existingMatch[i].matcher_user_id === tabMatchs[j].myId
-                                            && existingMatch[i].matched_user_id === tabMatchs[j].matchedId)
+                                            && existingMatch[i].matched_user_id === tabMatchs[j].matchedId
+                                            && existingMatch[i].matched_user_id === req.body.liked_user_id)
                                             ||
                                             (existingMatch[i].matched_user_id === tabMatchs[j].myId
-                                            && existingMatch[i].matcher_user_id === tabMatchs[j].matchedId)) {
+                                            && existingMatch[i].matcher_user_id === tabMatchs[j].matchedId
+                                            && existingMatch[i].matched_user_id === req.body.liked_user_id)) {
                                                 console.log("\n\n ++++++++ le match existe deja ++++++\n\n")
                                         }
                                         else {
@@ -132,15 +143,16 @@ export class fameRatingController {
                                             my_name: tabMatchs[j].myName,
                                             };
                                             const matchCreated = await userSignupModel.createMatch(createMatchbdd);
-                                            console.log("\n\ncreateMatchbdd = ", createMatchbdd);
+                                            console.log("\n\nMATCH CREATED => ", createMatchbdd);
                                             io.emit('reciproqueMatcha', matchCreated);
-                                            console.log("\n\n fameRatingController get IS THERE A Match => ", tabMatchs);
+                                            // console.log("\n\n fameRatingController get IS THERE A Match => ", tabMatchs);
                                             return matchCreated ;
                                         }
                                     }
                                 }
                             }
                             else {//premier mtch
+                                console.log("\n\nPREMIER MATCH TO CREATE")
                                 const createMatchbdd: UsersMatchsCreate = {
                                     user_id: tabMatchs[0].myId,
                                     matcher_user_id: tabMatchs[0].myId,
@@ -427,8 +439,9 @@ export class fameRatingController {
         try {
             const myId = req.query.matcher_id;
             console.log("\n\n req.query.matcher_id => ", req.query.matcher_id);
-            const tabMatchas = await userSignupModel.readMatchas("matcher_user_id", Number(myId));
-            res.status(201).json( {message : `fameRatingController.ts | Match founded !`, tabMatchas} );
+            const IMatchedThem = await userSignupModel.readMatchas("matcher_user_id", Number(myId));
+            const TheyMatchedMe = await userSignupModel.readMatchas("matched_user_id", Number(myId));
+            res.status(201).json( {message : `fameRatingController.ts | Match founded !`, IMatchedThem, TheyMatchedMe} );
         } catch (error) {
             res.status(500).json({ message: `fameRatingController.ts | Error during get matchas bdd : ${error}` });
         }
