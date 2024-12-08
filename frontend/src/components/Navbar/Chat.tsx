@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
 import "../../assets/styles/Navbar/Chat.css"
 import { useProfile } from './User/profileContext';
+import { all } from 'axios';
 
 const Chat = () => {
     const [data, setData] = useState<any>(null);
@@ -20,6 +21,14 @@ const Chat = () => {
             });
             console.log("\n\n I matched them -> ", response.data.IMatchedThem);
             console.log("They matched me -> ", response.data.TheyMatchedMe, "\n\n");
+            const IMatchedThem = response.data.IMatchedThem;
+            const TheyMatchedMe = response.data.TheyMatchedMe;
+
+            const allMatchas = [...IMatchedThem, ...TheyMatchedMe];
+            console.log("chat all matchas = ", allMatchas);
+            
+
+            console.log("\n\n list users / matchs available to chat with ===> ", allMatchas);
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
         }
@@ -68,6 +77,7 @@ const Chat = () => {
                                 className="card shadow-2-strong mb-3"style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
                                 <div className="card-body d-flex justify-content-center align-items-center">
                                     <p>Liste de toutes mes convos</p>
+                                    <p>Afficher les conv MAIS AUSSI les gens AVEC QUI je PEUX avoir une conv</p>
                                 </div>
                                 </div>
                             </div>

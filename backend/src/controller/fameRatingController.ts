@@ -439,9 +439,13 @@ export class fameRatingController {
         try {
             const myId = req.query.matcher_id;
             console.log("\n\n req.query.matcher_id => ", req.query.matcher_id);
-            const IMatchedThem = await userSignupModel.readMatchas("matcher_user_id", Number(myId));
-            const TheyMatchedMe = await userSignupModel.readMatchas("matched_user_id", Number(myId));
-            res.status(201).json( {message : `fameRatingController.ts | Match founded !`, IMatchedThem, TheyMatchedMe} );
+            const sampleIMatchedThem = await userSignupModel.readMatchas("matcher_user_id", Number(myId));
+            const sampleTheyMatchedMe = await userSignupModel.readMatchas("matched_user_id", Number(myId));
+            if (sampleIMatchedThem && sampleTheyMatchedMe) {
+                const IMatchedThem = sampleIMatchedThem.map(( {matched_name, matched_user_id}) => ({matched_name, matched_user_id }));
+                const TheyMatchedMe = sampleTheyMatchedMe.map(({my_name, matcher_user_id}) => ({my_name, matcher_user_id}));
+                res.status(201).json( {message : `fameRatingController.ts | Match founded !`, IMatchedThem, TheyMatchedMe} );
+            }
         } catch (error) {
             res.status(500).json({ message: `fameRatingController.ts | Error during get matchas bdd : ${error}` });
         }
