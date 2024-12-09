@@ -4,10 +4,11 @@ import "../../assets/styles/Navbar/Chat.css"
 import { useProfile } from './User/profileContext';
 import { all } from 'axios';
 import { useNavigate } from 'react-router';
+import { stripVTControlCharacters } from 'util';
 
 interface MatchaUser {
-    id: number;
-    name: string;
+    matched_user_id: number;
+    matched_name: string;
 }
 
 const Chat = () => {
@@ -16,6 +17,9 @@ const Chat = () => {
     const { isProfileComplete } = useProfile();
     const [notification, setNotification] = useState<string | null>(null);
     const [tabAllMatchas, setAllMatchas] = useState<MatchaUser[]>([]);
+    const [array, setArray] = useState<MatchaUser[]>([]);
+    const [profile_to_check_id, setProfileToCheck] = useState<number>();
+    const [displayConv, setDisplayConv] = useState<boolean>(false);
     const navigate = useNavigate();
 
     //get my info
@@ -32,6 +36,8 @@ const Chat = () => {
             console.log("They matched me -> ", response.data.TheyMatchedMe, "\n\n");
             // const IMatchedThem = response.data.IMatchedThem;
             // const TheyMatchedMe = response.data.TheyMatchedMe;
+            setArray(response.data.IMatchedThem);
+            console.log("\n\n array -> ", array);
             const IMatchedThem = response.data.IMatchedThem.map((item: any) => ({
                 id: item.matched_user_id,
                 name: item.matched_name,
@@ -57,6 +63,17 @@ const Chat = () => {
 
     const handleNavigateNotification = () => {
         navigate(`/apiServeur/userprofile`);
+    };
+
+    const handleClickConv = (profile_to_register_id: number) => {
+        setDisplayConv(true);
+        console.log(`\n je veux la conv avec ${profile_to_register_id} !`);
+        setProfileToCheck(profile_to_register_id);
+    };
+    console.log("profile to check id var globale = ", profile_to_check_id);
+
+    const handleClickCheckProfile = (profile_to_check_id: string) => {
+        console.log(`going to see ${profile_to_check_id}`);
     };
 
     useEffect(() => {
@@ -116,34 +133,76 @@ const Chat = () => {
 
 
                             {/* Rectangle vertical à gauche */}
-                            <div className="col-md-3"style={{ height:"500px", width:"330px" }}>
-                                <div
-                                className="card shadow-2-strong mb-3"style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
-                                    <div className="card d-flex justify-content-center align-items-center">
-                                        <p>Liste de toutes mes convos</p>
-                                        <p>Afficher les conv MAIS AUSSI les gens AVEC QUI je PEUX avoir une conv</p>
-                                    </div>
-                                    <div>
-                                        <table className="table-fm">
+                            <div className="discussions col-md-3"style={{ height:"500px", width:"330px", borderRadius: "30px" }}>
+                                        <table className="table-chat">
                                             <thead>
-                                                <tr>
-                                                    <th className="th-fm">WHO ?</th>
+                                                <tr className="tr-chat">
+                                                    <th className="th-chat">Discussions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <ul>
-                                                {tabAllMatchas.map((user) => (
-                                                    <li>{user.name}</li>
+                                                {array.map((user) => (
+                                                    <tr key={user.matched_user_id}
+                                                        onClick={() => handleClickConv(user.matched_user_id)}
+                                                    >
+                                                        <td className="td-chat">{user.matched_name}</td>
+                                                    </tr>
                                                 ))}
-                                            </ul>
                                             </tbody>
                                         </table>
+                            </div>
+
+                            {displayConv ? (
+                            <>
+                            {/* Deux carrés superposés */}
+                            <div className="d-flex flex-column mx-3" style={{ width: "40%" }}>
+                                <div className="card shadow-2-strong mb-3"style={{ borderRadius: "30px", height: "150px",}}>
+                                <div className="d-flex align-items-center gap-3 px-3" style={{ height: "100%" }}>
+                                    <div className="card-picture-1-c">
+                                            ///photo de maxence////
                                     </div>
+                                    <p>Max</p>
+                                </div>
+                                </div>
+
+                                <div className="card shadow-2-strong"style={{ borderRadius: "30px", width: "100%", height: "330px" }}>
+                                <div className="card-body d-flex justify-content-center align-items-center">
+                                    <p>messagerie et messages</p>
+                                </div>
                                 </div>
                             </div>
 
 
-                            {/* Deux carrés superposés */}
+                            {/* Rectangle vertical à droite */}
+                            <div className="col-md-3"style={{ height:"500px", width:"330px" }}>
+                                <div className="card shadow-2-strong mb-3" style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
+                                    <div className="card-body d-flex-column">
+                                            <div className="card card-picture-2-c">
+                                                ///photo user : {profile_to_check_id}////
+                                            </div>
+                                            <div className="card button-chat"
+                                            >
+                                                <div>
+                                                    <button
+                                                    className="button-chat-text"
+                                                    onClick={() => handleClickCheckProfile("null")}>
+                                                        Check this juicy profile !
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button className="button-chat-text">
+                                                        <p>Report</p>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </>
+
+                            ) : (
+
+                            <>
                             <div className="d-flex flex-column mx-3" style={{ width: "40%" }}>
                                 <div className="card shadow-2-strong mb-3"style={{ borderRadius: "30px", height: "150px",}}>
                                 <div className="d-flex align-items-center gap-3 px-3" style={{ height: "100%" }}>
@@ -172,19 +231,25 @@ const Chat = () => {
                                             <div className="card button-chat"
                                             >
                                                 <div>
-                                                    <button className="button-prev-next button-matcha-profile">
-                                                    <p>Aller sur son profil</p>
+                                                    <button
+                                                    className="button-chat-text"
+                                                    onClick={() => handleClickCheckProfile("null")}>
+                                                        Check this juicy profile !
                                                     </button>
                                                 </div>
                                                 <div>
-                                                    <button className="button-prev-next button-matcha-profile">
-                                                    <p>Report</p>
+                                                    <button className="button-chat-text">
+                                                        <p>Report</p>
                                                     </button>
                                                 </div>
                                             </div>
                                     </div>
                                 </div>
                             </div>
+
+                            </>
+                            )}
+
                         </div>
                     </div>
                     </div>

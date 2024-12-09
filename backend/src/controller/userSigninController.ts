@@ -28,7 +28,7 @@ export class userSigninController {
         } catch (err: any) {
             console.error("\nuserSigninController -> ", err);
             if (err == "TypeError: Cannot read properties of null (reading 'password_hash')") {
-                res.status(401).json( { message: "Wrong email" } );
+                res.status(401).json( { message: "Check the email. Does it exist ?" } );
             }
             else {
                 res.status(401).json( { message: err.message } );

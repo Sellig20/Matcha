@@ -442,6 +442,8 @@ export class fameRatingController {
             const sampleIMatchedThem = await userSignupModel.readMatchas("matcher_user_id", myId);
             const sampleTheyMatchedMe = await userSignupModel.readMatchas("matched_user_id", myId);
             if (sampleIMatchedThem && sampleTheyMatchedMe) {
+                console.log("\n\n I MATCHED CORRECTION = ", sampleIMatchedThem);
+                console.log("THEY MATCH ME CORRECTION = ", sampleTheyMatchedMe);
                 const IMatchedThem = sampleIMatchedThem.map(( {matched_name, matched_user_id}) => ({matched_name, matched_user_id }));
                 const TheyMatchedMe = sampleTheyMatchedMe.map(({my_name, matcher_user_id}) => ({my_name, matcher_user_id}));
                 res.status(201).json( {message : `fameRatingController.ts | Match founded !`, IMatchedThem, TheyMatchedMe} );
