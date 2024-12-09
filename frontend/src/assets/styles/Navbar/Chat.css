@@ -17,8 +17,22 @@
 .card-picture-2-c {
     background-color: rgb(197, 189, 189);
     width: 300px;
-    height: 200px;
+    height: 300px;
     border-radius: 20%;
     display: flex;
+    align-items: center;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-chat {
+    border: none;
+    padding: 30px;
+    gap: 10px;
+    justify-content: center;
     align-items: center;
 }

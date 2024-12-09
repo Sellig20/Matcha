@@ -3,39 +3,74 @@ import axiosInstance from '../../security/axiosInstance';
 import "../../assets/styles/Navbar/Chat.css"
 import { useProfile } from './User/profileContext';
 import { all } from 'axios';
+import { useNavigate } from 'react-router';
+
+interface MatchaUser {
+    id: number;
+    name: string;
+}
 
 const Chat = () => {
     const [data, setData] = useState<any>(null);
     const [message, setMessage] = useState('');
-    
+    const { isProfileComplete } = useProfile();
+    const [notification, setNotification] = useState<string | null>(null);
+    const [tabAllMatchas, setAllMatchas] = useState<MatchaUser[]>([]);
+    const navigate = useNavigate();
+
     //get my info
     const profile = useProfile();
 
     const getMatchasUsers = async () => {
         try {
             const myId = profile?.profile?.id;
-            console.log("\n profile?.profile?.id ", profile?.profile?.id);
             console.log("\n myId ", myId);
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasbdd`, {
                 params: { matcher_id: myId },
             });
             console.log("\n\n I matched them -> ", response.data.IMatchedThem);
             console.log("They matched me -> ", response.data.TheyMatchedMe, "\n\n");
-            const IMatchedThem = response.data.IMatchedThem;
-            const TheyMatchedMe = response.data.TheyMatchedMe;
-
-            const allMatchas = [...IMatchedThem, ...TheyMatchedMe];
-            console.log("chat all matchas = ", allMatchas);
+            // const IMatchedThem = response.data.IMatchedThem;
+            // const TheyMatchedMe = response.data.TheyMatchedMe;
+            const IMatchedThem = response.data.IMatchedThem.map((item: any) => ({
+                id: item.matched_user_id,
+                name: item.matched_name,
+            }));
+    
+            const TheyMatchedMe = response.data.TheyMatchedMe.map((item: any) => ({
+                id: item.matcher_user_id,
+                name: item.my_name,
+            }));
             
 
-            console.log("\n\n list users / matchs available to chat with ===> ", allMatchas);
+            const allMatchas = [...IMatchedThem, ...TheyMatchedMe];
+            setAllMatchas(allMatchas);
+            // console.log("chat all matchas = ", allMatchas);
+            // for (let i = 0; i < tabAllMatchas.length; i ++) {
+            //     console.log("\n ----------> ", tabAllMatchas[i].name);
+            // }
+            // console.log("\n\n list users / matchs available to chat with ===> ", allMatchas);
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
         }
     }
 
+    const handleNavigateNotification = () => {
+        navigate(`/apiServeur/userprofile`);
+    };
+
     useEffect(() => {
-        getMatchasUsers();
+        try {
+            if (isProfileComplete === false) {
+                setNotification("Warning : You must fill your profile before going on");
+            }
+            else {
+                getMatchasUsers();
+                
+            }
+    } catch (error) {
+        setNotification(`Erreur frontend userprofile : ${error}`);
+    }
 
     }, []);
 
@@ -63,6 +98,15 @@ const Chat = () => {
                 </h1>
             </div>
 
+            {notification && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <p>{notification}</p>
+                        <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
+                    </div>
+                </div>
+            )}
+
             <div className="container py-5 h-100">
                 <div className="d-flex row justify-content-center align-items-center h-100">
                     {/* Grand carré */}
@@ -75,10 +119,26 @@ const Chat = () => {
                             <div className="col-md-3"style={{ height:"500px", width:"330px" }}>
                                 <div
                                 className="card shadow-2-strong mb-3"style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
-                                <div className="card-body d-flex justify-content-center align-items-center">
-                                    <p>Liste de toutes mes convos</p>
-                                    <p>Afficher les conv MAIS AUSSI les gens AVEC QUI je PEUX avoir une conv</p>
-                                </div>
+                                    <div className="card d-flex justify-content-center align-items-center">
+                                        <p>Liste de toutes mes convos</p>
+                                        <p>Afficher les conv MAIS AUSSI les gens AVEC QUI je PEUX avoir une conv</p>
+                                    </div>
+                                    <div>
+                                        <table className="table-fm">
+                                            <thead>
+                                                <tr>
+                                                    <th className="th-fm">WHO ?</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <ul>
+                                                {tabAllMatchas.map((user) => (
+                                                    <li>{user.name}</li>
+                                                ))}
+                                            </ul>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
@@ -104,13 +164,24 @@ const Chat = () => {
 
                             {/* Rectangle vertical à droite */}
                             <div className="col-md-3"style={{ height:"500px", width:"330px" }}>
-                                <div className="card shadow-2-strong mb-3 justify-content-center align-items-center" style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
-                                    <div className="card-body d-flex-column justify-content-center align-items-center">
-                                        <div className="card-body card-picture-2-c">
-                                            ///photo de maxence////
-                                        </div>
-                                        <p>Aller sur son profile</p>
-                                        <p>Report</p>
+                                <div className="card shadow-2-strong mb-3" style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
+                                    <div className="card-body d-flex-column">
+                                            <div className="card card-picture-2-c">
+                                                ///photo de maxence////
+                                            </div>
+                                            <div className="card button-chat"
+                                            >
+                                                <div>
+                                                    <button className="button-prev-next button-matcha-profile">
+                                                    <p>Aller sur son profil</p>
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button className="button-prev-next button-matcha-profile">
+                                                    <p>Report</p>
+                                                    </button>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
                             </div>

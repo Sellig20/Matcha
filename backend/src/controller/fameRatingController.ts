@@ -437,10 +437,10 @@ export class fameRatingController {
 
     static async getMatchasbdd(req: Request, res: Response) {
         try {
-            const myId = req.query.matcher_id;
-            console.log("\n\n req.query.matcher_id => ", req.query.matcher_id);
-            const sampleIMatchedThem = await userSignupModel.readMatchas("matcher_user_id", Number(myId));
-            const sampleTheyMatchedMe = await userSignupModel.readMatchas("matched_user_id", Number(myId));
+            const myId = req.body.user_id;
+            console.log("\n\n req.query.matcher_id => ", myId);
+            const sampleIMatchedThem = await userSignupModel.readMatchas("matcher_user_id", myId);
+            const sampleTheyMatchedMe = await userSignupModel.readMatchas("matched_user_id", myId);
             if (sampleIMatchedThem && sampleTheyMatchedMe) {
                 const IMatchedThem = sampleIMatchedThem.map(( {matched_name, matched_user_id}) => ({matched_name, matched_user_id }));
                 const TheyMatchedMe = sampleTheyMatchedMe.map(({my_name, matcher_user_id}) => ({my_name, matcher_user_id}));
