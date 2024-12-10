@@ -30,7 +30,7 @@ const UserProfile: React.FC = () => {
     };
 
     useEffect(() => {
-        const res = fetchProfile();
+        // const res = fetchProfile();
     }, []);
 
     return (

@@ -448,6 +448,9 @@ export class fameRatingController {
                 const TheyMatchedMe = sampleTheyMatchedMe.map(({my_name, matcher_user_id}) => ({my_name, matcher_user_id}));
                 res.status(201).json( {message : `fameRatingController.ts | Match founded !`, IMatchedThem, TheyMatchedMe} );
             }
+            else {
+                res.status(204).json( {message: `No match founded ! MatchingController.ts` });
+            }
         } catch (error) {
             res.status(500).json({ message: `fameRatingController.ts | Error during get matchas bdd : ${error}` });
         }

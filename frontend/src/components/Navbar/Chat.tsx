@@ -5,17 +5,20 @@ import { useProfile } from './User/profileContext';
 import { all } from 'axios';
 import { useNavigate } from 'react-router';
 import { stripVTControlCharacters } from 'util';
+import { useForm } from './User/useForm';
 
 interface MatchaUser {
-    matched_user_id: number;
-    matched_name: string;
+    id: number;
+    name: string;
 }
 
 const Chat = () => {
     const [data, setData] = useState<any>(null);
     const [message, setMessage] = useState('');
     const { isProfileComplete } = useProfile();
+    const [formValues, handleChange] = useForm({ msg: ''});
     const [notification, setNotification] = useState<string | null>(null);
+    const [notificationNoMatch, setNotificationNoMatch] = useState<string | null>(null);
     const [tabAllMatchas, setAllMatchas] = useState<MatchaUser[]>([]);
     const [array, setArray] = useState<MatchaUser[]>([]);
     const [profile_to_check_id, setProfileToCheck] = useState<number>();
@@ -34,28 +37,29 @@ const Chat = () => {
             });
             console.log("\n\n I matched them -> ", response.data.IMatchedThem);
             console.log("They matched me -> ", response.data.TheyMatchedMe, "\n\n");
-            // const IMatchedThem = response.data.IMatchedThem;
-            // const TheyMatchedMe = response.data.TheyMatchedMe;
-            setArray(response.data.IMatchedThem);
+            if (response.data.TheyMatchedMe) {
+                const TheyMatchedMe = response.data.TheyMatchedMe.map((item: any) => ({
+                    id: item.matcher_user_id,
+                    name: item.my_name,
+                }));
+                setArray(TheyMatchedMe);
+            }
+            else if (!response.data.TheyMatchedMe || !array || array.length < 0) {
+                setNotificationNoMatch("You have to match with someone to start a conversation !");
+            }
             console.log("\n\n array -> ", array);
-            const IMatchedThem = response.data.IMatchedThem.map((item: any) => ({
-                id: item.matched_user_id,
-                name: item.matched_name,
-            }));
-    
-            const TheyMatchedMe = response.data.TheyMatchedMe.map((item: any) => ({
-                id: item.matcher_user_id,
-                name: item.my_name,
-            }));
-            
+            console.log("\n\n length IMATCHED THEM ----> ", array.length);
 
-            const allMatchas = [...IMatchedThem, ...TheyMatchedMe];
-            setAllMatchas(allMatchas);
-            // console.log("chat all matchas = ", allMatchas);
-            // for (let i = 0; i < tabAllMatchas.length; i ++) {
-            //     console.log("\n ----------> ", tabAllMatchas[i].name);
-            // }
-            // console.log("\n\n list users / matchs available to chat with ===> ", allMatchas);
+            // const IMatchedThem = response.data.IMatchedThem.map((item: any) => ({
+            //     id: item.matched_user_id,
+            //     name: item.matched_name,
+            // }));
+            
+            
+            
+            // const allMatchas = [...IMatchedThem, ...TheyMatchedMe];
+            // setAllMatchas(allMatchas);
+            
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
         }
@@ -63,6 +67,10 @@ const Chat = () => {
 
     const handleNavigateNotification = () => {
         navigate(`/apiServeur/userprofile`);
+    };
+
+    const handleNoMatchNotification = () => {
+        setNotificationNoMatch(null);
     };
 
     const handleClickConv = (profile_to_register_id: number) => {
@@ -118,8 +126,16 @@ const Chat = () => {
             {notification && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                        <p>{notification}</p>
+                        {notification}
                         <button className="btn-userproduct" onClick={handleNavigateNotification}>OK</button>
+                    </div>
+                </div>
+            )}
+            {notificationNoMatch && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        {notificationNoMatch} 
+                        <button className="btn-userproduct" onClick={handleNoMatchNotification}>OK</button>
                     </div>
                 </div>
             )}
@@ -142,10 +158,12 @@ const Chat = () => {
                                             </thead>
                                             <tbody>
                                                 {array.map((user) => (
-                                                    <tr key={user.matched_user_id}
-                                                        onClick={() => handleClickConv(user.matched_user_id)}
-                                                    >
-                                                        <td className="td-chat">{user.matched_name}</td>
+                                                    <tr key={user.id}
+                                                        onClick={() => handleClickConv(user.id)}
+                                                        className={
+                                                            displayConv === true ? 'td-chat-clicked' : 'td-chat'
+                                                        }>
+                                                        <td className="td-chat">{user.name}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -156,20 +174,40 @@ const Chat = () => {
                             <>
                             {/* Deux carrés superposés */}
                             <div className="d-flex flex-column mx-3" style={{ width: "40%" }}>
+
                                 <div className="card shadow-2-strong mb-3"style={{ borderRadius: "30px", height: "150px",}}>
                                 <div className="d-flex align-items-center gap-3 px-3" style={{ height: "100%" }}>
                                     <div className="card-picture-1-c">
-                                            ///photo de maxence////
+                                            ///photo user : {profile_to_check_id}////
                                     </div>
                                     <p>Max</p>
                                 </div>
                                 </div>
 
                                 <div className="card shadow-2-strong"style={{ borderRadius: "30px", width: "100%", height: "330px" }}>
-                                <div className="card-body d-flex justify-content-center align-items-center">
-                                    <p>messagerie et messages</p>
+                                <div className="card-body bubble-corpus">
+                                    <div className="historic-texts">
+                                    <p>old messages</p>
+
+                                    </div>
+                                    <div className="bubble-to-chat">
+                                        <textarea 
+                                            className="textearea-bubble"
+                                            id="bubble-chat"
+                                            value={formValues.msg}
+                                            onChange={handleChange}
+                                            required
+                                            >
+                                        </textarea>
+                                    </div>
+                                    <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
+                                        <button data-mdb-ripple-init 
+                                            className="btn btn-chat" 
+                                            > Send </button>
+                                    </div>
                                 </div>
                                 </div>
+
                             </div>
 
 
@@ -201,21 +239,17 @@ const Chat = () => {
                             </>
 
                             ) : (
+                                //si oas de clique sur display conversation
 
                             <>
                             <div className="d-flex flex-column mx-3" style={{ width: "40%" }}>
-                                <div className="card shadow-2-strong mb-3"style={{ borderRadius: "30px", height: "150px",}}>
-                                <div className="d-flex align-items-center gap-3 px-3" style={{ height: "100%" }}>
-                                    <div className="card-picture-1-c">
-                                            ///photo de maxence////
-                                    </div>
-                                    <p>Max</p>
-                                </div>
+                                <div className="no-chat-up card shadow-2-strong mb-3"style={{ borderRadius: "30px", height: "150px",}}>
+                                    No profile loaded ...
                                 </div>
 
-                                <div className="card shadow-2-strong"style={{ borderRadius: "30px", width: "100%", height: "330px" }}>
-                                <div className="card-body d-flex justify-content-center align-items-center">
-                                    <p>messagerie et messages</p>
+                                <div className="no-chat card shadow-2-strong"style={{ borderRadius: "30px", width: "100%", height: "330px" }}>
+                                <div className=" card-body d-flex justify-content-center align-items-center">
+                                    No conversation loaded...
                                 </div>
                                 </div>
                             </div>
@@ -223,27 +257,8 @@ const Chat = () => {
 
                             {/* Rectangle vertical à droite */}
                             <div className="col-md-3"style={{ height:"500px", width:"330px" }}>
-                                <div className="card shadow-2-strong mb-3" style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
-                                    <div className="card-body d-flex-column">
-                                            <div className="card card-picture-2-c">
-                                                ///photo de maxence////
-                                            </div>
-                                            <div className="card button-chat"
-                                            >
-                                                <div>
-                                                    <button
-                                                    className="button-chat-text"
-                                                    onClick={() => handleClickCheckProfile("null")}>
-                                                        Check this juicy profile !
-                                                    </button>
-                                                </div>
-                                                <div>
-                                                    <button className="button-chat-text">
-                                                        <p>Report</p>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                    </div>
+                                <div className="no-chat card shadow-2-strong mb-3" style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
+                                   No profile loaded ...
                                 </div>
                             </div>
 
