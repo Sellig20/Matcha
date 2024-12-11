@@ -6,6 +6,7 @@ import { all } from 'axios';
 import { useNavigate } from 'react-router';
 import { stripVTControlCharacters } from 'util';
 import { useForm } from './User/useForm';
+import { useWebSocketContext } from '../../security/wsContext';
 
 interface MatchaUser {
     id: number;
@@ -16,7 +17,7 @@ const Chat = () => {
     const [data, setData] = useState<any>(null);
     const [message, setMessage] = useState('');
     const { isProfileComplete } = useProfile();
-    const [formValues, handleChange] = useForm({ msg: ''});
+    const [formValues, setFormValues] = useState<{ msg: string }>({ msg: '' });
     const [notification, setNotification] = useState<string | null>(null);
     const [notificationNoMatch, setNotificationNoMatch] = useState<string | null>(null);
     const [tabAllMatchas, setAllMatchas] = useState<MatchaUser[]>([]);
@@ -24,6 +25,8 @@ const Chat = () => {
     const [profile_to_check_id, setProfileToCheck] = useState<number>();
     const [displayConv, setDisplayConv] = useState<boolean>(false);
     const navigate = useNavigate();
+    const { socket } = useWebSocketContext();
+
 
     //get my info
     const profile = useProfile();
@@ -92,11 +95,30 @@ const Chat = () => {
         console.log(`\n je veux la conv avec ${profile_to_register_id} !`);
         setProfileToCheck(profile_to_register_id);
     };
+
     console.log("profile to check id var globale = ", profile_to_check_id);
 
     const handleClickCheckProfile = (profile_to_check_id: number | undefined) => {
         console.log(`going to see ${profile_to_check_id} profile`);
         navigate(`/apiServeur/userproduct/${profile_to_check_id}`);
+    };
+
+    const handleChangeMsg = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setFormValues({ ...formValues, msg: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await axiosInstance.post(`http://localhost:8000/apiServeur/chatmessages`,  {
+                sender_id: profile?.profile?.id,
+                receiver_id: profile_to_check_id,
+                message: formValues.msg,
+            });
+            console.log("\n response chat post message -> ", response);
+        } catch (error) {
+            setMessage(`Chat.tsx | Erreur frontend post text messages chat : ${error}`);
+        }
     };
 
     useEffect(() => {
@@ -201,26 +223,30 @@ const Chat = () => {
                                 </div>
 
                                 <div className="card shadow-2-strong"style={{ borderRadius: "30px", width: "100%", height: "330px" }}>
-                                <div className="card-body bubble-corpus">
-                                    <div className="historic-texts">
-                                    <p>old messages</p>
+                                <div className="card-body corpus-bubble">
+                                    <form onSubmit={handleSubmit}>
 
-                                    </div>
-                                    <div className="bubble-to-chat">
-                                        <textarea 
-                                            className="textearea-bubble"
-                                            id="bubble-chat"
-                                            value={formValues.msg}
-                                            onChange={handleChange}
-                                            required
-                                            >
-                                        </textarea>
-                                    </div>
-                                    <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
-                                        <button data-mdb-ripple-init 
-                                            className="btn btn-chat btn-send" 
-                                            > Send </button>
-                                    </div>
+                                        <div className="historic-texts">
+                                        <p>old messages</p>
+
+                                        </div>
+                                        <div className="bubble-to-chat">
+                                            <textarea 
+                                                className="textearea-bubble"
+                                                id="msg"
+                                                name="msg"
+                                                value={formValues.msg}
+                                                onChange={handleChangeMsg}
+                                                required
+                                                >
+                                            </textarea>
+                                        </div>
+                                        <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
+                                            <button data-mdb-ripple-init 
+                                                className="btn btn-chat btn-send" 
+                                                > Send </button>
+                                        </div>
+                                    </form>
                                 </div>
                                 </div>
 

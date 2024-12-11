@@ -135,11 +135,7 @@
 }
 
 .corpus-bubble {
-    display: flex;
-    flex-direction: column; /* Colonne pour empiler les éléments */
-    justify-content: space-between; /* Espace entre les éléments */
-    height: 100%;
-    position: relative;
+  
 }
 
 .bubble-to-chat {

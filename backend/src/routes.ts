@@ -5,6 +5,7 @@ import { userSigninController } from './controller/userSigninController';
 import { userSignupController } from './controller/userSignupController';
 import { userProfileController } from './controller/userProfileController';
 import { MatchingController } from './controller/MatchingController';
+import { chatController } from './controller/chatController';
 import { Request, Response } from "express";
 import { authenticateWithToken } from "./authMiddleware";
 
@@ -100,6 +101,10 @@ router.get('/fm', authenticateWithToken, (req, res) => {
 
 router.get('/chat', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /CHAT', user: req.user });
+});
+
+router.post('/chatmessages', authenticateWithToken, (req, res) => {
+    chatController.postMessages(req, res);
 });
 
 router.get('/map', authenticateWithToken, (req, res) => {
