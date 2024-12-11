@@ -310,7 +310,7 @@ export class fameRatingController {
 
     static async getWhoLikedMe(req: Request, res: Response) {
         try {
-            const value = req.body.user_id;
+            const value = req.userId;
             console.log("\n\n\n %%%%%%%% WHO LIKED ME %%%%%%%%%%% ", req.body.user_id);
             const numberLikes = await userSignupModel.readLikes("liked_user_id", value);
             if (numberLikes) {
@@ -335,7 +335,7 @@ export class fameRatingController {
     
     static async getWhoLikedMe2(req: Request, res: Response) {//DEBILE
         try {
-            const value = req.body.user_id;
+            const value = req.userId;;
             const numberLikes = await userSignupModel.readLikes("liked_user_id", value);
             if (numberLikes) {
                 const ProfilesLikesTab = await Promise.all(numberLikes.map(async (like) => {
@@ -360,8 +360,8 @@ export class fameRatingController {
 
     static async getWhoILiked(req: Request, res: Response) {
         try {
-            const value = req.body.user_id;
-            console.log("\n\n\n %%%%%%%%%% WHO I LIKED %%%%%%%%% ", req.body.user_id);
+            const value = req.userId;
+            console.log("\n\n\n %%%%%%%%%% WHO I LIKED %%%%%%%%% ", req.userId);
 
             const numberLikes = await userSignupModel.readLikes("liker_user_id", value);
             if (numberLikes) {
@@ -437,16 +437,24 @@ export class fameRatingController {
 
     static async getMatchasbdd(req: Request, res: Response) {
         try {
-            const myId = req.body.user_id;
-            console.log("\n\n req.query.matcher_id => ", myId);
+            const myId = req.userId;
+            console.log("\n\n GETMATCHASBDD FAMERATING CONTROLLER req.body.matcher_id => ", myId);
             const sampleIMatchedThem = await userSignupModel.readMatchas("matcher_user_id", myId);
             const sampleTheyMatchedMe = await userSignupModel.readMatchas("matched_user_id", myId);
+            console.log("\n\nGETMATCHASBDD FAMERATING CONTROLLER Sample I MATCHED THEM => ", sampleIMatchedThem);
+            console.log("GETMATCHASBDD FAMERATING CONTROLLER Sample THEY MATCHED ME => ", sampleTheyMatchedMe);
             if (sampleIMatchedThem && sampleTheyMatchedMe) {
                 console.log("\n\n I MATCHED CORRECTION = ", sampleIMatchedThem);
                 console.log("THEY MATCH ME CORRECTION = ", sampleTheyMatchedMe);
                 const IMatchedThem = sampleIMatchedThem.map(( {matched_name, matched_user_id}) => ({matched_name, matched_user_id }));
                 const TheyMatchedMe = sampleTheyMatchedMe.map(({my_name, matcher_user_id}) => ({my_name, matcher_user_id}));
                 res.status(201).json( {message : `fameRatingController.ts | Match founded !`, IMatchedThem, TheyMatchedMe} );
+            } else if (sampleIMatchedThem) {
+                const IMatchedThem = sampleIMatchedThem.map(( {matched_name, matched_user_id}) => ({matched_name, matched_user_id }));
+                res.status(201).json( {message : `fameRatingController.ts | Match founded !`, IMatchedThem} );
+            } else if (sampleTheyMatchedMe) {
+                const TheyMatchedMe = sampleTheyMatchedMe.map(({my_name, matcher_user_id}) => ({my_name, matcher_user_id}));
+                res.status(201).json( {message : `fameRatingController.ts | Match founded !`, TheyMatchedMe} );
             }
             else {
                 res.status(204).json( {message: `No match founded ! MatchingController.ts` });

@@ -39,3 +39,4 @@ compa age * coeff
  * notif manque de peps couleur
  * ne pas pouvoir choisir deux tags pareil doublons
  * notification lorsqu'il y a un matcha
+ * appliquer le coeur algo sur userproduct

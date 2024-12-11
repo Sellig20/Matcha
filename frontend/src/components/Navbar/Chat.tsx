@@ -20,7 +20,7 @@ const Chat = () => {
     const [notification, setNotification] = useState<string | null>(null);
     const [notificationNoMatch, setNotificationNoMatch] = useState<string | null>(null);
     const [tabAllMatchas, setAllMatchas] = useState<MatchaUser[]>([]);
-    const [array, setArray] = useState<MatchaUser[]>([]);
+    const [array, setArray] = useState<any[]>([]);
     const [profile_to_check_id, setProfileToCheck] = useState<number>();
     const [displayConv, setDisplayConv] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -31,31 +31,45 @@ const Chat = () => {
     const getMatchasUsers = async () => {
         try {
             const myId = profile?.profile?.id;
-            console.log("\n myId ", myId);
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasbdd`, {
                 params: { matcher_id: myId },
             });
-            console.log("\n\n I matched them -> ", response.data.IMatchedThem);
-            console.log("They matched me -> ", response.data.TheyMatchedMe, "\n\n");
-            if (response.data.TheyMatchedMe) {
-                const TheyMatchedMe = response.data.TheyMatchedMe.map((item: any) => ({
+            console.log("THEY MATCHED ME => ", response.data.TheyMatchedMe);
+            console.log("I MATCHED THEM => ", response.data.IMatchedThem);
+            if (response.data.TheyMatchedMe && response.data.IMatchedThem) {
+                const TheyMatchedMe = response.data.TheyMatchedMe
+                .map((item:any) => ({
                     id: item.matcher_user_id,
                     name: item.my_name,
                 }));
-                setArray(TheyMatchedMe);
+                const IMatchedThem = response.data.IMatchedThem
+                .map((item:any) => ({
+                    id: item.matched_user_id,
+                    name: item.matched_name,
+                }));
+                const tmp1 = TheyMatchedMe.filter((item: any) => item.id !== myId);
+                const tmp2 = IMatchedThem.filter((item: any) => item.id !== myId);
+                setArray([...tmp1, ...tmp2]);
+            } else if (response.data.TheyMatchedMe) {
+                const TheyMatchedMe = response.data.TheyMatchedMe
+                .map((item:any) => ({
+                    id: item.matcher_user_id,
+                    name: item.my_name,
+                }));
+                const tmp1 = TheyMatchedMe.filter((item: any) => item.id !== myId);
+                setArray([...tmp1]);
+            } else if (response.data.IMatchedThem) {
+                const IMatchedThem = response.data.IMatchedThem
+                .map((item:any) => ({
+                    id: item.matched_user_id,
+                    name: item.matched_name,
+                }));
+                const tmp2 = IMatchedThem.filter((item: any) => item.id !== myId);
+                setArray([...tmp2]);
             }
-            else if (!response.data.TheyMatchedMe || !array || array.length < 0) {
+            else if (!response.data.TheyMatchedMe && !response.data.IMatchedThem) {
                 setNotificationNoMatch("You have to match with someone to start a conversation !");
             }
-            console.log("\n\n array -> ", array);
-            console.log("\n\n length IMATCHED THEM ----> ", array.length);
-
-            // const IMatchedThem = response.data.IMatchedThem.map((item: any) => ({
-            //     id: item.matched_user_id,
-            //     name: item.matched_name,
-            // }));
-            
-            
             
             // const allMatchas = [...IMatchedThem, ...TheyMatchedMe];
             // setAllMatchas(allMatchas);
@@ -80,8 +94,9 @@ const Chat = () => {
     };
     console.log("profile to check id var globale = ", profile_to_check_id);
 
-    const handleClickCheckProfile = (profile_to_check_id: string) => {
-        console.log(`going to see ${profile_to_check_id}`);
+    const handleClickCheckProfile = (profile_to_check_id: number | undefined) => {
+        console.log(`going to see ${profile_to_check_id} profile`);
+        navigate(`/apiServeur/userproduct/${profile_to_check_id}`);
     };
 
     useEffect(() => {
@@ -131,6 +146,7 @@ const Chat = () => {
                     </div>
                 </div>
             )}
+
             {notificationNoMatch && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -161,7 +177,7 @@ const Chat = () => {
                                                     <tr key={user.id}
                                                         onClick={() => handleClickConv(user.id)}
                                                         className={
-                                                            displayConv === true ? 'td-chat-clicked' : 'td-chat'
+                                                            profile_to_check_id === user.id ? 'td-chat-clicked' : 'td-chat'
                                                         }>
                                                         <td className="td-chat">{user.name}</td>
                                                     </tr>
@@ -202,7 +218,7 @@ const Chat = () => {
                                     </div>
                                     <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                                         <button data-mdb-ripple-init 
-                                            className="btn btn-chat" 
+                                            className="btn btn-chat btn-send" 
                                             > Send </button>
                                     </div>
                                 </div>
@@ -223,7 +239,7 @@ const Chat = () => {
                                                 <div>
                                                     <button
                                                     className="button-chat-text"
-                                                    onClick={() => handleClickCheckProfile("null")}>
+                                                    onClick={() => handleClickCheckProfile(profile_to_check_id)}>
                                                         Check this juicy profile !
                                                     </button>
                                                 </div>

@@ -85,6 +85,7 @@ export class userSignupModel {
 
     static async readMatchas(key?: string, value?: string | number) {
         const response = await orm?.read<"users_matchs", any>("users_matchs", key, value);
+        console.log("\n\n response readMAtchas => ", response);
         return response;
     }
 
