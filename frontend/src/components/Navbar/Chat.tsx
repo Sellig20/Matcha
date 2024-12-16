@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axiosInstance from '../../security/axiosInstance';
 import "../../assets/styles/Navbar/Chat.css"
 import { useProfile } from './User/profileContext';
@@ -17,16 +17,17 @@ const Chat = () => {
     const [data, setData] = useState<any>(null);
     const [message, setMessage] = useState('');
     const { isProfileComplete } = useProfile();
-    const [formValues, setFormValues] = useState<{ msg: string }>({ msg: '' });
+    const [formValues, setFormValues] = useState("");
     const [notification, setNotification] = useState<string | null>(null);
     const [notificationNoMatch, setNotificationNoMatch] = useState<string | null>(null);
     const [tabAllMatchas, setAllMatchas] = useState<MatchaUser[]>([]);
     const [array, setArray] = useState<any[]>([]);
+    const [chronoArray, setChronoArray] = useState<any[]>([]);
     const [profile_to_check_id, setProfileToCheck] = useState<number>();
     const [displayConv, setDisplayConv] = useState<boolean>(false);
     const navigate = useNavigate();
+    const messagesRef = useRef<HTMLDivElement | null>(null);
     const { socket } = useWebSocketContext();
-
 
     //get my info
     const profile = useProfile();
@@ -37,8 +38,6 @@ const Chat = () => {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasbdd`, {
                 params: { matcher_id: myId },
             });
-            console.log("THEY MATCHED ME => ", response.data.TheyMatchedMe);
-            console.log("I MATCHED THEM => ", response.data.IMatchedThem);
             if (response.data.TheyMatchedMe && response.data.IMatchedThem) {
                 const TheyMatchedMe = response.data.TheyMatchedMe
                 .map((item:any) => ({
@@ -92,34 +91,177 @@ const Chat = () => {
 
     const handleClickConv = (profile_to_register_id: number) => {
         setDisplayConv(true);
-        console.log(`\n je veux la conv avec ${profile_to_register_id} !`);
+        // console.log(`\n je veux la conv avec ${profile_to_register_id} !`);
         setProfileToCheck(profile_to_register_id);
     };
 
-    console.log("profile to check id var globale = ", profile_to_check_id);
+    // console.log("profile to check id var globale = ", profile_to_check_id);
 
     const handleClickCheckProfile = (profile_to_check_id: number | undefined) => {
-        console.log(`going to see ${profile_to_check_id} profile`);
+        // console.log(`going to see ${profile_to_check_id} profile`);
         navigate(`/apiServeur/userproduct/${profile_to_check_id}`);
     };
 
-    const handleChangeMsg = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setFormValues({ ...formValues, msg: e.target.value });
-    };
+    // const handleChangeMsg = () => {
+    //     setFormValues(formValues);
+    // };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post(`http://localhost:8000/apiServeur/chatmessages`,  {
+            const response = await axiosInstance.post(`http://localhost:8000/apiServeur/chatmessages`, {
                 sender_id: profile?.profile?.id,
                 receiver_id: profile_to_check_id,
-                message: formValues.msg,
+                message: formValues,
             });
-            console.log("\n response chat post message -> ", response);
+            
+
+            setFormValues("");
+            console.log("message ====== >>>>>>> ", message);
+
+            const itsMessages = response.data.itsMsg;
+            const myMessages = response.data.myMsg;
+
+
+
+            let sampleChronoArray = [];
+            let i = 0;
+            let j = 0;
+            while (i < myMessages.length && j < itsMessages.length) {
+                    // console.log("\n SES MESSAGES -> ", itsMessages[i]);
+                    // console.log("\n MES MESSAGES -> ", myMessages[j]);
+                    const myCurrentSentOn = new Date(myMessages[i].sent_on);
+                    const itsCurrentSentOn = new Date(itsMessages[j].sent_on);
+                    console.log("\n\n moi -> ", myMessages[i].message, "à -> ", myCurrentSentOn, 
+                        " \n|\n its -> ", itsMessages[j].message, "à -> ", itsCurrentSentOn);
+                    if (myCurrentSentOn < itsCurrentSentOn || !itsCurrentSentOn) {
+                        sampleChronoArray.push({
+                            message : myMessages[i].message,
+                            date : myCurrentSentOn,
+                            id : 1,
+                        })
+                        console.log(" >>>>>>>>>>>> ", myMessages[i].message, " <<<<<<<<<<< ");
+                        i++;
+                    } else if (itsCurrentSentOn < myCurrentSentOn || !myCurrentSentOn) {
+                        sampleChronoArray.push({
+                            message : itsMessages[j].message,
+                            date : itsCurrentSentOn,
+                            id : 2,
+                        })
+                        console.log(" >>>>>>>>>>>> ", itsMessages[j].message, " <<<<<<<<<<< ");
+                        j++;
+                    }
+                }
+                while (i < myMessages.length) {
+                    sampleChronoArray.push({
+                        message : myMessages[i].message,
+                        date : new Date(myMessages[i].sent_on),
+                        id : 1,
+                    })
+                    i++;
+                }
+                
+                while (j < itsMessages.length) {
+                    sampleChronoArray.push({
+                        message : itsMessages[j].message,
+                        date : new Date(itsMessages[j].sent_on),
+                        id : 2,
+                    })
+                    j++;
+                }
+                
+                console.log("chrono array is => ", sampleChronoArray);
+                setChronoArray(sampleChronoArray);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         } catch (error) {
             setMessage(`Chat.tsx | Erreur frontend post text messages chat : ${error}`);
         }
     };
+    
+    const getTextFor2 = async () => {
+        try {
+            // const response = await axiosInstance.get(`http://localhost:8000/apiServeur/getchatmessages`, 
+            //     { params: {
+            //         sender_id: profile?.profile?.id,
+            //         receiver_id: profile_to_check_id,
+            //     }}
+            // )
+            // const itsMessages = response.data.itsMsg;
+            // const myMessages = response.data.myMsg;
+            // let oldestMsg = null;
+    
+
+                //}
+            //}
+            // for (let i = 0; i < itsMessages.length; i++) {
+            //     for (let j = 0; j < myMessages.length; j++) {
+            // let sampleChronoArray = [];
+            // let i = 0;
+            // let j = 0;
+            // while (i < myMessages.length && j < itsMessages.length) {
+            //         // console.log("\n SES MESSAGES -> ", itsMessages[i]);
+            //         // console.log("\n MES MESSAGES -> ", myMessages[j]);
+            //         const myCurrentSentOn = new Date(myMessages[i].sent_on);
+            //         const itsCurrentSentOn = new Date(itsMessages[j].sent_on);
+            //         console.log("\n\n moi -> ", myMessages[i].message, "à -> ", myCurrentSentOn, 
+            //             " \n|\n its -> ", itsMessages[j].message, "à -> ", itsCurrentSentOn);
+            //         if (myCurrentSentOn < itsCurrentSentOn || !itsCurrentSentOn) {
+            //             sampleChronoArray.push({
+            //                 message : myMessages[i].message,
+            //                 date : myCurrentSentOn,
+            //                 id : 1,
+            //             })
+            //             console.log(" >>>>>>>>>>>> ", myMessages[i].message, " <<<<<<<<<<< ");
+            //             i++;
+            //         } else if (itsCurrentSentOn < myCurrentSentOn || !myCurrentSentOn) {
+            //             sampleChronoArray.push({
+            //                 message : itsMessages[j].message,
+            //                 date : itsCurrentSentOn,
+            //                 id : 2,
+            //             })
+            //             console.log(" >>>>>>>>>>>> ", itsMessages[j].message, " <<<<<<<<<<< ");
+            //             j++;
+            //         }
+            //     }
+            //     while (i < myMessages.length) {
+            //         sampleChronoArray.push({
+            //             message : myMessages[i].message,
+            //             date : new Date(myMessages[i].sent_on),
+            //             id : 1,
+            //         })
+            //         i++;
+            //     }
+                
+            //     while (j < itsMessages.length) {
+            //         sampleChronoArray.push({
+            //             message : itsMessages[j].message,
+            //             date : new Date(itsMessages[j].sent_on),
+            //             id : 2,
+            //         })
+            //         j++;
+            //     }
+                
+            //     console.log("chrono array is => ", sampleChronoArray);
+            //     setChronoArray(sampleChronoArray);
+        } catch (error) {
+            console.log(`Chats.tsx | Error get text message for 2 : ${error}`);
+        }
+    }
 
     useEffect(() => {
         try {
@@ -127,14 +269,33 @@ const Chat = () => {
                 setNotification("Warning : You must fill your profile before going on");
             }
             else {
-                getMatchasUsers();
                 
+                getMatchasUsers();
+                // if (profile_to_check_id) {
+                    // getTextFor2();
+                // }
+                if (messagesRef.current) {
+                    messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+                }
+                if (socket) {
+                    socket.on('send_messages_both', (tabMyMsg, tabsItsMsg) => {
+                        console.log("***** SOCKET BOTH ******\n tabmymsg = ", tabMyMsg, "\ntabitsmsg = ",tabsItsMsg);
+                    });
+
+                    socket.on('send_messages_me', (tabMyMsg) => {
+                        console.log("**** SOCKET ME *******\n tabmymsg = ", tabMyMsg);
+                    });
+
+                    socket.on('send_messages_its', (tabsItsMsg) => {
+                        console.log("***** SOCKET ITS ******\n tabitsmsg = ",tabsItsMsg);
+                    })
+                }
             }
     } catch (error) {
         setNotification(`Erreur frontend userprofile : ${error}`);
     }
 
-    }, []);
+    }, [profile_to_check_id, socket]);
 
     //liste des utilisateurs en ligne avec qui jai matche avec qui je parle
     //get matchas pour la liste de ceux a qui je peux parler et display une liste sur le cote gauche
@@ -150,9 +311,9 @@ const Chat = () => {
 
     return (
             <section className="gradient-custom">
-            {/* <div>
+            <div>
                 {message && <p style={{ color: 'red' }}>{message}</p>}
-            </div> */}
+            </div>
             
             <div>
                 <h1>
@@ -224,26 +385,38 @@ const Chat = () => {
 
                                 <div className="card shadow-2-strong"style={{ borderRadius: "30px", width: "100%", height: "330px" }}>
                                 <div className="card-body corpus-bubble">
+
+                                    <div className="historic-texts">
+                                        {chronoArray.map((msg) => (
+                                            <div
+                                            ref={messagesRef}
+                                                className={
+                                                   msg.id == 1 ? 'bubble-me' : 'bubble-its'
+                                                }
+                                                key={`${msg.date}-${msg.id}`}
+                                                >
+                                                <div className="da-chat">{msg.message}</div>
+                                            </div>
+                                        ))}
+                                    </div>
                                     <form onSubmit={handleSubmit}>
-
-                                        <div className="historic-texts">
-                                        <p>old messages</p>
-
-                                        </div>
                                         <div className="bubble-to-chat">
-                                            <textarea 
+                                            <input 
                                                 className="textearea-bubble"
                                                 id="msg"
                                                 name="msg"
-                                                value={formValues.msg}
-                                                onChange={handleChangeMsg}
-                                                required
+                                                value={formValues}
+                                                type="text"
+                                                onChange={(e) => setFormValues(e.target.value)}
+                                                // required
                                                 >
-                                            </textarea>
+                                            </input>
                                         </div>
                                         <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                                             <button data-mdb-ripple-init 
-                                                className="btn btn-chat btn-send" 
+                                                className="btn btn-chat btn-send"
+                                                // onClick={handleChangeMsg}
+                                                type="submit"
                                                 > Send </button>
                                         </div>
                                     </form>

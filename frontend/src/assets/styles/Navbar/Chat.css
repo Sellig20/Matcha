@@ -138,6 +138,41 @@
   
 }
 
+.historic-texts {
+    width: 100%; /* ou ajuste selon tes besoins */
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.historic-texts::-webkit-scrollbar {
+    width: 8px;
+}
+
+.historic-texts::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.historic-texts::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.bubble-me {
+    color: cornflowerblue;
+
+}
+
+.bubble-its {
+    color: olivedrab;
+}
+
 .bubble-to-chat {
     display: flex;
     position: absolute;

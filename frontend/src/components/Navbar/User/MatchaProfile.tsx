@@ -168,11 +168,10 @@ const MatchaProfile: React.FC = () => {
                             getMatcha();
                         };/////////??? Pourquoi ne faire uqe la premiere ligne
                         if (socket) {
-                                socket.on('reciproqueMatcha', (newMatcha) => {
+                            //     socket.on('reciproqueMatcha', (newMatcha) => {
+                            // })
 
-                            })
-
-                            socket.on('updateAlreadyLike', (valueToUpdate) => {
+                            socket.on('updateAlreadyLike', (valueToUpdate: boolean) => {
                                 setIsClickedHeart(valueToUpdate);
                             })
                         }

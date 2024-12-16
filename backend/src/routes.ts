@@ -107,6 +107,10 @@ router.post('/chatmessages', authenticateWithToken, (req, res) => {
     chatController.postMessages(req, res);
 });
 
+router.get('/getchatmessages', authenticateWithToken, (req, res) => {
+    chatController.readMessages(req, res);
+});
+
 router.get('/map', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /MAP', user: req.user });
 });
