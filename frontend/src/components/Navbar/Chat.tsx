@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 import { stripVTControlCharacters } from 'util';
 import { useForm } from './User/useForm';
 import { useWebSocketContext } from '../../security/wsContext';
+import { isTypedArray } from 'util/types';
 
 interface MatchaUser {
     id: number;
@@ -106,6 +107,69 @@ const Chat = () => {
     //     setFormValues(formValues);
     // };
 
+    const scrollToBottom = () => {
+        if (messagesRef.current) {
+          messagesRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const sortMsgChrono = (myMessages: any, itsMessages: any) => {
+        let sampleChronoArray = [];
+        let i = 0;
+        let j = 0;
+        console.log("\n\n\n^^^^^^^^^^^^^^\n jarrive en sortMsgChrono avec : ", myMessages, "-------", itsMessages);
+        console.log("avec comme i = ", i, "-------- et j = ", j);
+        console.log("^^^^^^^^^^^^^^\n\n\n")
+        while (i < myMessages.length && j < itsMessages.length) {
+            const myCurrentSentOn = new Date(myMessages[i].sent_on);
+            const itsCurrentSentOn = new Date(itsMessages[j].sent_on);
+            // console.log("\n\n moi -> ", myMessages[i].message, "à -> ", myCurrentSentOn, 
+            //     " \n|\n its -> ", itsMessages[j].message, "à -> ", itsCurrentSentOn);
+            if (myCurrentSentOn < itsCurrentSentOn || !itsCurrentSentOn) {
+                sampleChronoArray.push({
+                    message : myMessages[i].message,
+                    date : myCurrentSentOn,
+                    id : 1,
+                })
+                // console.log(" >>>>>>>>>>>> ", myMessages[i].message, " <<<<<<<<<<< ");
+                i++;
+            } else if (itsCurrentSentOn < myCurrentSentOn || !myCurrentSentOn) {
+                sampleChronoArray.push({
+                    message : itsMessages[j].message,
+                    date : itsCurrentSentOn,
+                    id : 2,
+                })
+                // console.log(" >>>>>>>>>>>> ", itsMessages[j].message, " <<<<<<<<<<< ");
+                j++;
+            }
+            console.log(" >>>>>>> debug 1 >>>>>> ", sampleChronoArray);
+        }
+        while (i < myMessages.length) {
+            sampleChronoArray.push({
+                message : myMessages[i].message,
+                date : new Date(myMessages[i].sent_on),
+                id : 1,
+            })
+            i++;
+            console.log(" >>>>>>> debug 2 >>>>>> ", sampleChronoArray);
+
+        }
+        while (j < itsMessages.length) {
+            sampleChronoArray.push({
+                message : itsMessages[j].message,
+                date : new Date(itsMessages[j].sent_on),
+                id : 2,
+            })
+            j++;
+            console.log(" >>>>>>> debug 3 >>>>>> ", sampleChronoArray);
+
+        }
+        console.log("chrono array is => ", sampleChronoArray);
+        return sampleChronoArray;
+        // setChronoArray((prevSCA) => [...prevSCA, sampleChronoArray]);
+
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -114,154 +178,25 @@ const Chat = () => {
                 receiver_id: profile_to_check_id,
                 message: formValues,
             });
-            
-
             setFormValues("");
-            console.log("message ====== >>>>>>> ", message);
 
             const itsMessages = response.data.itsMsg;
             const myMessages = response.data.myMsg;
-
-
-
-            let sampleChronoArray = [];
-            let i = 0;
-            let j = 0;
-            while (i < myMessages.length && j < itsMessages.length) {
-                    // console.log("\n SES MESSAGES -> ", itsMessages[i]);
-                    // console.log("\n MES MESSAGES -> ", myMessages[j]);
-                    const myCurrentSentOn = new Date(myMessages[i].sent_on);
-                    const itsCurrentSentOn = new Date(itsMessages[j].sent_on);
-                    console.log("\n\n moi -> ", myMessages[i].message, "à -> ", myCurrentSentOn, 
-                        " \n|\n its -> ", itsMessages[j].message, "à -> ", itsCurrentSentOn);
-                    if (myCurrentSentOn < itsCurrentSentOn || !itsCurrentSentOn) {
-                        sampleChronoArray.push({
-                            message : myMessages[i].message,
-                            date : myCurrentSentOn,
-                            id : 1,
-                        })
-                        console.log(" >>>>>>>>>>>> ", myMessages[i].message, " <<<<<<<<<<< ");
-                        i++;
-                    } else if (itsCurrentSentOn < myCurrentSentOn || !myCurrentSentOn) {
-                        sampleChronoArray.push({
-                            message : itsMessages[j].message,
-                            date : itsCurrentSentOn,
-                            id : 2,
-                        })
-                        console.log(" >>>>>>>>>>>> ", itsMessages[j].message, " <<<<<<<<<<< ");
-                        j++;
-                    }
-                }
-                while (i < myMessages.length) {
-                    sampleChronoArray.push({
-                        message : myMessages[i].message,
-                        date : new Date(myMessages[i].sent_on),
-                        id : 1,
-                    })
-                    i++;
-                }
-                
-                while (j < itsMessages.length) {
-                    sampleChronoArray.push({
-                        message : itsMessages[j].message,
-                        date : new Date(itsMessages[j].sent_on),
-                        id : 2,
-                    })
-                    j++;
-                }
-                
-                console.log("chrono array is => ", sampleChronoArray);
-                setChronoArray(sampleChronoArray);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            const sca = sortMsgChrono(myMessages, itsMessages);
+            // setChronoArray(sca);
+            setChronoArray((prev) => prev.concat(sca));
         } catch (error) {
             setMessage(`Chat.tsx | Erreur frontend post text messages chat : ${error}`);
         }
     };
     
-    const getTextFor2 = async () => {
-        try {
-            // const response = await axiosInstance.get(`http://localhost:8000/apiServeur/getchatmessages`, 
-            //     { params: {
-            //         sender_id: profile?.profile?.id,
-            //         receiver_id: profile_to_check_id,
-            //     }}
-            // )
-            // const itsMessages = response.data.itsMsg;
-            // const myMessages = response.data.myMsg;
-            // let oldestMsg = null;
-    
-
-                //}
-            //}
-            // for (let i = 0; i < itsMessages.length; i++) {
-            //     for (let j = 0; j < myMessages.length; j++) {
-            // let sampleChronoArray = [];
-            // let i = 0;
-            // let j = 0;
-            // while (i < myMessages.length && j < itsMessages.length) {
-            //         // console.log("\n SES MESSAGES -> ", itsMessages[i]);
-            //         // console.log("\n MES MESSAGES -> ", myMessages[j]);
-            //         const myCurrentSentOn = new Date(myMessages[i].sent_on);
-            //         const itsCurrentSentOn = new Date(itsMessages[j].sent_on);
-            //         console.log("\n\n moi -> ", myMessages[i].message, "à -> ", myCurrentSentOn, 
-            //             " \n|\n its -> ", itsMessages[j].message, "à -> ", itsCurrentSentOn);
-            //         if (myCurrentSentOn < itsCurrentSentOn || !itsCurrentSentOn) {
-            //             sampleChronoArray.push({
-            //                 message : myMessages[i].message,
-            //                 date : myCurrentSentOn,
-            //                 id : 1,
-            //             })
-            //             console.log(" >>>>>>>>>>>> ", myMessages[i].message, " <<<<<<<<<<< ");
-            //             i++;
-            //         } else if (itsCurrentSentOn < myCurrentSentOn || !myCurrentSentOn) {
-            //             sampleChronoArray.push({
-            //                 message : itsMessages[j].message,
-            //                 date : itsCurrentSentOn,
-            //                 id : 2,
-            //             })
-            //             console.log(" >>>>>>>>>>>> ", itsMessages[j].message, " <<<<<<<<<<< ");
-            //             j++;
-            //         }
-            //     }
-            //     while (i < myMessages.length) {
-            //         sampleChronoArray.push({
-            //             message : myMessages[i].message,
-            //             date : new Date(myMessages[i].sent_on),
-            //             id : 1,
-            //         })
-            //         i++;
-            //     }
-                
-            //     while (j < itsMessages.length) {
-            //         sampleChronoArray.push({
-            //             message : itsMessages[j].message,
-            //             date : new Date(itsMessages[j].sent_on),
-            //             id : 2,
-            //         })
-            //         j++;
-            //     }
-                
-            //     console.log("chrono array is => ", sampleChronoArray);
-            //     setChronoArray(sampleChronoArray);
-        } catch (error) {
-            console.log(`Chats.tsx | Error get text message for 2 : ${error}`);
-        }
-    }
+    // const getTextFor2 = async () => {
+    //     try {
+            
+    //     } catch (error) {
+    //         console.log(`Chats.tsx | Error get text message for 2 : ${error}`);
+    //     }
+    // }
 
     useEffect(() => {
         try {
@@ -269,33 +204,52 @@ const Chat = () => {
                 setNotification("Warning : You must fill your profile before going on");
             }
             else {
-                
                 getMatchasUsers();
-                // if (profile_to_check_id) {
-                    // getTextFor2();
-                // }
-                if (messagesRef.current) {
-                    messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-                }
                 if (socket) {
                     socket.on('send_messages_both', (tabMyMsg, tabsItsMsg) => {
                         console.log("***** SOCKET BOTH ******\n tabmymsg = ", tabMyMsg, "\ntabitsmsg = ",tabsItsMsg);
-                    });
+                        const sca = sortMsgChrono(tabMyMsg.tabMyMsg, tabsItsMsg.tabItsMsg);
+                        // setChronoArray(sca);
+                        console.log("$$$$$$$ sca => ", sca);
+                        // setChronoArray((prevSCA) => [...prevSCA, sca]);
+                        setChronoArray((prev) => prev.concat(sca));
+                        // console.log("------ 1 ----> chrono array === ", chronoArray);
 
+                    });
+                    
                     socket.on('send_messages_me', (tabMyMsg) => {
                         console.log("**** SOCKET ME *******\n tabmymsg = ", tabMyMsg);
-                    });
+                        const sca = sortMsgChrono(tabMyMsg,  chronoArray.filter(m => m.id === 2));
+                        // setChronoArray(sca);
+                        // setChronoArray((prevSCA) => [...prevSCA, sca]);
 
+                        // console.log("------ 2 ----> chrono array === ", chronoArray);
+                        setChronoArray((prev) => prev.concat(sca));
+                        
+                    });
+                    
                     socket.on('send_messages_its', (tabsItsMsg) => {
                         console.log("***** SOCKET ITS ******\n tabitsmsg = ",tabsItsMsg);
+                        const sca = sortMsgChrono(chronoArray.filter(m => m.id === 1), tabsItsMsg);
+                        // setChronoArray(sca);
+                        // setChronoArray((prevSCA) => [...prevSCA, sca]);
+
+                        // console.log("------ 3 ----> chrono array === ", chronoArray);
+                        setChronoArray((prev) => prev.concat(sca));
+
                     })
+                    scrollToBottom();
+                    return () => {
+                        socket.off('send_messages_both');
+                        socket.off('send_messages_me');
+                        socket.off('send_messages_its');
+                    }
                 }
             }
-    } catch (error) {
-        setNotification(`Erreur frontend userprofile : ${error}`);
-    }
-
-    }, [profile_to_check_id, socket]);
+        } catch (error) {
+            setNotification(`Erreur frontend userprofile : ${error}`);
+        }
+    }, [profile_to_check_id, socket, chronoArray]);
 
     //liste des utilisateurs en ligne avec qui jai matche avec qui je parle
     //get matchas pour la liste de ceux a qui je peux parler et display une liste sur le cote gauche
@@ -387,17 +341,17 @@ const Chat = () => {
                                 <div className="card-body corpus-bubble">
 
                                     <div className="historic-texts">
-                                        {chronoArray.map((msg) => (
+                                        {chronoArray.map((msg, index) => (
                                             <div
-                                            ref={messagesRef}
                                                 className={
                                                    msg.id == 1 ? 'bubble-me' : 'bubble-its'
                                                 }
-                                                key={`${msg.date}-${msg.id}`}
+                                                key={index}
                                                 >
                                                 <div className="da-chat">{msg.message}</div>
                                             </div>
                                         ))}
+                                        <div ref={messagesRef}></div>
                                     </div>
                                     <form onSubmit={handleSubmit}>
                                         <div className="bubble-to-chat">

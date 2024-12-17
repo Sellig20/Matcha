@@ -80,14 +80,17 @@ export class chatController {
                 console.log(`\n\nVoici les messages que moi ${userId} j'envoie à ${interlocuteur_id} : `, tabPushMyMessages);
                 console.log(`\n\nVoici les messages que mon interlo ${interlocuteur_id} m'envoie à moi ${userId} : `, tabPushItsMessages);
                 io.emit('send_messages_both', {tabMyMsg: tabPushMyMessages}, {tabItsMsg: tabPushItsMessages});
+                io.to(interlocuteur_id).emit('send_messages_both', {tabMyMsg: tabPushMyMessages}, {tabItsMsg: tabPushItsMessages});
                 res.status(200).json({ message: `We both ${userId} | ${interlocuteur_id} sent message`, myMsg: tabPushMyMessages, itsMsg: tabPushItsMessages});
             }
             else if (result_me_sender) {
                 io.emit('send_messages_me', {tabMyMsg: tabPushMyMessages});
+                io.to(interlocuteur_id).emit('send_messages_me', {tabMyMsg: tabPushMyMessages});
                 res.status(200).json({ message: `Only I ${userId} sent message`, myMsg: tabPushMyMessages});
             }
             else if (result_user_sender) {
                 io.emit('send_messages_its', {tabItsMsg: tabPushItsMessages});
+                io.to(interlocuteur_id).emit('send_messages_its', {tabItsMsg: tabPushItsMessages});
                 res.status(200).json({ message: `Only this person ${interlocuteur_id} sent message`, itsMsg: tabPushItsMessages});
             }
         } catch (error) {
