@@ -5,7 +5,7 @@ import { schema } from "./src/orm/schema";
 import dotenv from 'dotenv';
 import http from 'http';
 import { Socket } from 'socket.io';
-import { client, connectRedis } from "./redis";
+import { clientRedis, connectRedis } from "./redis";
 import { authenticateWithToken } from "./src/authMiddleware";
 
 dotenv.config();
@@ -48,10 +48,15 @@ const server = startServer();
 			credentials: true
 		}
 	});
-	
-	
+
+	export {io};
+
 	io.on('connection', (socket: Socket) => {
 		console.log('\n\n♦️♦️♦️♦️♦️♦️♦️♦️ WebSocket BACKEND connected:', socket.id, "♦️♦️♦️♦️♦️♦️♦️♦️\n\n");
+
+		const userId = socket.handshake.query.userId
+		clientRedis.set(`user:${userId}`, socket.id);
+		console.log(`\n--------- userId for redis is : ${userId} ---------\n`)
 
 		socket.on('newUser', (data) => {
 			socket.broadcast.emit('newUser', { id: socket.id, ...data });
@@ -59,7 +64,23 @@ const server = startServer();
 
 		socket.on('disconnect', () => {
 			console.log('\n\n♦️♦️♦️♦️♦️♦️♦️♦️ User déconnected:', socket.id, "♦️♦️♦️♦️♦️♦️♦️♦️\n\n");
+			clientRedis.del(`user:${userId}`);
 		});
+
+		socket.on('joinRoom', (roomId) => {
+			console.log(`\n\n\n *&*&*&*&*&*&* `, socket.id, `joined room : ${roomId} *&*&*&*&*&*&*&*\n\n`);
+			socket.join(roomId);
+		})
+
+		// socket.on('newMessage', (message) => {
+        //     console.log(" message frontend serveur : ", message);
+        //     socket.emit("newMessagefromFD", message);
+		// })
+
+		socket.on('newMessageBK', (message, socket, roomId) => {
+			io.to(roomId).emit('send_messages_both', {sender: socket, message});
+
+		})
 
 		//-----------------------------------------------------------
 		
@@ -79,7 +100,6 @@ const server = startServer();
 		// socket.emit('coucoux', 'je suis belle comme un coucou');//socket-event genere une fois
 	});
 	
-export {io};
 
 server?.listen(3000, () => {
 	console.log(`[server]: Server is running at http://localhost:${port}`);

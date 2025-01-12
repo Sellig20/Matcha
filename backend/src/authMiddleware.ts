@@ -3,7 +3,6 @@ import { UserProfileInterface, UserSettingsInterface } from "./databaseInterface
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { userSignupModel } from './model/userSignupModel';
-import {client} from '../redis'
 import { io } from '../server';
 
 dotenv.config();

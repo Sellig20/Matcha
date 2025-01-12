@@ -68,17 +68,17 @@ const App: React.FC = () => {
 
     return (
       <AuthProvider>
-        <WebSocketProvider>
-          <ProfileProvider>
-            <Router>
-                <Navbar />
-                <AuthWrapper>
-                  <Sidebar />
-                </AuthWrapper>
-                <ContentComplete />
-            </Router>
-          </ProfileProvider>
-        </WebSocketProvider>
+          <WebSocketProvider>
+        <ProfileProvider>
+              <Router>
+                  <Navbar />
+                  <AuthWrapper>
+                    <Sidebar />
+                  </AuthWrapper>
+                  <ContentComplete />
+              </Router>
+        </ProfileProvider>
+          </WebSocketProvider>
       </AuthProvider>
     );
 };

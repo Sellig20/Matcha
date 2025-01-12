@@ -2,15 +2,24 @@ import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
 import { io } from '../../server';
 import { UsersMessagesCreate } from "../orm/schema";
+import { clientRedis } from "../../redis";
 
 export class chatController {
     static async postMessages(req: Request, res: Response) {
         try {
-            const userId = req.userId;
-            // console.log("\n\n\n chatcontroller :\n I am : ", userId, 
-            //     "\nor I am : ", req.body.sender_id, 
-            //     "\nI wrote : ", req.body.message, 
-            //     "\nto : ", req.body.receiver_id);
+            let userId = req.query.sender_id;
+            if (!userId)
+                userId = req.body.sender_id;
+            let interlocuteur_id = req.query.receiver_id;
+            if (!interlocuteur_id)
+                interlocuteur_id = req.body.receiver_id;
+            
+            const senderSKid = await clientRedis.get(`user:${userId}`);
+            const receiverSKid = await clientRedis.get(`user:${interlocuteur_id}`);
+
+            console.log(`----- CHAT -----\n socket : ${senderSKid} | id : ${userId} 
+                \n----------------\n socket : ${receiverSKid} | id : ${interlocuteur_id}
+                \n----------------`);
             const newMessage: UsersMessagesCreate = {
                 sender_id: req.body.sender_id,
                 receiver_id: req.body.receiver_id,
@@ -19,7 +28,19 @@ export class chatController {
                 seen_on: new Date().toISOString(),
             }
             await userSignupModel.createMessage(newMessage);
-            await this.readMessages(req, res);
+            console.log("\n\n message emited : ", req.body.message);
+            if (userId && interlocuteur_id) {
+                const roomId = [userId, interlocuteur_id].sort().join("-");
+                console.log("\n\n roomId ==> ", roomId);
+                if (senderSKid) {
+                    io.sockets.sockets.get(senderSKid)?.join(roomId);
+                }
+                if (receiverSKid) {
+                    io.sockets.sockets.get(receiverSKid)?.join(roomId);
+                }
+                io.to(roomId).emit("newMessage", {message: req.body.message});
+                return res.status(201).json({ message : req.body.message });
+            }
         } catch (error) {
             res.status(204).json({ message: `chatController.ts | Error during posting message text : ${error}` });
         }
@@ -27,21 +48,26 @@ export class chatController {
 
     static async readMessages(req: Request, res: Response) {
         try {
-            const userId = req.body.sender_id;
-            const interlocuteur_id = req.body.receiver_id;
-            // si A parle a B et A parle a C
-            //Il faut que je choppe les messages que A a envoye en bdd
-            console.log("\n\n************************************chatController.ts | je suis l'envoyeur tu es sur ma page chat a moi : ", Number(userId));
+            let userId = req.query.sender_id;
+            if (!userId)
+                userId = req.body.sender_id;
+            let interlocuteur_id = req.query.receiver_id;
+            if (!interlocuteur_id)
+                interlocuteur_id = req.body.receiver_id;
+
+            console.log("\n\n --------------\n");
+            console.log("userId = ", userId);
+            console.log("\ninterlocuteur_id = ", interlocuteur_id);
+            console.log("\n--------------\n\n");
+            const roomId = [userId, interlocuteur_id].sort().join("-");
+            console.log("\n\n roomId ==> ", roomId);
+            // io.emit('joinRoomFR', roomId);
+
             const result_me_sender = await userSignupModel.readMyMessages("sender_id", Number(userId));
-            //il faut que je compare si ces messages sont envoyes a B
-            console.log("****************** result_me_sender => ", result_me_sender);
             let tabPushMyMessages = [];
             if (result_me_sender) {
                 for(let i = 0; i < result_me_sender.length; i++) {
-                    console.log("-------- result_me_sender[i].receiver_id = ", result_me_sender[i].receiver_id, "----------");
-                    console.log("-------- interlocuteur_id = ", interlocuteur_id, "----------");
                     if (result_me_sender[i].receiver_id === Number(interlocuteur_id)) {
-                        console.log("-------- result_me_sender[i].message = ", result_me_sender[i].message, "----------");
                         tabPushMyMessages.push(
                             {
                                 message: result_me_sender[i].message,
@@ -51,19 +77,12 @@ export class chatController {
                     }
                 }
             }
-            //il faut que je choppe les messages envoyes par B
-            console.log("\n\n**************************************chatController.ts | voici mon receiver qui va recevoir mon msg : ", interlocuteur_id);
             const result_user_sender = await userSignupModel.readMyMessages("receiver_id", Number(userId));
-            console.log("****************** result_user_sender => ", result_user_sender);
             let tabPushItsMessages = [];
-            //ce que je veux cest uand userIdest receiver
             if (result_user_sender) {
                 for(let i = 0; i < result_user_sender.length; i++) {
-                    console.log("-------- result_user_sender[i].interlocuteur_id = ", result_user_sender[i].receiver_id, "----------");
-                    console.log("-------- userId = ", userId, "----------");
                     if (result_user_sender[i].receiver_id === Number(userId) &&
                         result_user_sender[i].sender_id === Number(interlocuteur_id)) {
-                        console.log("-------- result_user_sender[i].message = ", result_user_sender[i].message, "----------");
                         tabPushItsMessages.push(
                             {
                                 message : result_user_sender[i].message,
@@ -73,25 +92,26 @@ export class chatController {
                     }
                 }
             }
-            //Il faut que je compare si ces messages sont envoyes a A
-            //Aurais-je a ce moment la les messages dans l'ordre ? A prioriiiii
-            // res.status(201).json({ message: `chatController.ts | Display Conversation`, result_me_sender, result_user_sender });
             if (result_me_sender && result_user_sender) {
-                console.log(`\n\nVoici les messages que moi ${userId} j'envoie à ${interlocuteur_id} : `, tabPushMyMessages);
-                console.log(`\n\nVoici les messages que mon interlo ${interlocuteur_id} m'envoie à moi ${userId} : `, tabPushItsMessages);
-                io.emit('send_messages_both', {tabMyMsg: tabPushMyMessages}, {tabItsMsg: tabPushItsMessages});
-                io.to(interlocuteur_id).emit('send_messages_both', {tabMyMsg: tabPushMyMessages}, {tabItsMsg: tabPushItsMessages});
-                res.status(200).json({ message: `We both ${userId} | ${interlocuteur_id} sent message`, myMsg: tabPushMyMessages, itsMsg: tabPushItsMessages});
+                console.log("\n\n RES STATUS 1")
+                // io.to(roomId).emit('send_messages_both', {tabMyMsg: tabPushMyMessages}, {tabItsMsg: tabPushItsMessages});
+                return res.status(200).json({ message: `We both ${userId} | ${interlocuteur_id} sent message`, myMsg: tabPushMyMessages, itsMsg: tabPushItsMessages});
             }
+
             else if (result_me_sender) {
-                io.emit('send_messages_me', {tabMyMsg: tabPushMyMessages});
-                io.to(interlocuteur_id).emit('send_messages_me', {tabMyMsg: tabPushMyMessages});
-                res.status(200).json({ message: `Only I ${userId} sent message`, myMsg: tabPushMyMessages});
+                console.log("\n\n RES STATUS 2")
+                // io.to(roomId).emit('send_messages_me', {tabMyMsg: tabPushMyMessages});
+                return res.status(200).json({ message: `Only I ${userId} sent message`, myMsg: tabPushMyMessages});
             }
+
             else if (result_user_sender) {
-                io.emit('send_messages_its', {tabItsMsg: tabPushItsMessages});
-                io.to(interlocuteur_id).emit('send_messages_its', {tabItsMsg: tabPushItsMessages});
-                res.status(200).json({ message: `Only this person ${interlocuteur_id} sent message`, itsMsg: tabPushItsMessages});
+                console.log("\n\n RES STATUS 3")
+                // io.to(roomId).emit('send_messages_its', {tabItsMsg: tabPushItsMessages});
+                return res.status(200).json({ message: `Only this person ${interlocuteur_id} sent message`, itsMsg: tabPushItsMessages});
+            }
+            else {
+                console.log("\n\nCOUAC\n\n");
+                res.status(200).json({ message: `COUAC`});
             }
         } catch (error) {
             res.status(204).json({ message: `chatController.ts | Error during posting message text : ${error}` });

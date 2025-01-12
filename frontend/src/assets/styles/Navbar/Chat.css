@@ -141,36 +141,35 @@
 .historic-texts {
     width: 100%;
     height: 200px;
-    overflow-y: scroll;
-    /* overflow-x: hidden; */
+    overflow-y: auto;
+    overflow-x: hidden;
     border: 1px solid #ccc;
     padding: 10px;
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
     gap: 10px;
+    word-wrap: break-word;
 }
 
-/* .historic-texts::-webkit-scrollbar {
-    width: 8px;
+.bubble-chat {
+    max-width: 70%;
+    border-radius: 30px;
+    /* width: 200px; */
+    /* height: 50px; */
+    padding: 10px;
+    margin: 2px;
+    display: inline-block;
 }
 
-.historic-texts::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
+.bubble-chat.me {
+    align-self: flex-end;
+    background-color: cornflowerblue;
 }
 
-.historic-texts::-webkit-scrollbar-thumb:hover {
-    background: #555;
-} */
-
-.bubble-me {
-    color: cornflowerblue;
-
-}
-
-.bubble-its {
-    color: olivedrab;
+.bubble-chat.its {
+    align-self: flex-start;
+    background-color: olivedrab;
 }
 
 .bubble-to-chat {

@@ -40,3 +40,4 @@ compa age * coeff
  * ne pas pouvoir choisir deux tags pareil doublons
  * notification lorsqu'il y a un matcha
  * appliquer le coeur algo sur userproduct
+ * balade toi en faisant des feintes parce que y'a des bugs

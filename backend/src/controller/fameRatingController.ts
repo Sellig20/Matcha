@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
-import {client} from '../../redis'
+import {clientRedis} from '../../redis'
 import { UsersLikesCreate, UsersProfilesViewsCreate } from "../orm/schema";
 import { io } from '../../server';
 import { UsersMatchsCreate } from "../orm/schema";
