@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
 import { io } from '../../server';
 import { UsersMessagesCreate } from "../orm/schema";
-import { clientRedis } from "../../redis";
 
 export class chatController {
     static async postMessages(req: Request, res: Response) {
@@ -14,12 +13,6 @@ export class chatController {
             if (!interlocuteur_id)
                 interlocuteur_id = req.body.receiver_id;
             
-            const senderSKid = await clientRedis.get(`user:${userId}`);
-            const receiverSKid = await clientRedis.get(`user:${interlocuteur_id}`);
-
-            console.log(`----- CHAT -----\n socket : ${senderSKid} | id : ${userId} 
-                \n----------------\n socket : ${receiverSKid} | id : ${interlocuteur_id}
-                \n----------------`);
             const newMessage: UsersMessagesCreate = {
                 sender_id: req.body.sender_id,
                 receiver_id: req.body.receiver_id,
@@ -28,16 +21,8 @@ export class chatController {
                 seen_on: new Date().toISOString(),
             }
             await userSignupModel.createMessage(newMessage);
-            console.log("\n\n message emited : ", req.body.message);
             if (userId && interlocuteur_id) {
                 const roomId = [userId, interlocuteur_id].sort().join("-");
-                console.log("\n\n roomId ==> ", roomId);
-                if (senderSKid) {
-                    io.sockets.sockets.get(senderSKid)?.join(roomId);
-                }
-                if (receiverSKid) {
-                    io.sockets.sockets.get(receiverSKid)?.join(roomId);
-                }
                 io.to(roomId).emit("newMessage", {message: req.body.message});
                 return res.status(201).json({ message : req.body.message });
             }
@@ -55,13 +40,7 @@ export class chatController {
             if (!interlocuteur_id)
                 interlocuteur_id = req.body.receiver_id;
 
-            console.log("\n\n --------------\n");
-            console.log("userId = ", userId);
-            console.log("\ninterlocuteur_id = ", interlocuteur_id);
-            console.log("\n--------------\n\n");
             const roomId = [userId, interlocuteur_id].sort().join("-");
-            console.log("\n\n roomId ==> ", roomId);
-            // io.emit('joinRoomFR', roomId);
 
             const result_me_sender = await userSignupModel.readMyMessages("sender_id", Number(userId));
             let tabPushMyMessages = [];
@@ -93,25 +72,18 @@ export class chatController {
                 }
             }
             if (result_me_sender && result_user_sender) {
-                console.log("\n\n RES STATUS 1")
-                // io.to(roomId).emit('send_messages_both', {tabMyMsg: tabPushMyMessages}, {tabItsMsg: tabPushItsMessages});
                 return res.status(200).json({ message: `We both ${userId} | ${interlocuteur_id} sent message`, myMsg: tabPushMyMessages, itsMsg: tabPushItsMessages});
             }
 
             else if (result_me_sender) {
-                console.log("\n\n RES STATUS 2")
-                // io.to(roomId).emit('send_messages_me', {tabMyMsg: tabPushMyMessages});
                 return res.status(200).json({ message: `Only I ${userId} sent message`, myMsg: tabPushMyMessages});
             }
 
             else if (result_user_sender) {
-                console.log("\n\n RES STATUS 3")
-                // io.to(roomId).emit('send_messages_its', {tabItsMsg: tabPushItsMessages});
                 return res.status(200).json({ message: `Only this person ${interlocuteur_id} sent message`, itsMsg: tabPushItsMessages});
             }
             else {
-                console.log("\n\nCOUAC\n\n");
-                res.status(200).json({ message: `COUAC`});
+                res.status(200).json({ message: `ChatController.ts | readMessages | Error`});
             }
         } catch (error) {
             res.status(204).json({ message: `chatController.ts | Error during posting message text : ${error}` });

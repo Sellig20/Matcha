@@ -38,18 +38,6 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             console.log('WebSocket FRONTEND connected: ', newSocket.id);
         });
 
-        // newSocket.on('joinRoomFR', (rId) => {
-		// 	console.log(`\n\n\n *&*&*&*&*&*&* `, newSocket.id, `joined room : ${rId} *&*&*&*&*&*&*&*`);
-        //     newSocket.emit('joinRoomBK', rId);
-		// })
-
-        // newSocket.on('newMessage', (message: any) => {
-        //     console.log(" message frontend serveur : ", message);
-        //     newSocket.emit("newMessagefromFD", message);
-		// })
-
-
-
         newSocket.off('disconnect', () => {
             console.log('WebSocket FRONTEND DISconnected: ', newSocket.id);
         });

@@ -22,8 +22,6 @@ const AllUSers: React.FC = () => {
             setMyId(response.data.myId);
             setUsers(response.data.list);
             setUsersNames(response.data.listName);
-            console.log("\n\n users =>>> ALL USERS >>> ", response.data.listName, "\n\n");
-            // console.log("\n\n i am ", profile);
         } catch (error) {
             setMessage(`AllUsers.tsx | Erreur frontend allusers : ${error}`);
         }
@@ -37,27 +35,9 @@ const AllUSers: React.FC = () => {
         
         getListUsers();
         if (socket) {
-            // const emitMessage = () => {
-            //     const message = 'Hello from frontend!';
-            //     socket.emit('messagerie', message);
-            // };
-            
-            // const emitMessageCoucou = () => {
-            //     const message = 'Coux couc!';
-            //     socket.emit('coucou', message);
-            // };
-
-            // socket.emit('newUser');
             socket.on('newUser', (updateUsers) => {
                 setUsers(updateUsers);
             })
-            
-            // socket.on('coucoux', (msg) => {
-            //     console.log("Alluser.tsx ca :", msg);
-            // })
-            
-            // // emitMessage();
-            // emitMessageCoucou();
             
             return () => {
                 socket.off('message');

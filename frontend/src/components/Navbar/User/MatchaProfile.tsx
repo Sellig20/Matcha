@@ -49,29 +49,12 @@ const MatchaProfile: React.FC = () => {
         }
     }
 
-    // const getMatcha = async () => {
-    //     try {
-    //         console.log("\n\nje passe bien en getMAtcha frontend !!!!");
-    //         console.log("users[currentIndex].id ", users[currentIndex].id);
-    //         const idd = users[currentIndex].id;
-    //         console.log("idd --------------------------------> ", idd);
-    //         const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
-    //         setMessage(response.data.message);
-    //         console.log(" response isssssss : ", response);
-    //     } catch (error) {
-    //         setMessage(`MatchaProfile.tsx | Erreur frontend get MATCHAS  : ${error}`);
-    //     }
-    // }
-
     const getMatcha = async () => {
         try {
             const myId = profile?.profile?.id;
-            console.log("\n profile?.profile?.id ", profile?.profile?.id);
-            console.log("\n myId ", myId);
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasbdd`, {
                 params: { matcher_id: myId },
             });
-            console.log("\n\n all matchs -> ", response);
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
         }
@@ -91,7 +74,6 @@ const MatchaProfile: React.FC = () => {
                 params: { the_id: profile?.profile?.id },
             });
             if (response.data.success) {
-                console.log("\nLike enregistré avec succès\n");
                 // setIsClickedHeart("true");
                 setMessage(response.data.message);
             } else {
@@ -103,14 +85,13 @@ const MatchaProfile: React.FC = () => {
         }
     };
 
-    // REPASSER LE COEUR EN ROUGE
     const handleDisclickHeart = async() => {
         try {
             setIsClickedHeart(false);
             console.log("handle disclick heart\n");
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/dislikes`, {
                 user_id: profile?.profile?.id,
-                liked_user_id: users[currentIndex]?.id,//pas bon
+                liked_user_id: users[currentIndex]?.id,
                 liker_user_id: profile?.profile?.id,
 
             })
@@ -129,8 +110,6 @@ const MatchaProfile: React.FC = () => {
     }
     
     const handleClickNext = () => {
-        console.log("users = ", users);
-        console.log("users.length = ", users.length);
         if (currentIndex < users.length - 1) {
             setCurrentIndex(currentIndex + 1);
             setMessageNewMatch("New match !");
@@ -138,7 +117,6 @@ const MatchaProfile: React.FC = () => {
             setMessageNewMatch("Sorry, no more matchas for today !");
         }
     }
-    //link to all my matched and suggestions and suggestions = userproduct possibility to like and matched = user product heart clicked
     const handleClickKnowMore = (userid: string) => {
         navigate(`/apiServeur/userproduct/${userid}`);
     }
@@ -166,11 +144,8 @@ const MatchaProfile: React.FC = () => {
                         await getSuggestedMatch();
                         if (users.length > 0) {
                             getMatcha();
-                        };/////////??? Pourquoi ne faire uqe la premiere ligne
+                        };
                         if (socket) {
-                            //     socket.on('reciproqueMatcha', (newMatcha) => {
-                            // })
-
                             socket.on('updateAlreadyLike', (valueToUpdate: boolean) => {
                                 setIsClickedHeart(valueToUpdate);
                             })
@@ -187,7 +162,6 @@ const MatchaProfile: React.FC = () => {
         }
     }, [socket])
 
-    //il faut les sockets pour render des que jarrive sur la page.
     const i = 0;
     const currentUser = users[currentIndex];
 

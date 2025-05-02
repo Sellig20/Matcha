@@ -4,7 +4,6 @@ import errorHandler from "../utils/error";
 import { Pool, PoolClient } from 'pg';
 import dotenv from 'dotenv';
 
-// TODO : parse db and compare with schema
 dotenv.config();
 
 class ORM {
@@ -23,7 +22,7 @@ class ORM {
 	private schema: Schema;
     private pool: Pool;
 
-	private async createTables(): Promise<void> { // TODO : wrap another try catch
+	private async createTables(): Promise<void> {
 		const client = await this.pool.connect();
 		try {
 			await client.query("BEGIN");
@@ -35,7 +34,6 @@ class ORM {
 		} catch (error) {
 			if (client) {
 				console.log("ERROR CATCH CREATE TAVBLEEEEEEEEEEE");
-				// await client.query("ROLLBACK");
 			}
 			errorHandler(error, "Failed to create tables");
 		} 
@@ -67,7 +65,6 @@ class ORM {
 	async create<T extends keyof Schema>(
 		tableName: T,
 		createData: CreateType<T>
-		//  eslint-disable-next-line @typescript-eslint/no-explicit-any
 	): Promise<any | null> {
 		const tableSchema = this.schema[tableName] as TableSchema;
 		const fields = Object.keys(tableSchema).filter((field) => field !== "id");
@@ -82,8 +79,8 @@ class ORM {
 
 		try {
 			const result = await query(queryText);
-			// console.log(`\n\nSuccessfully created record in ${tableName}`);
-			// console.log("\n\nInserted row:", result.rows[0]);
+			console.log(`\n\nSuccessfully created record in ${tableName}`);
+			console.log("\n\nInserted row:", result.rows[0]);
 			return result;
 		} catch (error) {
 			errorHandler(error, `Failed to create record in ${tableName}`);
@@ -110,8 +107,8 @@ class ORM {
 		const queryText = `UPDATE ${tableName} SET ${setClause} WHERE id = ${id} RETURNING *`;
 		try {
 			const result = await query(queryText);
-			// console.log(`\n\nSuccessfully updated record in ${tableName} with id ${id}`);
-			// console.log("\n\nUpdated row:", result.rows[0]);
+			console.log(`\n\nSuccessfully updated record in ${tableName} with id ${id}`);
+			console.log("\n\nUpdated row:", result.rows[0]);
 			return result;
 		} catch (error) {
 			errorHandler(
@@ -125,7 +122,6 @@ class ORM {
         tableName: T,
         propertyName?: K, //champ de la table que je veux lire
         propertyValue?: string | number //variable
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
     ): Promise<any[] | null> {
         const tableSchema = this.schema[tableName];
         try {
@@ -146,7 +142,7 @@ class ORM {
             const result = await query(queryText);
 
             if (!result) {
-                console.log(`\n\nResult is undefined`); // TODO: Handle better
+                console.log(`\n\nResult is undefined`);
                 return null;
             }
 
@@ -155,7 +151,7 @@ class ORM {
                 return null;
             }
 
-            // console.log(`\n\nSuccessfully retrieved record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);
+            console.log(`\n\nSuccessfully retrieved record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);
             return result.rows;
         } catch (error) {
             errorHandler(error, `\n\nFailed to retrieve record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);

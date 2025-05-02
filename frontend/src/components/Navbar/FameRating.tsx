@@ -42,14 +42,10 @@ const FameRating = () => {
         }
     };
 
-    //get matchas number
     const getMatchasNumber = async () => {
         try {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchasnumber/${idd}`);
-            // console.log("\n reponse matchs number is => ", response.data.tabMatchs);
             setMatchs(response.data.tabMatchs || []);
-            // console.log("\n setMatchs => ", matchs);
-            //put response dans le tableau de match trouvé et afficher et faire la jauge de famerating
             if (response.data) {
                 setMessage(`FameRating.tsx | MATCHS CONGRATS`);
             } else {
@@ -61,7 +57,6 @@ const FameRating = () => {
     }
 
     const handleNavigateNotification = () => {
-        // setNotification(null);
         navigate(`/apiServeur/userprofile`);
     };
 
@@ -78,7 +73,6 @@ const FameRating = () => {
                     getMatchasNumber();
                     if (socket) {
                         socket.on('insert_view', (newView) => {
-                            console.log("\n\n ---**--**---- new view fame rating : ", newView);
                             setViews((prevViews) => [...prevViews, newView]);
                         })
             
@@ -91,12 +85,10 @@ const FameRating = () => {
                         })
             
                         socket.on('update_countViews', (newCount) => {
-                            console.log("\n\n nombre de vues get who viewed me : ", newCount);
                             setCountViews(newCount);
                         })
             
                         socket.on('update_countLikes', (newCount) => {
-                            console.log("\n\n nombre de vues get who viewed me : ", newCount);
                             setCountLikes(newCount);
                         })
                     };

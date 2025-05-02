@@ -21,9 +21,6 @@ const Match: React.FC = () => {
             const response = await axiosInstance.get(`http://localhost:8000/apiServeur/matchsusers`);
             setMessage(response.data.message);
             setMyId(response.data.myId);
-            // setUsers(response.data.listName);
-            console.log("\n\n users =>> MATCH?S USERS >>>> ", response.data.listName, "\n\n");
-            // console.log("\n\n i am ", profile);
         } catch (error) {
             setMessage(`AllUsers.tsx | Erreur frontend allusers : ${error}`);
         }
@@ -49,7 +46,6 @@ const Match: React.FC = () => {
                     if (socket) {
             
                         socket.on('newMatchUser', (listName) => {
-                            console.log("\n\nje suis la socket");
                             setUsers(listName);
                         })
                         

@@ -37,8 +37,6 @@ const UserProduct: React.FC = () => {
                 viewer_first_name: profile?.profile?.first_name,
             });
             setMessage(response.data.message);
-            console.log("\n\nresponse ---> ", response.data.message);
-            console.log("\n\nresponse ---> ", response.data);
         } catch (error) {
             setMessage(`UserProduct.tsx | Erreur frontend post views : ${error}`);
         }
@@ -70,7 +68,6 @@ const UserProduct: React.FC = () => {
             });
             setMessage(response.data.message);
             const heartKey = `isClickedHeart${profile?.profile?.id}${user?.id}`;
-            console.log("\n je suis passee par click heart et heartk =", heartKey, "\n\n");
             const currentState = localStorage.getItem(heartKey) === 'true';
             const newState = !currentState;
             localStorage.setItem(heartKey, String(newState));
@@ -107,7 +104,6 @@ const UserProduct: React.FC = () => {
         }
         const heartKey = `isClickedHeart${profile?.profile?.id}${user?.id}`; // Clé unique pour cet utilisateur
         const saveHeart = localStorage.getItem(heartKey);
-        console.log("\n saveh userproduct = ", saveHeart);
         if (saveHeart === 'true') {
             setIsClickedHeart(true);
         } else {

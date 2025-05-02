@@ -108,7 +108,6 @@ export class userSignupModel {
 
     static async readMyMessages(key?: string, value?: string | number) {
         const response = await orm?.read<"users_messages", any>("users_messages", key, value);
-        // console.log("\n\n response userSinupModel readMessages => ", response);
         return response;
     }
 

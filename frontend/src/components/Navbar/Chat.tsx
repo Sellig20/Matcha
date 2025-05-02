@@ -11,14 +11,12 @@ interface MatchaUser {
 }
 
 const Chat = () => {
-    const [data, setData] = useState<any>(null);
     const [message, setMessage] = useState('');
     const [roomId, setRoomId] = useState('');
     const { isProfileComplete } = useProfile();
     const [formValues, setFormValues] = useState("");
     const [notification, setNotification] = useState<string | null>(null);
     const [notificationNoMatch, setNotificationNoMatch] = useState<string | null>(null);
-    const [tabAllMatchas, setAllMatchas] = useState<MatchaUser[]>([]);
     const [array, setArray] = useState<any[]>([]);
     const [chronoArray, setChronoArray] = useState<any[]>([]);
     const [profile_to_check_id, setProfileToCheck] = useState<number>();
@@ -26,9 +24,7 @@ const Chat = () => {
     const navigate = useNavigate();
     const messagesRef = useRef<HTMLDivElement | null>(null);
     const { socket } = useWebSocketContext();
-    const updatedArrayRef = useRef<any[]>([]); 
 
-    //get my info
     const profile = useProfile();
 
     const getMatchasUsers = async () => {
@@ -71,10 +67,6 @@ const Chat = () => {
             else if (!response.data.TheyMatchedMe && !response.data.IMatchedThem) {
                 setNotificationNoMatch("You have to match with someone to start a conversation !");
             }
-            
-            // const allMatchas = [...IMatchedThem, ...TheyMatchedMe];
-            // setAllMatchas(allMatchas);
-            
         } catch (error) {
             setMessage(`FameRating.tsx | Erreur try to get who viewed me : ${error}`);
         }
@@ -90,20 +82,13 @@ const Chat = () => {
 
     const handleClickConv = (profile_to_register_id: number) => {
         setDisplayConv(true);
-        // console.log(`\n je veux la conv avec ${profile_to_register_id} !`);
         setProfileToCheck(profile_to_register_id);
     };
 
-    // console.log("profile to check id var globale = ", profile_to_check_id);
 
     const handleClickCheckProfile = (profile_to_check_id: number | undefined) => {
-        // console.log(`going to see ${profile_to_check_id} profile`);
         navigate(`/apiServeur/userproduct/${profile_to_check_id}`);
     };
-
-    // const handleChangeMsg = () => {
-    //     setFormValues(formValues);
-    // };
 
     const scrollToBottom = () => {
         if (messagesRef.current) {
@@ -164,49 +149,17 @@ const Chat = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            console.log("\n je poste messages");
             const response = await axiosInstance.post(`http://localhost:8000/apiServeur/chatmessages`, {
                 sender_id: profile?.profile?.id,
                 receiver_id: profile_to_check_id,
                 message: formValues,
             });
             // await getHistoricChat();
-            console.log("post retour chat frontend is : ", response);
         } catch (error) {
             setMessage(`Chat.tsx | Erreur frontend post text messages chat : ${error}`);
         }
     };
     
-    // const itsMessages = response.data.itsMsg;
-    // const myMessages = response.data.myMsg;
-    // console.log("\n\nPOST MESSG = ", myMessages, " | ", itsMessages);
-    // const sca = sortMsgChrono(myMessages, itsMessages);
-    // setChronoArray((prevSCA) => [...prevSCA, ...sca]);
-    // setFormValues("");
-    // if (socket) {
-    //     console.log('Emitting socket message POST :', { message, socket });
-    //     socket.emit('newMessage', { message, socket });
-    // }
-    
-    // const getHistoricChat = async () => {
-    //     try {
-    //         const response = await axiosInstance.get(`http://localhost:8000/apiServeur/getchatmessages`, 
-    //             { params: {
-    //                 sender_id: profile?.profile?.id,
-    //                 receiver_id: profile_to_check_id,
-    //             }}
-    //         );
-    //         console.log("response get chat message is => ", response);
-    //         const itsMessages = response.data.itsMsg;
-    //         const myMessages = response.data.myMsg;
-    //         const sca = sortMsgChrono(myMessages, itsMessages);
-    //         setChronoArray(sca);
-
-    //     } catch (error) {
-    //         console.log(`Chats.tsx | Error get text message for 2 : ${error}`);
-    //     }
-    // }
-
     useEffect(() => {
         try {
             if (isProfileComplete === false) {
@@ -215,8 +168,6 @@ const Chat = () => {
             else {
                 getMatchasUsers();
                 if (profile_to_check_id) {
-                    console.log("\nprofile check id : ", profile_to_check_id);
-                    // getHistoricChat();
                 }
                 if (isUserAtBottom()) {
                     scrollToBottom();
@@ -225,7 +176,6 @@ const Chat = () => {
                 let interlocuteur_id = profile_to_check_id;
                 if (userId && interlocuteur_id) {
                     const roomId = [userId, interlocuteur_id].sort().join("-");
-                    console.log("\n\n roomId ==> ", roomId);
                     setRoomId(roomId);
                 }
                 if (socket) {
@@ -234,17 +184,10 @@ const Chat = () => {
                     }
 
                     socket.on("newMessage", (message: any) => {
-                        console.log("CACACACA");
-                        // setChronoArray((prevSCA) => [...prevSCA, ...message.message]);
-                        // setChronoArray(message);
                         setChronoArray((prev) => [...prev, message]);
-                        
                     })
                     
                     return () => {
-                        // socket.off('send_messages_both');
-                        // socket.off('send_messages_me');
-                        // socket.off('send_messages_its');
                     }
                 }
             }
@@ -252,73 +195,6 @@ const Chat = () => {
             setNotification(`Erreur frontend userprofile : ${error}`);
         }
     }, [socket]);
-
-
-
-
-    // socket.on('send_messages_both', (sender, message) => {
-    //     // console.log("***** SOCKET BOTH ******\n tabmymsg = ", tabMyMsg, "\ntabitsmsg = ",tabsItsMsg);
-    //     // const sca = sortMsgChrono(tabMyMsg.tabMyMsg, tabsItsMsg.tabItsMsg);
-    //     // setChronoArray((prevSCA) => [...prevSCA, ...sca]);
-    //     // console.log("------ 1 ----> chrono array === ", chronoArray);
-    //     console.log("sender === ", sender);
-    //     if (sender === socket.id) {
-    //         console.log("mon message");
-    //     }
-    //     else {
-    //         console.log("message den face")
-    //     }
-    // });
-    
-    // socket.on('send_messages_me', (tabMyMsg) => {
-    //     console.log("**** SOCKET ME *******\n tabmymsg = ", tabMyMsg);
-    //     const sca = sortMsgChrono(tabMyMsg.tabMyMsg,[]);
-    //     // setChronoArray(sca);
-    //     setChronoArray((prevSCA) => [...prevSCA, ...sca]);
-        
-    //     // setChronoArray((prevSCA) => 
-    //     //     {
-    //     //         const updatedArray = [...prevSCA, ...sca];
-    //     //         return updatedArray;
-    //     //     });
-    //     // updatedArrayRef.current = [...updatedArrayRef.current, ...sca];
-
-    //     console.log("------ 2 ----> chrono array === ", chronoArray);
-    //     // setChronoArray((prev) => prev.concat(sca));
-    //     // console.log("+++++++ socket 2 ++++++++\n");
-        
-    // });
-    
-    // socket.on('send_messages_its', (tabsItsMsg) => {
-    //     console.log("***** SOCKET ITS ******\n tabitsmsg = ",tabsItsMsg);
-    //     const sca = sortMsgChrono([], tabsItsMsg.tabItsMsg);
-    //     // setChronoArray(sca);
-    //     setChronoArray((prevSCA) => [...prevSCA, ...sca]);
-        
-    //     // setChronoArray((prevSCA) => 
-    //     //     {
-    //     //         const updatedArray = [...prevSCA, ...sca];
-    //     //         return updatedArray;
-    //     //     });
-    //     // updatedArrayRef.current = [...updatedArrayRef.current, ...sca];
-
-    //     console.log("------ 3 ----> chrono array === ", chronoArray);
-    //     // setChronoArray((prev) => prev.concat(sca));
-    //     // console.log("+++++++ socket 3 ++++++++\n");
-
-    // })
-
-    //liste des utilisateurs en ligne avec qui jai matche avec qui je parle
-    //get matchas pour la liste de ceux a qui je peux parler et display une liste sur le cote gauche
-    //creer une zone d'entree de texte qui permet en cliauqnt sur "envoyer" de la "monter" au-dessus dans une bulle de conv
-    
-    //enregistrer chaque message dans la table message
-    
-    // 1 room = 2 personnes qui ont matche
-    // post les messages en bdd
-    // <- socket et res ->
-    // get les anciens messages
-    //les afficher en bulles frontend
 
     return (
             <section className="gradient-custom">
@@ -358,7 +234,6 @@ const Chat = () => {
                         <div className="d-flex justify-content-between align-items-start p-4">
 
 
-                            {/* Rectangle vertical à gauche */}
                             <div className="discussions col-md-3"style={{ height:"500px", width:"330px", borderRadius: "30px" }}>
                                         <table className="table-chat">
                                             <thead>
@@ -382,7 +257,6 @@ const Chat = () => {
 
                             {displayConv ? (
                             <>
-                            {/* Deux carrés superposés */}
                             <div className="d-flex flex-column mx-3" style={{ width: "40%" }}>
 
                                 <div className="card shadow-2-strong mb-3"style={{ borderRadius: "30px", height: "150px",}}>
@@ -419,14 +293,12 @@ const Chat = () => {
                                                 value={formValues}
                                                 type="text"
                                                 onChange={(e) => setFormValues(e.target.value)}
-                                                // required
                                                 >
                                             </input>
                                         </div>
                                         <div className="mt-4 pt-2 d-flex align-items-center justify-content-center">
                                             <button data-mdb-ripple-init 
                                                 className="btn btn-chat btn-send"
-                                                // onClick={handleChangeMsg}
                                                 type="submit"
                                                 > Send </button>
                                         </div>
@@ -436,8 +308,6 @@ const Chat = () => {
 
                             </div>
 
-
-                            {/* Rectangle vertical à droite */}
                             <div className="col-md-3"style={{ height:"500px", width:"330px" }}>
                                 <div className="card shadow-2-strong mb-3" style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
                                     <div className="card-body d-flex-column">
@@ -480,8 +350,6 @@ const Chat = () => {
                                 </div>
                             </div>
 
-
-                            {/* Rectangle vertical à droite */}
                             <div className="col-md-3"style={{ height:"500px", width:"330px" }}>
                                 <div className="no-chat card shadow-2-strong mb-3" style={{ borderRadius: "30px", width: "100%", height: "100%" }}>
                                    No profile loaded ...

@@ -108,8 +108,6 @@ router.post('/chatmessages', authenticateWithToken, (req, res) => {
 });
 
 router.get('/getchatmessages', authenticateWithToken, (req, res) => {
-    console.log("\nje pass dans ROUUUUUUTEs");
-
     chatController.readMessages(req, res);
 });
 

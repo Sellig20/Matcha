@@ -5,7 +5,6 @@ import { schema } from "./src/orm/schema";
 import dotenv from 'dotenv';
 import http from 'http';
 import { Socket } from 'socket.io';
-import { clientRedis, connectRedis } from "./redis";
 import { authenticateWithToken } from "./src/authMiddleware";
 
 dotenv.config();
@@ -20,7 +19,6 @@ function startServer() {
 		if (!orm) {
 			throw new Error("Failed to create ORM");
 		}
-		connectRedis();
 		const server = http.createServer(app);
 		return server;
 	} catch (error) {
@@ -40,14 +38,13 @@ async function stopServer() {
 
 const server = startServer();
 
-	console.log("\n\n\ IF SERVER -> WEBSOCKETS\n\n");
-	const io = require('socket.io')(server, {
-		cors: {
-			origin: 'http://localhost:8000',
-			methods: ['GET', 'POST', 'DELETE', 'PUT'],
-			credentials: true
-		}
-	});
+const io = require('socket.io')(server, {
+	cors: {
+		origin: 'http://localhost:8000',
+		methods: ['GET', 'POST', 'DELETE', 'PUT'],
+		credentials: true
+	}
+});
 
 	export {io};
 
@@ -55,8 +52,6 @@ const server = startServer();
 		console.log('\n\n♦️♦️♦️♦️♦️♦️♦️♦️ WebSocket BACKEND connected:', socket.id, "♦️♦️♦️♦️♦️♦️♦️♦️\n\n");
 
 		const userId = socket.handshake.query.userId
-		clientRedis.set(`user:${userId}`, socket.id);
-		console.log(`\n--------- userId for redis is : ${userId} ---------\n`)
 
 		socket.on('newUser', (data) => {
 			socket.broadcast.emit('newUser', { id: socket.id, ...data });
@@ -64,7 +59,6 @@ const server = startServer();
 
 		socket.on('disconnect', () => {
 			console.log('\n\n♦️♦️♦️♦️♦️♦️♦️♦️ User déconnected:', socket.id, "♦️♦️♦️♦️♦️♦️♦️♦️\n\n");
-			clientRedis.del(`user:${userId}`);
 		});
 
 		socket.on('joinRoom', (roomId) => {
@@ -72,32 +66,22 @@ const server = startServer();
 			socket.join(roomId);
 		})
 
-		// socket.on('newMessage', (message) => {
-        //     console.log(" message frontend serveur : ", message);
-        //     socket.emit("newMessagefromFD", message);
-		// })
-
 		socket.on('newMessageBK', (message, socket, roomId) => {
 			io.to(roomId).emit('send_messages_both', {sender: socket, message});
 
 		})
 
-		//-----------------------------------------------------------
-		
 		socket.on('messagerie', (msg: string) => {
-			console.log(`\n\n\n je suis le serveur je suis en event - messagerie - : ${msg}\n\n`);
 			socket.emit('messagerie', 'je suis sur ta messagerie');
 		});
 		
 		socket.on('coucou', (msg: string) => {
-			console.log(`\n\n\n je suis le serveur je suis en event - coucou - : ${msg}\n\n`);
+			console.log(`\n\nserver.ts : ${msg}\n\n`);
 		});
 
 		socket.on('update_pvt', () => {
-			console.log("\n\n\n\n io pvt\n\n");
+			console.log("\n\nserver.ts : update_pvt\n\n");
 		})
-		
-		// socket.emit('coucoux', 'je suis belle comme un coucou');//socket-event genere une fois
 	});
 	
 

@@ -1,14 +1,11 @@
 import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
-import { userSigninController } from "./userSigninController";
 import { io } from '../../server';
-import { UserProfileInterface } from "../databaseInterfaces";
 
 export class MatchingController {
 
     static async sort_SI_GenderController(req: Request, res: Response, list: any[] | undefined) {
         try {
-            //liste des users sans moi pour echaffauder
             const my_sexual_interest = req.user?.sexual_interest;
             let tmpList = [];
             if (list && my_sexual_interest === "women") {
@@ -34,7 +31,7 @@ export class MatchingController {
             }
             return finalList;
         } catch (error) {
-            console.log(`\n\n\nMatchingController.ts sort SI and gender | Error : ${error}\n\n\n`);
+            console.log(`\n\n\nMatchingController.ts sort_SI_gender_controller | Error : ${error}\n\n\n`);
             return null;
         };
     };
@@ -59,7 +56,7 @@ export class MatchingController {
         }
     }
     
-    static async getListUsers(req: Request, res: Response) {//For AllUsers.tsx, from bdd
+    static async getListUsers(req: Request, res: Response) {
         try {
             const listTab = await userSignupModel.readUserByEmail();
             const list = listTab?.map(user => user.id);
@@ -74,7 +71,6 @@ export class MatchingController {
         static async sortFirstTag(req: Request, res: Response, tab: any[] | null) {
             try {                
                 const finalTab: string[] = [];
-                //count / 3 = 0,3 ou 0.6 ou 1 puis le + proche de 1 = le gagnant
                 tab?.sort((a, b) => b.value - a.value);
                 return finalTab;
             } catch (error) {
@@ -145,7 +141,7 @@ export class MatchingController {
         }
     }
     
-    static async getMatchsUsers(req: Request, res: Response) {//For AllUsers.tsx, from bdd
+    static async getMatchsUsers(req: Request, res: Response) {
         try {
             const listTab = await userSignupModel.readUserByEmail();
             const currentId = req.userId;
@@ -171,7 +167,6 @@ export class MatchingController {
             const sorted_age_tab = await this.sortAge(req, res, sorted_SI_gender_tab);
             const algo_age = await this.sortFirst(req, res, sorted_age_tab);
             const algo_tags = await this.sortTags(req, res, algo_age);
-            // const list = sorted_age_tab?.map(user => user.id);
             const listName = algo_tags?.map(user => 
                 ({ 
                     user_name: user.user_name,
@@ -188,7 +183,6 @@ export class MatchingController {
             );
             const v = req.userId;
             const existingLike = await userSignupModel.readLikes("liker_user_id", v);
-            //to check if the like exist ad so update alreadyLike
             if (existingLike && listName && listName.length > 0) {
                 for (let i = 0; i < listName.length; i++) {
                     for (let j = 0; j < existingLike.length; j++) {
