@@ -1,7 +1,7 @@
 import { query } from '../db';
 import { UserSettingsInterface } from '../databaseInterfaces';
 import orm from '../../server'
-import { UserCreate, UsersLikesCreate, UsersMatchsCreate, UsersMessagesCreate, UsersProfilesViewsCreate } from '../orm/schema';
+import { UserCreate, UsersLikesCreate, UsersMatchsCreate, UsersMessagesCreate, UsersViewsCreate } from '../orm/schema';
 
 // export class userSignupModel {
     // static async findByEmail(email: string) {
@@ -28,8 +28,8 @@ export class userSignupModel {
         return response;
     }
 
-    static async createViews(newViews: UsersProfilesViewsCreate) {
-        const response = await orm?.create<"users_profiles_views">("users_profiles_views", newViews);
+    static async createViews(newViews: UsersViewsCreate) {
+        const response = await orm?.create<"users_views">("users_views", newViews);
         return response;
     }
 
@@ -64,7 +64,7 @@ export class userSignupModel {
     }
 
     static async readViewed(key?: string, value?: string | number) {
-        const response = await orm?.read<"users_profiles_views", any>("users_profiles_views", key, value);
+        const response = await orm?.read<"users_views", any>("users_views", key, value);
         return response;
     }
 

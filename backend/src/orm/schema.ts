@@ -3,7 +3,7 @@
 export type CreateType<T extends keyof Schema> =
   T extends "users" ? UserCreate :
   T extends "users_sexual_preferences" ? UsersSexualPreferencesCreate :
-  T extends "users_interests" ? UsersInterestsCreate :
+  T extends "users_interests" ? UsersTagsCreate :
   T extends "users_pictures" ? UsersPicturesCreate :
   T extends "users_pictures_likes" ? UsersPicturesLikesCreate :
   T extends "users_profiles_views" ? UsersProfilesViewsCreate :
@@ -40,10 +40,10 @@ export interface UsersSexualPreferencesCreate {
     name: string,
     user_id: number,
 }
-export interface UsersInterestsCreate {
-    name: string,
-    user_id: number,
-}
+// export interface UsersTagsCreate {
+//     name: string,
+//     user_id: number,
+// }
 
 export interface UsersPicturesCreate {
     url: string,
@@ -58,7 +58,7 @@ export interface UsersPicturesLikesCreate {
     liked_on: string,
 }
 
-export interface UsersProfilesViewsCreate {
+export interface UsersViewsCreate {
 	first_name: string,
     user_viewer_id: number,
     user_viewed_id: number,
@@ -175,14 +175,14 @@ export const schema: Schema = {
 		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
 	},
 
-	users_pictures_likes: {
-		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
-		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
-		picture_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USERS_PICTURES_ID],
-		liked_on: [ColumnType.TIMESTAMP, ColumnConstraint.NOT_NULL],
-	},
+	// users_pictures_likes: {
+	// 	id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
+	// 	user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
+	// 	picture_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USERS_PICTURES_ID],
+	// 	liked_on: [ColumnType.TIMESTAMP, ColumnConstraint.NOT_NULL],
+	// },
 
-	users_profiles_views: {
+	users_views: {
 		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
 		first_name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL],
 		user_viewer_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
