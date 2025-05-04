@@ -4,16 +4,16 @@ import orm from '../../server';
 import { UserCreate } from '../orm/schema';
 
 export class userSigninModel {
-    static async getLogin(email: string, password: string) {
+    static async getLogin(email: string, password: string) {//GO TO CONTROLLER
         const userArray = await orm?.read<"users", any>("users", "email", email);
         const user = userArray ? userArray[0] : null;
         if (user && user.email.length === 0) {
-            throw new Error('Wrong email');
+            throw new Error('Wrong email');//return
         }
         const hashedPwd = user.password_hash;
         const resPassword = await bcrypt.compare(password, hashedPwd);
         if (!resPassword) {
-            throw new Error('Wrong password');
+            throw new Error('Wrong password');//return
         }
         // delete myUser.pass_word;
         return user;

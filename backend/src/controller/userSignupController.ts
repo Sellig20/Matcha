@@ -19,13 +19,13 @@ export class userSignupController {
                 res.status(400).json({ message: 'UserSignupController.ts | Email already existing in the database' });
                 return;
             }
-
+            // regeles du pqsswd dont taille max 
             const hashedPwd = await bcrypt.hash(password, 10);
 
-            if (!JWT_SECRET || JWT_SECRET === null) {
+            if (!JWT_SECRET || JWT_SECRET === null) { // return  500
                 throw new Error('UserSignupController.ts | JWT_SECRET is not defined in the environment variables');
             }
-            const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '10h' });
+            const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '10h' }); // maybe id
         
             const newUser: UserCreate = {
                 user_name: "",
@@ -36,7 +36,7 @@ export class userSignupController {
                 age_lower_bound: 0,
                 age_upper_bound: 0,
                 password_hash: hashedPwd,
-                validation_token: token,
+                validation_token: token, // ADRIEN remove from db
                 gender: "",
                 biography: "",
                 sexual_interest: "",
@@ -60,13 +60,11 @@ export class userSignupController {
         try {
             const id = req.userId;
             const userArray = await userSignupModel.readUserByEmail("id", id);
-            if (userArray && userArray.length > 0) {
-                const isProfileCompleted = userArray[0].is_profile_completed;
-                res.status(201).json({ message: 'UserSignupController.ts | Success getting is profile complete', isProfileCompletedDB: isProfileCompleted});
-            }
-            else {
+            if (!userArray || !userArray.length) {
                 return res.status(400).json({ message: 'UserSignupController.ts | Error getting profile for isprofilecompleted'});
             }
+            const isProfileCompleted = userArray[0].is_profile_completed;
+            res.status(201).json({ message: 'UserSignupController.ts | Success getting is profile complete', isProfileCompletedDB: isProfileCompleted});
         } catch (error) {
             res.status(500).json({ message: `UserSignupController.ts | Error during getting is profile complete : ${error}` });
             return;

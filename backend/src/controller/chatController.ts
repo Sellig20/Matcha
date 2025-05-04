@@ -3,6 +3,8 @@ import { userSignupModel } from "../model/userSignupModel";
 import { io } from '../../server';
 import { UsersMessagesCreate } from "../orm/schema";
 
+// ADRIEN replace by a web socket
+
 export class chatController {
     static async postMessages(req: Request, res: Response) {
         try {

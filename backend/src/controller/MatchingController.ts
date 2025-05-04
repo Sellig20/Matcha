@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
 import { io } from '../../server';
 
+// Algo is good !
+
 export class MatchingController {
 
     static async sort_SI_GenderController(req: Request, res: Response, list: any[] | undefined) {
@@ -141,7 +143,7 @@ export class MatchingController {
         }
     }
     
-    static async getMatchsUsers(req: Request, res: Response) {
+    static async getMatchsUsers(req: Request, res: Response) { // ADRIEN let multiple conditions in orm read
         try {
             const listTab = await userSignupModel.readUserByEmail();
             const currentId = req.userId;
@@ -195,7 +197,7 @@ export class MatchingController {
                     }
                 }
             }
-            io.emit('newMatchUserMP', listName);
+            io.emit('newMatchUserMP', listName); // useless
             res.status(201).json({ message: `List of all users`, tab: listName });
         } catch (error) {
             res.status(500).json({ message: `fameRatingController.ts | Error during get list users : ${error}` });

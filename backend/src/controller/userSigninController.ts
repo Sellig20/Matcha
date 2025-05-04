@@ -10,12 +10,12 @@ export class userSigninController {
     static async getLogin(req: Request, res: Response) {
         try {
             const { email, password } = req.body;
-            const validUser = await userSigninModel.getLogin(email, password);
+            const validUser = await userSigninModel.getLogin(email, password); // use read user
             if (!validUser) {
                 res.status(400).json({ message: 'UserSigninController.ts | Email not found' });
                 return;
             }
-            if (!JWT_SECRET || JWT_SECRET === null) {
+            if (!JWT_SECRET || JWT_SECRET === null) { // return 500
                 throw new Error('UserSigninController.ts | JWT_SECRET is not defined in the environment variables');
             }
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '10h' });
@@ -23,11 +23,11 @@ export class userSigninController {
             res.status(200).json({
                 message: "UserSigninController.ts | Auth successfull welcome in the app",
                 token: token,
-                user: validUser
+                user: validUser // pas utile
             });
-        } catch (err: any) {
+        } catch (err: any) { // return 500
             console.error("\nuserSigninController -> ", err);
-            if (err == "TypeError: Cannot read properties of null (reading 'password_hash')") {
+            if (err == "TypeError: Cannot read properties of null (reading 'password_hash')") { // remove all this
                 res.status(401).json( { message: "Check the email. Does it exist ?" } );
             }
             else {

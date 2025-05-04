@@ -17,13 +17,13 @@ export class fameRatingController {
                 user_viewer_id: req.body.viewer_id,
                 user_viewed_id: req.body.viewed_id,
                 view_started_on: new Date().toISOString(),
-                view_ended_on: new Date(Date.now() + 3600000).toISOString(),
+                view_ended_on: new Date(Date.now() + 3600000).toISOString(), // Adrien figure this out
             };
             const result = await userSignupModel.createViews(tableView);
-            io.emit('insert_view', tableView);
+            io.emit('insert_view', tableView); // useless
             const count = await this.countViews(value);
-            io.emit('update_countViews', count);
-            res.status(201).json({ message: `views ok`});
+            io.emit('update_countViews', count); // useless
+            res.status(201).json({ message: `views ok`}); 
         } catch (error) {
             res.status(500).json({ message: `\n\nfameRatingController.ts | Error during recording views : ${error}\n\n` });
             return;
@@ -34,6 +34,7 @@ export class fameRatingController {
         try {
             const firstNameBdd = await userSignupModel.readFirstName("id", req.body.liker_user_id);
             const existingLike = await userSignupModel.readLikes("liker_user_id", req.body.liker_user_id);
+            // Adrien fix this
 
             if (existingLike && existingLike[0].liked_user_id === req.body.liked_user_id
                 && existingLike[0].liker_user_id === req.body.liker_user_id) {
@@ -42,17 +43,16 @@ export class fameRatingController {
 
             const tableLikes: UsersLikesCreate = {
                 user_id: req.body.user_id,
-                first_name: firstNameBdd,
+                first_name: firstNameBdd, // should not have this field
                 liked_user_id: req.body.liked_user_id,
                 liker_user_id: req.body.liker_user_id,
-                liked_on: new Date().toISOString(),
+                liked_on: new Date().toISOString(), // Jadore
             };
             await userSignupModel.createLikes(tableLikes);
-            const value = req.body.liker_user_id;
+            const value = req.body.liker_user_id; // next 4 lines are useless
             io.emit('insert_likes', tableLikes, "\n\n");
             const count = await this.countLikes(value);
             io.emit('update_countLikes', count);
-            const isThereAMatch = await this.getIsThereAMatch(req, res);
             res.status(201).json({ success: true, message: `likes ok` });
         } catch (error) {
             res.status(500).json({ message: `\n\nfameRatingController.ts | Error during recording likes : ${error}\n\n` });
@@ -159,6 +159,7 @@ export class fameRatingController {
     static async countViews(value: any) {
         try {
             const profile = await userSignupModel.readAnything("users_profiles_views", "user_viewed_id", value);
+            // rest is useless just return profile.length
             const viewerCounts: { [key: string]: number } = {};
             profile?.forEach(ind => {
                 const viewer = ind.user_viewer_id;
