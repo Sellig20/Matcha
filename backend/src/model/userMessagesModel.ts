@@ -8,7 +8,7 @@ export class userMessagesModel {
     }
 
     static async readMessages(key?: string, value?: string | number) {
-        const res = await orm?.read<"users_messages">("users_messages", key, value)
+        const res = await orm?.read<"users_messages", string>("users_messages", key, value)
         return res;
     }
 

@@ -8,7 +8,7 @@ export class userBlocksModel {
     }
 
     static async readBlocks(key?: string, value?: string | number) {
-        const res = await orm?.read<"users_blocks">("users_blocks", key, value)
+        const res = await orm?.read<"users_blocks", string>("users_blocks", key, value)
         return res;
     }
 

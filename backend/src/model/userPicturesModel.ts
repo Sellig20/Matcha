@@ -8,7 +8,7 @@ export class userPicturesModel {
     }
 
     static async readPictures(key?: string, value?: string | number) {
-        const res = await orm?.read<"users_pictures">("users_pictures", key, value)
+        const res = await orm?.read<"users_pictures", string>("users_pictures", key, value)
         return res;
     }
 

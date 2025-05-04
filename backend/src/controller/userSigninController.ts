@@ -15,8 +15,8 @@ export class userSigninController {
                 res.status(400).json({ message: 'UserSigninController.ts | Email not found' });
                 return;
             }
-            if (!JWT_SECRET || JWT_SECRET === null) { // return 500
-                throw new Error('UserSigninController.ts | JWT_SECRET is not defined in the environment variables');
+            if (!JWT_SECRET) {
+                return res.status(400).json({ message: 'serSigninController.ts | getLogin | WT_SECRET is not defined in the environment variables' });
             }
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '10h' });
             await userSigninModel.storeNewToken(email, token, validUser.id);

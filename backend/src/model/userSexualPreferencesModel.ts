@@ -8,7 +8,7 @@ export class userSexualPreferencesModel {
     }
 
     static async readSexualPreferences(key?: string, value?: string | number) {
-        const res = await orm?.read<"users_sexual_preferences">("users_sexual_preferences", key, value)
+        const res = await orm?.read<"users_sexual_preferences", string>("users_sexual_preferences", key, value)
         return res;
     }
 

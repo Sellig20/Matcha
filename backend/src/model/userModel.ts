@@ -8,7 +8,7 @@ export class userModel {
     }
 
     static async readUser(key?: string, value?: string | number) {
-        const res = await orm?.read<"users">("users", key, value)
+        const res = await orm?.read<"users", string>("users", key, value)
         return res;
     }
 

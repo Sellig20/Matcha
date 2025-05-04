@@ -1,5 +1,5 @@
 import { query, pool } from "../db";
-import { Schema, TableSchema, FieldDefinition, CreateType } from "./schema";
+import { Schema, TableSchema, FieldDefinition, CreateType, UsersViewsCreate } from "./schema";
 import errorHandler from "../utils/error";
 import { Pool, PoolClient } from 'pg';
 import dotenv from 'dotenv';

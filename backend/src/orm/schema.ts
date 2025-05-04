@@ -3,10 +3,9 @@
 export type CreateType<T extends keyof Schema> =
   T extends "users" ? UserCreate :
   T extends "users_sexual_preferences" ? UsersSexualPreferencesCreate :
-  T extends "users_interests" ? UsersTagsCreate :
   T extends "users_pictures" ? UsersPicturesCreate :
   T extends "users_pictures_likes" ? UsersPicturesLikesCreate :
-  T extends "users_profiles_views" ? UsersProfilesViewsCreate :
+  T extends "users_views" ? UsersViewsCreate :
   T extends "users_likes" ? UsersLikesCreate :
   T extends "users_matchs" ? UsersMatchsCreate :
   T extends "users_blocks" ? UsersBlocksCreate :
@@ -40,10 +39,6 @@ export interface UsersSexualPreferencesCreate {
     name: string,
     user_id: number,
 }
-// export interface UsersTagsCreate {
-//     name: string,
-//     user_id: number,
-// }
 
 export interface UsersPicturesCreate {
     url: string,
@@ -156,12 +151,6 @@ export const schema: Schema = {
 	},
 
 	users_sexual_preferences: {
-		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
-		name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL], // enum
-		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],
-	},
-
-	users_interests: {
 		id: [ColumnType.SERIAL, ColumnConstraint.PRIMARY_KEY],
 		name: [ColumnType.VARCHAR, ColumnConstraint.NOT_NULL], // enum
 		user_id: [ColumnType.INT, ColumnConstraint.REFERENCES_USER_ID],

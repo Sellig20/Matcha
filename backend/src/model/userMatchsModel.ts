@@ -8,7 +8,7 @@ export class userMatchsModel {
     }
 
     static async readMatchs(key?: string, value?: string | number) {
-        const res = await orm?.read<"users_matchs">("users_matchs", key, value)
+        const res = await orm?.read<"users_matchs", string>("users_matchs", key, value)
         return res;
     }
 

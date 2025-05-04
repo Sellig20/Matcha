@@ -3,7 +3,7 @@ import axiosInstance from '../../security/axiosInstance';
 import "../../assets/styles/Navbar/FameRating.css"
 import { useProfile } from './User/profileContext';
 import { useNavigate, useParams } from 'react-router';
-import { UsersLikesCreate, UsersMatchsCreate, UsersProfilesViewsCreate } from '../../../../backend/src/orm/schema';
+import { UsersLikesCreate, UsersMatchsCreate, UsersViewsCreate } from '../../../../backend/src/orm/schema';
 import { useWebSocketContext } from '../../security/wsContext';
 
 const FameRating = () => {
@@ -12,7 +12,7 @@ const FameRating = () => {
     const { idd } = useParams<{idd:string}>();
     const [countViews, setCountViews] = useState<number>();
     const [countLikes, setCountLikes] = useState<number>();
-    const [views, setViews] = useState<UsersProfilesViewsCreate[]>([]);
+    const [views, setViews] = useState<UsersViewsCreate[]>([]);
     const [likes, setLikes] = useState<UsersLikesCreate[]>([]);
     const [matchs, setMatchs] = useState<UsersMatchsCreate[]>([]);
     const { socket } = useWebSocketContext();

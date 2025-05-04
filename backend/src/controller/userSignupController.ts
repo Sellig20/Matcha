@@ -11,19 +11,20 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export class userSignupController {
+    
     static async signup(req: Request, res: Response) {
         try {
             const { firstname, lastname, email, password } = req.body;
-            const existingUserAlready = await userSignupModel.readUserByEmail("email", email);
-            if (existingUserAlready) {
-                res.status(400).json({ message: 'UserSignupController.ts | Email already existing in the database' });
-                return;
+            const existingUser = await userSignupModel.readUserByEmail("email", email);//by id
+            if (existingUser) {
+                return res.status(400).json({ message: 'UserSignupController.ts | signup | Error while authenticating' });
             }
-            // regeles du pqsswd dont taille max 
+            // regles du passwd dont taille max 
             const hashedPwd = await bcrypt.hash(password, 10);
 
-            if (!JWT_SECRET || JWT_SECRET === null) { // return  500
-                throw new Error('UserSignupController.ts | JWT_SECRET is not defined in the environment variables');
+            if (!JWT_SECRET) {
+                res.status(500).json({ message: 'UserSignupController.ts | signup | Error while authenticating' });
+                return;
             }
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '10h' }); // maybe id
         

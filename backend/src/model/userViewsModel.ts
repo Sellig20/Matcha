@@ -8,7 +8,7 @@ export class userViewsModel {
     }
 
     static async readView(key?: string, value?: string | number) {
-        const res = await orm?.read<"users_views">("users_views", key, value)
+        const res = await orm?.read<"users_views", string>("users_views", key, value)
         return res;
     }
 

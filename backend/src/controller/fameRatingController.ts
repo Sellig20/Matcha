@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { userSignupModel } from "../model/userSignupModel";
-import { UsersLikesCreate, UsersProfilesViewsCreate } from "../orm/schema";
+import { UsersLikesCreate, UsersViewsCreate } from "../orm/schema";
 import { io } from '../../server';
 import { UsersMatchsCreate } from "../orm/schema";
 import { table } from "console";
@@ -12,7 +12,7 @@ export class fameRatingController {
             const value = req.body.viewed_id;
             const firstNameBdd = await userSignupModel.readFirstName("id", req.body.viewer_id);
             
-            const tableView: UsersProfilesViewsCreate = {
+            const tableView: UsersViewsCreate = {
                 first_name: firstNameBdd,
                 user_viewer_id: req.body.viewer_id,
                 user_viewed_id: req.body.viewed_id,

@@ -8,7 +8,7 @@ export class userLikesModel {
     }
 
     static async readLikes(key?: string, value?: string | number) {
-        const res = await orm?.read<"users_likes">("users_likes", key, value)
+        const res = await orm?.read<"users_likes", string>("users_likes", key, value)
         return res;
     }
 
