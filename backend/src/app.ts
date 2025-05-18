@@ -1,36 +1,36 @@
-import "dotenv/config";
-import express, { NextFunction, Request, Response } from "express";
-import createHttpError, { isHttpError } from "http-errors";
+// src/app.ts
+import express from "express";
 import cors from "cors";
-import cookieParser from 'cookie-parser';
-import routes from "./routes";
+import userController from "./controllers/user.controller"; // Adjust path
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
+app.use(cors()); // Configure CORS as needed
+app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 
-app.use(express.json());
+// Mount the user controller
+app.use("/api", userController); // All user routes will be prefixed with /api
 
-app.use(cookieParser());
-
-app.use("/apiServeur", routes);
-
-app.use((req, res, next) => {
-    next(createHttpError(404,"Endpoint not found"));
+// Basic route for testing
+app.get("/api/test", (req, res) => {
+	res.send("Hello from Matcha Backend!");
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
-    console.error(error);
-    let errorMessage = "Unknown error";
-    let statusCode = 500;
-    if (isHttpError(error)) {
-        statusCode = error.status;
-        errorMessage = error.message;
-    }
-    res.status(statusCode).json({ error: errorMessage });
-})
+// Error handling middleware (optional, but good practice)
+app.use(
+	(
+		err: any,
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => {
+		console.error("Unhandled application error:", err.stack || err);
+		res.status(err.status || 500).json({
+			message: err.message || "Internal Server Error",
+			// error: process.env.NODE_ENV === 'development' ? err : {} // Only show error details in dev
+		});
+	}
+);
 
 export default app;

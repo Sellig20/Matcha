@@ -1,10 +1,12 @@
+# docker-compose.yml
+
 volumes: 
-  db_data:
+  db_data: # This volume will persist your data across container recreations
 
 services: 
 
   db:
-    image: postgres
+    image: postgres:16 # UPDATED to latest stable PostgreSQL 16
     container_name: db
     restart: always
     tty: true
@@ -13,21 +15,25 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-       - db_data:/var/lib/postgresql/data
-    #    - ./insertdata.sql:/docker-entrypoint-initdb.d/insertdata.sql
-    #    - ./wait_insert_data.sh:/docker-entrypoint-initdb.d/wait_insert_data.sh
-    # command: ["sh", "/docker-entrypoint-initdb.d/wait_insert_data.sh"]
+       - db_data:/var/lib/postgresql/data # Mounts the named volume to persist data
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432" # Use environment variable for host port, default to 5432
     networks:
       - node-network
+    # Optional: Add a healthcheck to ensure DB is ready before other services start
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
 
   back-end:
     env_file:
       - .env
     depends_on:
         db:
-          condition: service_started
+          # condition: service_healthy # Use if healthcheck is defined and PG version supports it well
+          condition: service_started # Fallback if no healthcheck
     networks: 
       - node-network
     build:
@@ -37,10 +43,11 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
+      - /usr/src/app/node_modules # Important: Keeps node_modules in the container
     tty: true
     ports:
-      - "3000:3000"
+      - "${BACKEND_PORT:-3000}:3000" # Use environment variable for host port, default to 3000
+    command: npm run dev # Or your start command
 
   front-end:
     depends_on:
