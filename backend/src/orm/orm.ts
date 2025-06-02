@@ -147,11 +147,11 @@ class ORM {
             }
 
             if (result.rows.length === 0) {
-                console.log(`\n\nNo record found in ${tableName} with ${String(propertyName)} ${propertyValue}`);
+                console.log(`\n\nNo READ record found in ${tableName} with ${String(propertyName)} ${propertyValue}`);
                 return null;
             }
 
-            console.log(`\n\nSuccessfully retrieved record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);
+            console.log(`\n\nread orm : Successfully retrieved record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);
             return result.rows;
         } catch (error) {
             errorHandler(error, `\n\nFailed to retrieve record from ${tableName} where ${String(propertyName)} = ${propertyValue}`);

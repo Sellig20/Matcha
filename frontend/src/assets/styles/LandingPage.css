@@ -3,15 +3,10 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    font-family: "posterable";
-    width: 500px;
-    height: 200px;
-    font-size: 40px;
-    color: rgba(240, 147, 251, 1);
+    font-family: "citymango";
+    font-size: 90px;
+    color: #ec5219;
     margin-bottom: 20px;
-    background-color: rgb(245, 87, 171);
-    border-radius: 50%;
-    box-shadow: 0 4px 5px rgba(39, 18, 49, 0.1);
 }
 
 .bubble-container {
@@ -30,7 +25,7 @@
     height: 150px;
     padding: 60px;
     margin: 10px;
-    border-radius: 70px;
+    border-radius: 90px;
     box-shadow: 0 4px 5px rgba(39, 18, 49, 0.1);
   }
   
@@ -41,12 +36,12 @@
   
   .bubble.left {
     align-self: flex-start;
-    background-color: rgb(245, 87, 171);
-    color: rgba(240, 147, 251, 1);
+    background-color: #ff784d;
+    color: #FDF6F0;
   }
   
   .bubble.right {
     align-self: flex-end;    
-    background-color: rgb(232, 148, 241);
-    color: rgb(224, 60, 148);
+    background-color: #ff6b35;
+    color: #FDF6F0;
   }

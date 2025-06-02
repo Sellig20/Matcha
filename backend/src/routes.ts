@@ -115,7 +115,7 @@ router.get('/map', authenticateWithToken, (req, res) => {
     res.json({ message: 'This is a protected route -- /MAP', user: req.user });
 });
 
-router.get('/checktok', authenticateWithToken, (req, res) => {
+router.get('/checktoken', authenticateWithToken, (req, res) => {
     res.json({ valid: true });
 });
 

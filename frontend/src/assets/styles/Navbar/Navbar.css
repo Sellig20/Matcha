@@ -1,15 +1,15 @@
 .navbar-brand {
-    font-family: "city mango";
+    font-family: "citymango";
     font-size: 60px;
-    color:#FF9CB6;
+    color:#ec5219;
 }
 
 .navbar-brand:hover {
-    color:#FF9CB6;
+    color:#ff9966;
 }
 
 .navbar {
-    background: linear-gradient(to bottom left, #FF9CB6, #480ced);
+    background: linear-gradient(to bottom left,  #e9460b, #232a69);
 }
 
 .nav {
@@ -20,14 +20,14 @@
     font-family: "memories";
     padding: 10px;
     text-decoration: none;
-    border: 2px solid #C49FFF;
+    border: 2px solid #FDF6F0;
     margin: 4px;
     border-radius: 50px;
-    color: #FF9CB6;
+    color: #FDF6F0;
     font-size: 21px;
 }
 
 .btn-navbar:hover {
-    color: #eaaaf1;
-    background-color: #480ced;
+    color: #FDF6F0;
+    background-color: #ff6b35;
 }

@@ -7,24 +7,24 @@
 */
 
 .form-card {
-  background-color: #FF9CB6;
+  background-color: #ec5219;
   padding: 7px;
 }
 
 .fields {
-  background-color: #eaaaf1;
-  color: #480ced;
+  background-color: #e4270e;
+  color: #FDF6F0;
 }
 
 .high {
-  color: #480ced;
+  color: #ec5219;
 }
 
 .gradient-custom {
-  background: #f093fb;
+  background: #451708;
   min-height: 100vh;
-  background: -webkit-linear-gradient(to bottom right, #480ced, #FF9CB6);
-  background: linear-gradient(to bottom right, #480ced, #FF9CB6);
+  background: -webkit-linear-gradient(to bottom right, #232a69, #e9460b);
+  background: linear-gradient(to bottom right, #232a69, #e9460b);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,7 +32,7 @@
 }
 
 h1 {
-  color: #FF9CB6;
+  color: #ec5219;
   font-family: "posterable";
 }
 
@@ -48,19 +48,19 @@ h1 {
 }
 
 .card {
-  background-color: #C49FFF;
+  background-color: #f5e7e6;
 }
 
 .btn {
   font-family: "posterable";
-  background-color: #eaaaf1;
+  background-color: #FDF6F0;
   font-size: 25px;
-  color: #480ced;
+  color: #ec5219;
 }
 
 .btn:hover {
   color: #eaaaf1;
-  background-color: #480ced;
+  background-color: #ec5219;
 }
 
 .openbtn {
@@ -86,7 +86,7 @@ h1 {
 }
 
 .modal-content {
-  background: #eaaaf1;
+  background: #f76733;
   padding: 20px;
   border-radius: 8px;
   max-width: 500px;
@@ -94,7 +94,7 @@ h1 {
   font-size: 22px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   font-family: "posterable";
-  color: #480ced;
+  color: #ec5219;
 }
 
 .modal-content h2 {
@@ -105,14 +105,14 @@ h1 {
   margin-top: 20px;
   padding: 10px 20px;
   border: none;
-  background-color: #480ced;
-  color: #C49FFF;
+  background-color: #ec5219;
+  color: #ec5219;
   font-size: 18px;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .modal-content button:hover {
-  background-color: #C49FFF;
-  color: #480ced;
+  background-color: #ec5219;
+  color: #ec5219;
 }

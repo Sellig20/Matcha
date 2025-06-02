@@ -1,32 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import axios from 'axios';
-import { useAuth } from './useAuth';
-import { Link } from 'react-router-dom';
-import '../assets/styles/Error.css'
+import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "./useAuth";
+import { Link } from "react-router-dom";
+import "../assets/styles/Error.css";
 
 interface ProtectedRouteProps {
-    component: React.ComponentType<any>;
+  component: React.ComponentType<any>;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, ...rest }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  component: Component,
+  ...rest
+}) => {
+  const { isAuthenticated } = useAuth();
 
-    const { isAuthenticated } = useAuth();
-
-    if (isAuthenticated === null) {
-        return (
-            <section className="gradient-custom-error" >
-            <div><Link to="/signup" className="letters" style={{ textDecoration: 'none'}}>Sign up </Link>
-                or
-                <Link to="/signin" className="letters" style={{ textDecoration: 'none' }}> Sign in </Link>
-                to access the Matchamallow community ! 🩷</div>
-            </section>
-        )
-    }
-    if (isAuthenticated === false) {
-        return <Navigate to="/signup" />;
-    }
-    return <Component {...rest} />;
+  if (isAuthenticated === null) {
+    return (
+      <section className="gradient-custom-error">
+        <div>
+          <Link
+            to="/signup"
+            className="letters"
+            style={{ textDecoration: "none" }}
+          >
+            Sign up{" "}
+          </Link>
+          or
+          <Link
+            to="/signin"
+            className="letters"
+            style={{ textDecoration: "none" }}
+          >
+            {" "}
+            Sign in{" "}
+          </Link>
+          to access the Matchamallow community ! 🩷
+        </div>
+      </section>
+    );
+  }
+  if (isAuthenticated === false) {
+    return <Navigate to="/signup" />;
+  }
+  return <Component {...rest} />;
 };
 
 export default ProtectedRoute;

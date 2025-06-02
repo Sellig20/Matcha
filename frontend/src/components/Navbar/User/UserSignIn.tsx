@@ -8,7 +8,7 @@ import { useProfile } from './profileContext';
 import axiosInstance from '../../../security/axiosInstance';
 
 const UserSignIn: React.FC = () => {
-    const { checkAuth } = useAuth();
+    const { checkAuthentification } = useAuth();
     const { isProfileComplete, fetchProfile, profile } = useProfile();
     const [message, setMessage] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState('');
@@ -25,7 +25,7 @@ const UserSignIn: React.FC = () => {
 
             if (response.data.message) {
                 sessionStorage.setItem('token', response.data.token);
-                checkAuth();
+                checkAuthentification();
                 const isPC = await fetchProfile();
                 if (!isPC) {
                     console.log(`userSignin.tsx -> ${profile?.id}is authenticated and profile is UNcompleted please fill your profile`);

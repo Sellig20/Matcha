@@ -13,6 +13,20 @@
 }
 
 @font-face {
+    font-family: 'posterable';
+    src: url('./../fonts/POSTERABLE.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'citymango';
+    src: url('./../fonts/City.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'memories';
     src: url('./../fonts/memories_note/Memories.otf') format('opentype');
     font-weight: normal;

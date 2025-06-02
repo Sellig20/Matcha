@@ -9,6 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 export class userSigninController {
     static async getLogin(req: Request, res: Response) {
         try {
+            //ca doit aller chercher l'id du user dans le jwt OU si celui ci est expiré, lui creer un autre ID a ;ettre dans le jwt grace a son email deja enregistré
             const { email, password } = req.body;
             const validUser = await userSigninModel.getLogin(email, password); // use read user
             if (!validUser) {
