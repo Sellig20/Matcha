@@ -78,6 +78,7 @@ export class fameRatingController {
                                 myId: likeTab[i].liked_user_id,
                             });
                         }
+                        //donc separer IS THERE A MATCH de CREATING MATCH
                         //Création du match
                         if (tabMatchs.length > 0) {
                             let existingMatch = await userSignupModel.readMatchas("matcher_user_id", req.body.user_id);
