@@ -246,8 +246,7 @@ export type InferInput<T extends AppTable> = z.input<
 >;
 
 // --- SQL Table Definitions ---
-// REVERTED to DO $$ BEGIN ... END $$; blocks for ENUM creation for wider PG compatibility
-// and to bypass the syntax error with "CREATE TYPE IF NOT EXISTS" on the current setup.
+
 export const enumDefinitionsSQL = {
 	gender_enum: `
         DO $$

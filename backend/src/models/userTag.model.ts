@@ -1,6 +1,6 @@
 // src/models/userTag.model.ts
-import { InferEntity, InferInput, AppTable } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput, AppTable } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class UserTagModel {
 	private orm: ORM;
@@ -32,7 +32,7 @@ export class UserTagModel {
 		options?: ReadOptions<"user_tags">
 	): Promise<InferEntity<"user_tags">[]> {
 		const defaultOptions: ReadOptions<"user_tags"> = {
-			where: { user_id: userId } as Partial<InferEntity<"user_tags">>,
+			where: { user_id: userId },
 		};
 		const queryOptions = {
 			...defaultOptions,
@@ -53,7 +53,7 @@ export class UserTagModel {
 		options?: ReadOptions<"user_tags">
 	): Promise<InferEntity<"user_tags">[]> {
 		const defaultOptions: ReadOptions<"user_tags"> = {
-			where: { tag_id: tagId } as Partial<InferEntity<"user_tags">>,
+			where: { tag_id: tagId },
 		};
 		const queryOptions = {
 			...defaultOptions,
@@ -74,9 +74,7 @@ export class UserTagModel {
 		tagId: number
 	): Promise<InferEntity<"user_tags"> | null> {
 		return this.orm.findOne<"user_tags">("user_tags", {
-			where: { user_id: userId, tag_id: tagId } as Partial<
-				InferEntity<"user_tags">
-			>,
+			where: { user_id: userId, tag_id: tagId }
 		});
 	}
 

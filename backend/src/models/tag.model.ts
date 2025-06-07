@@ -1,6 +1,6 @@
 // src/models/tag.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class TagModel {
 	private orm: ORM;
@@ -77,7 +77,7 @@ export class TagModel {
 	 */
 	async findByName(name: string): Promise<InferEntity<"tags"> | null> {
 		return this.orm.findOne<"tags">("tags", {
-			where: { name } as Partial<InferEntity<"tags">>,
+			where: { name },
 		});
 	}
 

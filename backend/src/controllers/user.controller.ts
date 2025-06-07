@@ -1,9 +1,9 @@
 // src/controllers/user.controller.ts
 import { Request, Response, Router } from "express";
 import {
-	userModel, // Assuming userModel is exported from your main app setup or a central models index
-} from "../../server"; // Adjust this path to where your userModel instance is exported
-import { UserInput } from "../orm/schemaTypes"; // For request body type
+	userModel,
+} from "../../server";
+import { UserInput } from "../orm/schemaTypes";
 
 const router = Router();
 

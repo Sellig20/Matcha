@@ -1,6 +1,6 @@
 // src/models/connection.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class ConnectionModel {
 	private orm: ORM;
@@ -61,18 +61,14 @@ export class ConnectionModel {
 			"connections",
 			{
 				...options,
-				where: { ...baseWhere, user1_id: userId } as Partial<
-					InferEntity<"connections">
-				>,
+				where: { ...baseWhere, user1_id: userId }
 			}
 		);
 		const connectionsAsUser2 = await this.orm.read<"connections">(
 			"connections",
 			{
 				...options,
-				where: { ...baseWhere, user2_id: userId } as Partial<
-					InferEntity<"connections">
-				>,
+				where: { ...baseWhere, user2_id: userId }
 			}
 		);
 
@@ -97,7 +93,7 @@ export class ConnectionModel {
 		const user1_id = Math.min(userAId, userBId);
 		const user2_id = Math.max(userAId, userBId);
 		return this.orm.findOne<"connections">("connections", {
-			where: { user1_id, user2_id } as Partial<InferEntity<"connections">>,
+			where: { user1_id, user2_id },
 		});
 	}
 

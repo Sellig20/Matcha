@@ -1,6 +1,6 @@
 // src/models/profileView.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class ProfileViewModel {
 	private orm: ORM;
@@ -45,7 +45,7 @@ export class ProfileViewModel {
 		options?: ReadOptions<"profile_views">
 	): Promise<InferEntity<"profile_views">[]> {
 		const defaultOptions: ReadOptions<"profile_views"> = {
-			where: { viewed_id: viewedId } as Partial<InferEntity<"profile_views">>,
+			where: { viewed_id: viewedId },
 			orderBy: { field: "viewed_at", direction: "DESC" },
 		};
 		const queryOptions = {
@@ -67,7 +67,7 @@ export class ProfileViewModel {
 		options?: ReadOptions<"profile_views">
 	): Promise<InferEntity<"profile_views">[]> {
 		const defaultOptions: ReadOptions<"profile_views"> = {
-			where: { viewer_id: viewerId } as Partial<InferEntity<"profile_views">>,
+			where: { viewer_id: viewerId },
 			orderBy: { field: "viewed_at", direction: "DESC" },
 		};
 		const queryOptions = {

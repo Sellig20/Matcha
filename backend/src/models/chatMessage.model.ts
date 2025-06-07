@@ -1,6 +1,6 @@
 // src/models/chatMessage.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class ChatMessageModel {
 	private orm: ORM;
@@ -40,9 +40,7 @@ export class ChatMessageModel {
 		options?: ReadOptions<"chat_messages">
 	): Promise<InferEntity<"chat_messages">[]> {
 		const defaultOptions: ReadOptions<"chat_messages"> = {
-			where: { connection_id: connectionId } as Partial<
-				InferEntity<"chat_messages">
-			>,
+			where: { connection_id: connectionId },
 			orderBy: { field: "sent_at", direction: "ASC" },
 		};
 		const queryOptions = {
@@ -70,7 +68,7 @@ export class ChatMessageModel {
 				connection_id: connectionId,
 				receiver_id: receiverId,
 				read_at: null,
-			} as Partial<InferEntity<"chat_messages">>,
+			},
 			orderBy: { field: "sent_at", direction: "ASC" },
 		};
 		const queryOptions = {

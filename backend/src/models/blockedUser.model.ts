@@ -1,6 +1,6 @@
 // src/models/blockedUser.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class BlockedUserModel {
 	private orm: ORM;
@@ -48,7 +48,7 @@ export class BlockedUserModel {
 			where: {
 				blocker_id: blockerId,
 				blocked_id: blockedId,
-			} as Partial<InferEntity<"blocked_users">>,
+			},
 		});
 	}
 
@@ -63,7 +63,7 @@ export class BlockedUserModel {
 		options?: ReadOptions<"blocked_users">
 	): Promise<InferEntity<"blocked_users">[]> {
 		const defaultOptions: ReadOptions<"blocked_users"> = {
-			where: { blocker_id: blockerId } as Partial<InferEntity<"blocked_users">>,
+			where: { blocker_id: blockerId },
 			orderBy: { field: "blocked_at", direction: "DESC" },
 		};
 		const queryOptions = {
@@ -85,7 +85,7 @@ export class BlockedUserModel {
 		options?: ReadOptions<"blocked_users">
 	): Promise<InferEntity<"blocked_users">[]> {
 		const defaultOptions: ReadOptions<"blocked_users"> = {
-			where: { blocked_id: blockedId } as Partial<InferEntity<"blocked_users">>,
+			where: { blocked_id: blockedId },
 			orderBy: { field: "blocked_at", direction: "DESC" },
 		};
 		const queryOptions = {

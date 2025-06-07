@@ -1,6 +1,6 @@
 // src/models/userPicture.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm"
 
 export class UserPictureModel {
 	private orm: ORM;
@@ -28,7 +28,7 @@ export class UserPictureModel {
 						where: {
 							user_id: data.user_id,
 							is_profile_picture: true,
-						} as Partial<InferEntity<"user_pictures">>,
+						},
 					}
 				);
 				for (const pic of existingProfilePics) {
@@ -66,7 +66,7 @@ export class UserPictureModel {
 		options?: ReadOptions<"user_pictures">
 	): Promise<InferEntity<"user_pictures">[]> {
 		const defaultOptions: ReadOptions<"user_pictures"> = {
-			where: { user_id: userId } as Partial<InferEntity<"user_pictures">>,
+			where: { user_id: userId },
 			orderBy: { field: "created_at", direction: "ASC" },
 		};
 		const queryOptions = {
@@ -89,7 +89,7 @@ export class UserPictureModel {
 			where: {
 				user_id: userId,
 				is_profile_picture: true,
-			} as Partial<InferEntity<"user_pictures">>,
+			},
 		});
 	}
 
@@ -114,7 +114,7 @@ export class UserPictureModel {
 							where: {
 								user_id: picToUpdate.user_id,
 								is_profile_picture: true,
-							} as Partial<InferEntity<"user_pictures">>,
+							},
 						}
 					);
 					for (const pic of existingProfilePics) {

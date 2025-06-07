@@ -1,6 +1,6 @@
 // src/models/user.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class UserModel {
 	private orm: ORM;
@@ -79,7 +79,7 @@ export class UserModel {
 	 */
 	async findByEmail(email: string): Promise<InferEntity<"users"> | null> {
 		return this.orm.findOne<"users">("users", {
-			where: { email } as Partial<InferEntity<"users">>,
+			where: { email },
 		});
 	}
 
@@ -90,7 +90,7 @@ export class UserModel {
 	 */
 	async findByUsername(username: string): Promise<InferEntity<"users"> | null> {
 		return this.orm.findOne<"users">("users", {
-			where: { username } as Partial<InferEntity<"users">>,
+			where: { username },
 		});
 	}
 }

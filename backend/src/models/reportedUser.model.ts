@@ -1,6 +1,6 @@
 // src/models/reportedUser.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class ReportedUserModel {
 	private orm: ORM;
@@ -48,7 +48,7 @@ export class ReportedUserModel {
 			where: {
 				reporter_id: reporterId,
 				reported_id: reportedId,
-			} as Partial<InferEntity<"reported_users">>,
+			},
 		});
 	}
 
@@ -63,9 +63,7 @@ export class ReportedUserModel {
 		options?: ReadOptions<"reported_users">
 	): Promise<InferEntity<"reported_users">[]> {
 		const defaultOptions: ReadOptions<"reported_users"> = {
-			where: { reporter_id: reporterId } as Partial<
-				InferEntity<"reported_users">
-			>,
+			where: { reporter_id: reporterId },
 			orderBy: { field: "reported_at", direction: "DESC" },
 		};
 		const queryOptions = {
@@ -87,9 +85,7 @@ export class ReportedUserModel {
 		options?: ReadOptions<"reported_users">
 	): Promise<InferEntity<"reported_users">[]> {
 		const defaultOptions: ReadOptions<"reported_users"> = {
-			where: { reported_id: reportedId } as Partial<
-				InferEntity<"reported_users">
-			>,
+			where: { reported_id: reportedId },
 			orderBy: { field: "reported_at", direction: "DESC" },
 		};
 		const queryOptions = {
@@ -108,10 +104,4 @@ export class ReportedUserModel {
 	async delete(id: number): Promise<boolean> {
 		return this.orm.delete<"reported_users">("reported_users", id);
 	}
-
-	// Example for a potential update method (e.g., to change report status)
-	// async updateReportStatus(id: number, status: string): Promise<InferEntity<'reported_users'> | null> {
-	//    // Ensure 'status' is a valid field in your ReportedUserInput schema if you implement this
-	//    return this.orm.update<'reported_users'>("reported_users", id, { status } as Partial<InferInput<'reported_users'>>);
-	// }
 }

@@ -1,6 +1,6 @@
 // src/models/like.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class LikeModel {
 	private orm: ORM;
@@ -45,7 +45,7 @@ export class LikeModel {
 		options?: ReadOptions<"likes">
 	): Promise<InferEntity<"likes">[]> {
 		const defaultOptions: ReadOptions<"likes"> = {
-			where: { liked_user_id: likedUserId } as Partial<InferEntity<"likes">>,
+			where: { liked_user_id: likedUserId },
 			orderBy: { field: "liked_at", direction: "DESC" },
 		};
 		const queryOptions = {
@@ -67,7 +67,7 @@ export class LikeModel {
 		options?: ReadOptions<"likes">
 	): Promise<InferEntity<"likes">[]> {
 		const defaultOptions: ReadOptions<"likes"> = {
-			where: { liker_id: likerId } as Partial<InferEntity<"likes">>,
+			where: { liker_id: likerId },
 			orderBy: { field: "liked_at", direction: "DESC" },
 		};
 		const queryOptions = {

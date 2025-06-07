@@ -1,6 +1,6 @@
 // src/models/notification.model.ts
-import { InferEntity, InferInput } from "../orm/schemaTypes"; // Adjust path as needed
-import { ReadOptions, ORM } from "../orm/orm"; // Assuming ReadOptions is exported
+import { InferEntity, InferInput } from "../orm/schemaTypes";
+import { ReadOptions, ORM } from "../orm/orm";
 
 export class NotificationModel {
 	private orm: ORM;
@@ -40,7 +40,7 @@ export class NotificationModel {
 		options?: ReadOptions<"notifications">
 	): Promise<InferEntity<"notifications">[]> {
 		const defaultOptions: ReadOptions<"notifications"> = {
-			where: { user_id: userId } as Partial<InferEntity<"notifications">>,
+			where: { user_id: userId },
 			orderBy: { field: "created_at", direction: "DESC" },
 		};
 		const queryOptions = {
@@ -65,7 +65,7 @@ export class NotificationModel {
 			where: {
 				user_id: userId,
 				is_read: false,
-			} as Partial<InferEntity<"notifications">>,
+			},
 			orderBy: { field: "created_at", direction: "DESC" },
 		};
 		const queryOptions = {
